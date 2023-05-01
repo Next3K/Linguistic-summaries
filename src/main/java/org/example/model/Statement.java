@@ -13,7 +13,7 @@ public abstract class Statement {
         this.summarizer = summarizer;
     }
 
-    abstract Double calculateDegreeOfTruth();
+    abstract public Double calculateDegreeOfTruth();
 
     String getTextualRepresentation() {
         return quantifier.getTextualRepresentation() + " " +
