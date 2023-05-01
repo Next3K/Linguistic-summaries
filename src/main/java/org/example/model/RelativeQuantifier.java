@@ -4,6 +4,10 @@ public class RelativeQuantifier implements Quantifier{
 
     private final FuzzySet set;
 
+    public enum RelativeQuantifierTypes {
+        ABOUT_HALF, ALMOST_ALL, ALMOST_NONE, MOST, SOME
+    }
+
     public RelativeQuantifier(FuzzySet set) {
         this.set = set;
     }
