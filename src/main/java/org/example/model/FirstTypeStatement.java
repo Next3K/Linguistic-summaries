@@ -1,7 +1,6 @@
 package org.example.model;
 
-public class FirstTypeStatement extends Statement{
-    
+public class FirstTypeStatement extends Statement {
 
     public FirstTypeStatement(Quantifier quantifier, Summarizer summarizer) {
         super(quantifier, summarizer);
@@ -16,6 +15,12 @@ public class FirstTypeStatement extends Statement{
         // calculate degree of truth
 
         return degreeOfTruth;
+    }
+
+    @Override
+    public String getTextualRepresentation() {
+        return quantifier.getTextualRepresentation() + " " +
+                SUBJECT + " are/have " + summarizer.getTextualRepresentation();
     }
 
 }

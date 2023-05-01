@@ -5,6 +5,7 @@ public class AbsoluteQuantifier implements Quantifier {
     private final FuzzySet set;
     private final Integer value;
     private final AbsoluteQuantifierType type;
+    private final UniverseOfDiscourse universeOfDiscourse;
 
     public enum AbsoluteQuantifierType {
         ABOUT, LESS_THAN, OVER;
@@ -17,19 +18,31 @@ public class AbsoluteQuantifier implements Quantifier {
             };
         }
 
-        public FuzzySet getFuzzySet(int value) {
+        public FuzzySet getFuzzySet(int value, UniverseOfDiscourse universeOfDiscourse) {
+            Integer maximum = universeOfDiscourse.getMaximum();
+            Integer minimum = universeOfDiscourse.getMinimum();
             return switch (this) {
-                case OVER -> null;
-                case ABOUT -> null;
-                case LESS_THAN -> null;
+                case OVER -> new FuzzySet(
+                        new TrapezoidMembershipFunction(minimum, value, maximum, maximum),
+                        universeOfDiscourse);
+                case ABOUT -> new FuzzySet(
+                        new TriangularMembershipFunction(minimum + (0.5 * (value - minimum)), maximum - (0.5 * (maximum - value)), value),
+                        universeOfDiscourse);
+                case LESS_THAN -> new FuzzySet(
+                        new TrapezoidMembershipFunction(minimum, minimum, value, maximum),
+                        universeOfDiscourse);
             };
         }
     }
 
-    public AbsoluteQuantifier(AbsoluteQuantifierType type, Integer value) {
+    public AbsoluteQuantifier(AbsoluteQuantifierType type, Integer value, UniverseOfDiscourse universeOfDiscourse) {
+        this.universeOfDiscourse = universeOfDiscourse;
+        if (!universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
+            throw new IllegalArgumentException("Provided value is not in universe of discourse!");
+        }
         this.value = value;
         this.type = type;
-        this.set = type.getFuzzySet(value);
+        this.set = type.getFuzzySet(value, universeOfDiscourse);
     }
 
     @Override
