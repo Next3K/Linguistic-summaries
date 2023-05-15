@@ -1,4 +1,6 @@
-package org.example.model;
+package org.example.model.functions;
+
+import org.example.model.MembershipFunction;
 
 public class TrapezoidMembershipFunction implements MembershipFunction {
 

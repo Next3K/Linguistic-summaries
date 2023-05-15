@@ -1,5 +1,8 @@
 package org.example.model;
 
+import org.example.model.functions.TrapezoidMembershipFunction;
+import org.example.model.functions.TriangularMembershipFunction;
+
 public class RelativeQuantifier implements Quantifier {
 
     private final FuzzySet set;

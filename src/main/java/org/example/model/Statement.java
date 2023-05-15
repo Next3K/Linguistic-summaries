@@ -3,7 +3,7 @@ package org.example.model;
 public abstract class Statement {
 
     // subject of the summary
-    protected static final String SUBJECT = "students";
+    protected static final String SUBJECT = "daily weather measurement";
 
     protected final Quantifier quantifier;
     protected final Summarizer summarizer;
