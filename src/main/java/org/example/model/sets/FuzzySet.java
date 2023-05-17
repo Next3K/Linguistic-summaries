@@ -32,6 +32,20 @@ public class FuzzySet extends NonFuzzySet {
     }
 
     public boolean isConvex() {
+        double globalMaximum = 0;
+        boolean foundPick = false;
+        double delta = (universeOfDiscourse.getMaximum() - universeOfDiscourse.getMinimum()) / 100;
+        for (double i = universeOfDiscourse.getMinimum(); i < universeOfDiscourse.getMaximum(); i += delta) {
+            double currentValue = calculateMembershipFunctionValue(i);
+            if (currentValue > globalMaximum) globalMaximum = currentValue;
+            else {
+                if (foundPick) {
+                    return false;
+                } else {
+                    foundPick = true;
+                }
+            }
+        }
         return true;
     }
 
