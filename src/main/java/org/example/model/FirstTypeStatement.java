@@ -17,7 +17,7 @@ public class FirstTypeStatement extends Statement {
     @Override
     public String getTextualRepresentation() {
         return quantifier.getTextualRepresentation() + " " +
-                SUBJECT + " are/have " + summarizer.getTextualRepresentation();
+                SUBJECT + " are/have " + summarizer;
     }
 
 }

@@ -1,16 +1,22 @@
 package org.example.model;
 
-import java.util.List;
-
 public class Summarizer {
-    // summarizers combined with AND
-    List<Summarizer> individualSummarizers;
 
-    public String getTextualRepresentation() {
-        return " ";
+    private final String label;
+    private final FuzzySet fuzzySet;
+    private final LinguisticVariable linguisticVariable;
+
+    public Summarizer(LinguisticVariable linguisticVariable, String label) {
+        this.linguisticVariable = linguisticVariable;
+        this.label = label;
+        this.fuzzySet = linguisticVariable.getSemanticRule().get(label);
     }
 
-    public Double getValue() {
-        return null;
+    public String getTextualRepresentation() {
+        return linguisticVariable.getSyntacticRule().apply(label);
+    }
+
+    public Double getValueFor(double x) {
+        return fuzzySet.calculateMembershipFunctionValue(x);
     }
 }
