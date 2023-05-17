@@ -5,25 +5,55 @@ import org.example.model.functions.TriangularMembershipFunction;
 
 public class AbsoluteQuantifier implements Quantifier {
 
-    private final FuzzySet set;
-    private final Integer value;
-    private final AbsoluteQuantifierType type;
-    private final UniverseOfDiscourse universeOfDiscourse;
+    private final FuzzySet fuzzySet;
+    private final Double value;
+    private final String textualForm;
+
+    // standard absolute quantifiers
+    public AbsoluteQuantifier(AbsoluteQuantifierType type, Double value) {
+        if (!AbsoluteQuantifierType.universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
+            throw new IllegalArgumentException(
+                    "Provided value: " + value +
+                            " is not in universe of discourse! Value should be between:" +
+                            AbsoluteQuantifierType.universeOfDiscourse.getMinimum() + " and " +
+                            AbsoluteQuantifierType.universeOfDiscourse.getMaximum());
+        }
+        this.value = value;
+        this.fuzzySet = type.getFuzzySet(value);
+        this.textualForm = type.getInTextualForm();
+    }
+
+    // custom absolute quantifiers
+    public AbsoluteQuantifier(String label, Double value, FuzzySet fuzzySet) {
+        if (!AbsoluteQuantifierType.universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
+            throw new IllegalArgumentException(
+                    "Provided value: " + value +
+                    " is not in universe of discourse! Value should be between:" +
+                    AbsoluteQuantifierType.universeOfDiscourse.getMinimum() + " and " +
+                    AbsoluteQuantifierType.universeOfDiscourse.getMaximum());
+        }
+        this.value = value;
+        this.fuzzySet = fuzzySet;
+        this.textualForm = label;
+    }
+
 
     public enum AbsoluteQuantifierType {
         ABOUT, LESS_THAN, OVER;
 
+        private static final UniverseOfDiscourse universeOfDiscourse = new UniverseOfDiscourse(0d, 15_000d);
+
         public String getInTextualForm() {
             return switch (this) {
-                case OVER -> "over";
-                case ABOUT -> "about";
-                case LESS_THAN -> "less than";
+                case OVER -> "More than";
+                case ABOUT -> "About";
+                case LESS_THAN -> "Less than";
             };
         }
 
-        public FuzzySet getFuzzySet(int value, UniverseOfDiscourse universeOfDiscourse) {
-            Integer maximum = universeOfDiscourse.getMaximum();
-            Integer minimum = universeOfDiscourse.getMinimum();
+        public FuzzySet getFuzzySet(double value) {
+            var maximum = universeOfDiscourse.getMaximum();
+            var minimum = universeOfDiscourse.getMinimum();
             return switch (this) {
                 case OVER -> new FuzzySet(
                         new TrapezoidMembershipFunction(minimum, value, maximum, maximum),
@@ -38,24 +68,15 @@ public class AbsoluteQuantifier implements Quantifier {
         }
     }
 
-    public AbsoluteQuantifier(AbsoluteQuantifierType type, Integer value, UniverseOfDiscourse universeOfDiscourse) {
-        this.universeOfDiscourse = universeOfDiscourse;
-        if (!universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
-            throw new IllegalArgumentException("Provided value is not in universe of discourse!");
-        }
-        this.value = value;
-        this.type = type;
-        this.set = type.getFuzzySet(value, universeOfDiscourse);
-    }
 
     @Override
     public String getTextualRepresentation() {
-        return this.type.getInTextualForm() + " " + value;
+        return this.textualForm + " " + value;
     }
 
     @Override
     public Double getQuantified(Double d) {
-        return set.calculateMembershipFunctionValue(d);
+        return fuzzySet.calculateMembershipFunctionValue(d);
     }
 
     @Override

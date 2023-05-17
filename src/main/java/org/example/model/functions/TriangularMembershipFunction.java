@@ -4,7 +4,7 @@ import org.example.model.MembershipFunction;
 
 public class TriangularMembershipFunction implements MembershipFunction {
 
-    public TriangularMembershipFunction(double a, double b, double mid) {
+    public TriangularMembershipFunction(double a, double mid, double b) {
         this.a = a;
         this.b = b;
         this.mid = mid;
@@ -17,7 +17,6 @@ public class TriangularMembershipFunction implements MembershipFunction {
     @Override
     public Double evaluate(Double x) {
         if (x < a || x > b) return 0.0;
-
         if (x < mid) {
             return x * 1 / (mid - a) - (a / (mid - a));
         }

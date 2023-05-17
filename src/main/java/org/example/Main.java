@@ -25,6 +25,5 @@ public class Main {
 
         // print
         statements.forEach(System.out::println);
-
     }
 }
