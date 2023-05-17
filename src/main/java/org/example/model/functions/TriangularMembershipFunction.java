@@ -1,7 +1,5 @@
 package org.example.model.functions;
 
-import org.example.model.MembershipFunction;
-
 public class TriangularMembershipFunction implements MembershipFunction {
 
     public TriangularMembershipFunction(double a, double mid, double b) {
@@ -21,5 +19,23 @@ public class TriangularMembershipFunction implements MembershipFunction {
             return x * 1 / (mid - a) - (a / (mid - a));
         }
         return x * 1 / (b - mid) - (mid / (b - mid));
+    }
+
+    @Override
+    public Double getIntegral(double a, double b) {
+        if (b < this.a) return 0.0d;
+        if (a > this.b) return 0.0d;
+        
+        //left part
+        double leftPart = 0;
+        // right part
+        double rightPart = 0;
+
+        return leftPart + rightPart;
+    }
+
+    @Override
+    public Double getMaxValue() {
+        return 1.0d;
     }
 }

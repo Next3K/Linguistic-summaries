@@ -1,10 +1,13 @@
-package org.example.model;
+package org.example.model.statements;
 
-import org.example.model.measures.AggregatingMeasure;
+import lombok.Getter;
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.Summarizer;
 import org.example.model.measures.Measures;
 
 import java.util.Objects;
 
+@Getter
 public abstract class Statement {
 
     // subject of the summary

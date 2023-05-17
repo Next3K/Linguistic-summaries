@@ -1,6 +1,6 @@
 package org.example;
 
-import org.example.model.Statement;
+import org.example.model.statements.Statement;
 
 import java.util.List;
 

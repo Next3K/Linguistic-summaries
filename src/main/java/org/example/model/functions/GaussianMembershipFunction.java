@@ -1,7 +1,5 @@
 package org.example.model.functions;
 
-import org.example.model.MembershipFunction;
-
 public class GaussianMembershipFunction implements MembershipFunction {
 
     private final double mean;
@@ -17,6 +15,16 @@ public class GaussianMembershipFunction implements MembershipFunction {
     @Override
     public Double evaluate(Double x) {
         return gaussianFunction(x) * normalizationConstant;
+    }
+
+    @Override
+    public Double getIntegral(double a, double b) {
+        return null;
+    }
+
+    @Override
+    public Double getMaxValue() {
+        return 0d;
     }
 
     private double gaussianFunction(Double x) {

@@ -1,16 +1,22 @@
-package org.example.model;
+package org.example.model.quantifiers;
 
+import org.example.model.FuzzySet;
+import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.functions.TriangularMembershipFunction;
 
-public class AbsoluteQuantifier implements Quantifier {
+
+public class AbsoluteQuantifier extends Quantifier {
 
     private final FuzzySet fuzzySet;
     private final Double value;
     private final String textualForm;
 
     // standard absolute quantifiers
-    public AbsoluteQuantifier(AbsoluteQuantifierType type, Double value) {
+    public AbsoluteQuantifier(AbsoluteQuantifierType type,
+                              Double value) {
+        super(type.getFuzzySet(value).getMembershipFunction(), type.getFuzzySet(value).getUniverseOfDiscourse());
+
         if (!AbsoluteQuantifierType.universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
             throw new IllegalArgumentException(
                     "Provided value: " + value +
@@ -25,6 +31,8 @@ public class AbsoluteQuantifier implements Quantifier {
 
     // custom absolute quantifiers
     public AbsoluteQuantifier(String label, Double value, FuzzySet fuzzySet) {
+        super(fuzzySet.getMembershipFunction(), fuzzySet.getUniverseOfDiscourse());
+
         if (!AbsoluteQuantifierType.universeOfDiscourse.valueInUniverseOfDiscourse(value)) {
             throw new IllegalArgumentException(
                     "Provided value: " + value +

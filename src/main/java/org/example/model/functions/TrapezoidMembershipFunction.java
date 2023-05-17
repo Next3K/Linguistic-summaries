@@ -1,7 +1,5 @@
 package org.example.model.functions;
 
-import org.example.model.MembershipFunction;
-
 public class TrapezoidMembershipFunction implements MembershipFunction {
 
     public TrapezoidMembershipFunction(double a, double A, double B, double b) {
@@ -28,5 +26,15 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
             // x > B
             return x * 1 / (b - B) - (B / (b - B));
         }
+    }
+
+    @Override
+    public Double getIntegral(double a, double b) {
+        return null;
+    }
+
+    @Override
+    public Double getMaxValue() {
+        return 1.0d;
     }
 }

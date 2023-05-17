@@ -1,6 +1,7 @@
-package org.example.model;
+package org.example.model.statements;
 
-import java.util.Objects;
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.Summarizer;
 
 public class FirstTypeStatement extends Statement {
 

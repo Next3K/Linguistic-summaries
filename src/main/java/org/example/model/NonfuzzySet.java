@@ -1,5 +1,7 @@
 package org.example.model;
 
+import org.example.model.functions.MembershipFunction;
+
 public class NonfuzzySet {
     private final MembershipFunction membershipFunction;
     private final UniverseOfDiscourse universeOfDiscourse;

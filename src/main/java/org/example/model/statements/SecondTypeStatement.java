@@ -1,4 +1,7 @@
-package org.example.model;
+package org.example.model.statements;
+
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.Summarizer;
 
 public class SecondTypeStatement extends Statement {
 
@@ -18,13 +21,7 @@ public class SecondTypeStatement extends Statement {
 
     @Override
     public Double calculateQualityMeasure() {
-        if (degreeOfTruth != null) {
-            return degreeOfTruth;
-        }
-
-        // calculate degree of truth
-
-        return degreeOfTruth;
+        return 0d;
     }
 
     @Override

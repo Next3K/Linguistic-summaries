@@ -1,8 +1,8 @@
 package org.example;
 
 import org.example.model.Entry;
-import org.example.model.Quantifier;
-import org.example.model.Statement;
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.statements.Statement;
 
 import java.util.ArrayList;
 import java.util.Comparator;

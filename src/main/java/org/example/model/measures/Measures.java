@@ -1,11 +1,13 @@
 package org.example.model.measures;
 
-import org.example.model.Statement;
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.statements.Statement;
 
 public class Measures {
 
     public static double calculateDegreeOfTruth(Statement statement) {
-        return 0;
+        Quantifier quantifier = statement.getQuantifier();
+        return quantifier.getQuantified(0.1);
     }
 
     public static double calculateDegreeOfImprecision(Statement statement) {

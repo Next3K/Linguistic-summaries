@@ -1,22 +1,33 @@
 package org.example.model;
 
-public class Summarizer {
 
+import org.example.model.functions.MembershipFunction;
+
+import java.util.function.Function;
+
+public class Summarizer extends FuzzySet{
+
+    // label of the fuzzy set
     private final String label;
-    private final FuzzySet fuzzySet;
-    private final LinguisticVariable linguisticVariable;
 
-    public Summarizer(LinguisticVariable linguisticVariable, String label) {
-        this.linguisticVariable = linguisticVariable;
+    // generates textual description from summarizer
+    private final Function<String, String> descriptionProducer;
+
+    public Summarizer(String label,
+                      MembershipFunction membershipFunction,
+                      UniverseOfDiscourse universeOfDiscourse,
+                      Function<String, String> descriptionProducer) {
+        super(membershipFunction, universeOfDiscourse);
+
+        this.descriptionProducer = descriptionProducer;
         this.label = label;
-        this.fuzzySet = linguisticVariable.getSemanticRule().get(label);
     }
 
     public String getTextualRepresentation() {
-        return linguisticVariable.getSyntacticRule().apply(label);
+        return descriptionProducer.apply(label);
     }
 
-    public Double getValueFor(double x) {
-        return fuzzySet.calculateMembershipFunctionValue(x);
+    public Double getSummarizerValueFor(double x) {
+        return this.calculateMembershipFunctionValue(x);
     }
 }

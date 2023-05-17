@@ -1,9 +1,12 @@
-package org.example.model;
+package org.example.model.quantifiers;
 
+import org.example.model.FuzzySet;
+import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.functions.TriangularMembershipFunction;
 
-public class RelativeQuantifier implements Quantifier {
+
+public class RelativeQuantifier extends Quantifier {
 
     private final FuzzySet set;
     private final RelativeQuantifierType type;
@@ -11,6 +14,7 @@ public class RelativeQuantifier implements Quantifier {
 
     // standard relative quantifiers
     public RelativeQuantifier(RelativeQuantifierType type) {
+        super(type.getFuzzySet().getMembershipFunction(), type.getFuzzySet().getUniverseOfDiscourse());
         this.type = type;
         this.set = type.getFuzzySet();
         this.textualForm = type.getInTextualForm();
@@ -18,6 +22,7 @@ public class RelativeQuantifier implements Quantifier {
 
     // custom relative quantifiers
     public RelativeQuantifier(String label, FuzzySet fuzzySet) {
+        super(fuzzySet.getMembershipFunction(), fuzzySet.getUniverseOfDiscourse());
         this.set = fuzzySet;
         this.type = null;
         this.textualForm = label;

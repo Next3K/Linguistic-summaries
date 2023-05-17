@@ -2,6 +2,10 @@ package org.example;
 
 import org.example.model.*;
 import org.example.model.functions.TrapezoidMembershipFunction;
+import org.example.model.quantifiers.AbsoluteQuantifier;
+import org.example.model.quantifiers.Quantifier;
+import org.example.model.quantifiers.RelativeQuantifier;
+import org.example.model.statements.Statement;
 
 import java.util.ArrayList;
 import java.util.List;
