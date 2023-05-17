@@ -11,7 +11,7 @@ public class Main {
         List<Statement> statements = Util.generateStatements(100);
 
         // sort by degree of truth
-        statements.sort(Comparator.comparingDouble(Statement::calculateDegreeOfTruth));
+        statements.sort(Comparator.comparingDouble(Statement::calculateQualityMeasure));
 
         // print
         statements.forEach(System.out::println);

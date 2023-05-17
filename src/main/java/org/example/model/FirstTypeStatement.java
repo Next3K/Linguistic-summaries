@@ -1,21 +1,18 @@
 package org.example.model;
 
+import java.util.Objects;
+
 public class FirstTypeStatement extends Statement {
 
     public FirstTypeStatement(Quantifier quantifier, Summarizer summarizer) {
         super(quantifier, summarizer);
     }
 
-    @Override
-    public Double calculateDegreeOfTruth() {
-        if (this.degreeOfTruth != null) {
-            return degreeOfTruth;
-        }
+//    @Override
+//    public Double calculateQualityMeasure() {
+//        return Objects.requireNonNullElse(this.qualityMeasure, 0.45d);
+//    }
 
-        // calculate degree of truth
-
-        return degreeOfTruth;
-    }
 
     @Override
     public String getTextualRepresentation() {

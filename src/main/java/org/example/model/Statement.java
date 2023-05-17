@@ -1,5 +1,9 @@
 package org.example.model;
 
+import org.example.model.measures.AggregatingMeasure;
+
+import java.util.Objects;
+
 public abstract class Statement {
 
     // subject of the summary
@@ -8,7 +12,7 @@ public abstract class Statement {
     protected final Quantifier quantifier;
     protected final Summarizer summarizer;
 
-    protected Double degreeOfTruth;
+    protected Double qualityMeasure;
 
     protected Statement(Quantifier quantifier, Summarizer summarizer) {
         this.quantifier = quantifier;
@@ -16,10 +20,13 @@ public abstract class Statement {
     }
 
     String getReport() {
-        return getTextualRepresentation() + " [" + calculateDegreeOfTruth() + "]";
+        return getTextualRepresentation() + " [" + calculateQualityMeasure() + "]";
     }
 
     public abstract String getTextualRepresentation();
 
-    public abstract Double calculateDegreeOfTruth();
+    public Double calculateQualityMeasure() {
+        return Objects.requireNonNullElse(this.qualityMeasure, new AggregatingMeasure().getValue(this));
+    }
+
 }

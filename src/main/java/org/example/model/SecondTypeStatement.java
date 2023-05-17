@@ -17,7 +17,7 @@ public class SecondTypeStatement extends Statement {
     protected final Summarizer qualifier;
 
     @Override
-    public Double calculateDegreeOfTruth() {
+    public Double calculateQualityMeasure() {
         if (degreeOfTruth != null) {
             return degreeOfTruth;
         }

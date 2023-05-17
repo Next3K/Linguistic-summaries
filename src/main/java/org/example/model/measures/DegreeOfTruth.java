@@ -3,7 +3,7 @@ package org.example.model.measures;
 import org.example.model.QualityMeasure;
 import org.example.model.Statement;
 
-public class DegreeOfAppropriateness implements QualityMeasure {
+public class DegreeOfTruth implements QualityMeasure {
 
     @Override
     public double getValue(Statement statement) {
@@ -12,6 +12,6 @@ public class DegreeOfAppropriateness implements QualityMeasure {
 
     @Override
     public String getName() {
-        return "degree of appropriateness";
+        return "degree of truth";
     }
 }
