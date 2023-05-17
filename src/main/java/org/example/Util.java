@@ -5,6 +5,7 @@ import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.quantifiers.RelativeQuantifier;
+import org.example.model.sets.FuzzySet;
 import org.example.model.statements.Statement;
 
 import java.util.ArrayList;
@@ -14,7 +15,17 @@ public class Util {
 
     public static List<Statement> generateStatements(List<Quantifier> absoluteQuantifiers,
                                                      List<Quantifier> relativeQuantifiers,
-                                                     List<FuzzySet> chosenSummarizers) {
+                                                     List<Summarizer> chosenSummarizers) {
+        List<Statement> statements = new ArrayList<>(10_000);
+
+        for (var quantifier : absoluteQuantifiers) {
+            System.out.println("generate stuff");
+        }
+
+        for (var quantifier : relativeQuantifiers) {
+            System.out.println("generate stuff");
+        }
+
         return new ArrayList<>(200);
     }
     public static List<Entry> loadFromDatabase() {

@@ -5,7 +5,6 @@ import org.example.model.Summarizer;
 
 public class SecondTypeStatement extends Statement {
 
-
     protected SecondTypeStatement(Quantifier quantifier, Summarizer summarizer, Summarizer qualifier) {
         super(quantifier, summarizer);
 
@@ -30,6 +29,4 @@ public class SecondTypeStatement extends Statement {
                 SUBJECT + " being/having " +  qualifier.getTextualRepresentation() +
                 " are also / have also "  + summarizer.getTextualRepresentation();
     }
-
-
 }

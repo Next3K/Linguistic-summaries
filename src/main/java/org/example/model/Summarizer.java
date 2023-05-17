@@ -2,10 +2,11 @@ package org.example.model;
 
 
 import org.example.model.functions.MembershipFunction;
+import org.example.model.sets.FuzzySet;
 
 import java.util.function.Function;
 
-public class Summarizer extends FuzzySet{
+public class Summarizer extends FuzzySet {
 
     // label of the fuzzy set
     private final String label;

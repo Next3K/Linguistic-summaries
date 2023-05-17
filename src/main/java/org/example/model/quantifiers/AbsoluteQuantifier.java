@@ -1,6 +1,6 @@
 package org.example.model.quantifiers;
 
-import org.example.model.FuzzySet;
+import org.example.model.sets.FuzzySet;
 import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.functions.TriangularMembershipFunction;

@@ -1,10 +1,11 @@
-package org.example.model;
+package org.example.model.sets;
 
 import lombok.Getter;
+import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.MembershipFunction;
 
 @Getter
-public class FuzzySet extends ClassicalSet {
+public class FuzzySet extends NonFuzzySet {
 
     private final MembershipFunction membershipFunction;
     private final UniverseOfDiscourse universeOfDiscourse;

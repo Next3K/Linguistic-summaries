@@ -2,6 +2,7 @@ package org.example.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.example.model.sets.FuzzySet;
 
 import java.util.Map;
 import java.util.Set;
