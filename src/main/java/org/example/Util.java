@@ -2,7 +2,6 @@ package org.example;
 
 import org.example.model.*;
 import org.example.model.functions.TrapezoidMembershipFunction;
-import org.example.model.functions.TriangularMembershipFunction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,9 @@ public class Util {
                 new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ABOUT_THREE_QUARTERS);
         Quantifier many = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.MANY);
         Quantifier almostAll = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ALMOST_ALL);
-        return List.of(almostNone, few, aboutQuarter, some, aboutHalf, aboutThreeQuarters, many, almostAll);
+
+        return new ArrayList<>(List.of(almostNone, few, aboutQuarter,
+                some, aboutHalf, aboutThreeQuarters, many, almostAll));
     }
 
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
@@ -67,8 +68,8 @@ public class Util {
                 new FuzzySet(new TrapezoidMembershipFunction(2400, 3400, 1500, 1600), universe));
 
 
-        return List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
-                sevenTwoZeroZero, oneZeroEightZeroZero, oneFourFourZeroZero);
+        return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
+                sevenTwoZeroZero, oneZeroEightZeroZero, oneFourFourZeroZero));
     }
 
 }

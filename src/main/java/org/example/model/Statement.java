@@ -1,6 +1,7 @@
 package org.example.model;
 
 import org.example.model.measures.AggregatingMeasure;
+import org.example.model.measures.Measures;
 
 import java.util.Objects;
 
@@ -26,7 +27,7 @@ public abstract class Statement {
     public abstract String getTextualRepresentation();
 
     public Double calculateQualityMeasure() {
-        return Objects.requireNonNullElse(this.qualityMeasure, new AggregatingMeasure().getValue(this));
+        return Objects.requireNonNullElse(this.qualityMeasure, Measures.calculateWeightedMeasure(this));
     }
 
 }

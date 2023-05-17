@@ -14,6 +14,9 @@ public class FuzzySet {
         if (universeOfDiscourse.valueInUniverseOfDiscourse(x)) {
             return membershipFunction.evaluate(x);
         }
-        throw new IllegalStateException("Argument out of bounds for given universe of discourse!");
+        throw new IllegalStateException("Argument: "+ x +
+                "out of bounds for given universe of discourse! Min: " +
+                universeOfDiscourse.getMinimum() +
+                " Max: " + universeOfDiscourse.getMaximum());
     }
 }
