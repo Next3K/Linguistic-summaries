@@ -4,6 +4,8 @@ import lombok.Getter;
 import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.MembershipFunction;
 
+import java.util.Random;
+
 @Getter
 public class FuzzySet extends NonFuzzySet {
 
@@ -32,18 +34,14 @@ public class FuzzySet extends NonFuzzySet {
     }
 
     public boolean isConvex() {
-        double globalMaximum = 0;
-        boolean foundPick = false;
-        double delta = (universeOfDiscourse.getMaximum() - universeOfDiscourse.getMinimum()) / 100;
-        for (double i = universeOfDiscourse.getMinimum(); i < universeOfDiscourse.getMaximum(); i += delta) {
-            double currentValue = calculateMembershipFunctionValue(i);
-            if (currentValue > globalMaximum) globalMaximum = currentValue;
-            else {
-                if (foundPick) {
-                    return false;
-                } else {
-                    foundPick = true;
-                }
+        Random r = new Random();
+        double diff = universeOfDiscourse.getMaximum() - universeOfDiscourse.getMinimum();
+        for (int i = 0; i < 50; i++) {
+            double a = universeOfDiscourse.getMinimum() + r.nextDouble() * diff;
+            double b = universeOfDiscourse.getMinimum() + r.nextDouble() * diff;
+            if (calculateMembershipFunctionValue((a + b) / 2.0d) < Math.min(
+                    calculateMembershipFunctionValue(a), calculateMembershipFunctionValue(b))) {
+                return false;
             }
         }
         return true;
