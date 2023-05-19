@@ -3,6 +3,7 @@ package org.example.model;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.example.model.sets.FuzzySet;
+import org.example.model.sets.UniverseOfDiscourse;
 
 import java.util.Map;
 import java.util.Set;
@@ -33,12 +34,19 @@ public class LinguisticVariable {
                               Set<String> linguisticValues,
                               UniverseOfDiscourse universeOfDiscourse,
                               Map<String, FuzzySet> semanticRule,
-                              boolean simpleDescription) {
+                              SyntacticRuleType syntacticRuleType) {
         this.name = name;
         this.linguisticValues = linguisticValues;
         this.universeOfDiscourse = universeOfDiscourse;
         this.semanticRule = semanticRule;
-        this.syntacticRule = (simpleDescription) ? this::simpleDescription : this::complexDescription;
+        this.syntacticRule = switch (syntacticRuleType) {
+            case SIMPLE -> this::simpleDescription;
+            case COMPLEX -> this::complexDescription;
+        };
+    }
+
+    public enum SyntacticRuleType {
+        SIMPLE, COMPLEX
     }
 
     // example: "Student is/have: buffed"

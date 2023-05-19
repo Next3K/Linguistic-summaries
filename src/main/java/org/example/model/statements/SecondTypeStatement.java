@@ -1,7 +1,7 @@
 package org.example.model.statements;
 
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.Summarizer;
+import org.example.model.sets.Summarizer;
 
 public class SecondTypeStatement extends Statement {
 

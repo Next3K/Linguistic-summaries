@@ -1,18 +1,18 @@
 package org.example.model.sets;
 
 import lombok.Getter;
-import org.example.model.UniverseOfDiscourse;
 import org.example.model.functions.MembershipFunction;
 
 import java.util.Random;
 
 @Getter
-public class FuzzySet extends NonFuzzySet {
+public class FuzzySet extends ContinuousNonFuzzySet {
 
-    private final MembershipFunction membershipFunction;
-    private final UniverseOfDiscourse universeOfDiscourse;
+    protected final MembershipFunction membershipFunction;
+    protected final UniverseOfDiscourse universeOfDiscourse;
 
     public FuzzySet(MembershipFunction membershipFunction, UniverseOfDiscourse universeOfDiscourse) {
+        super(universeOfDiscourse.getMinimum(), universeOfDiscourse.getMaximum());
         this.membershipFunction = membershipFunction;
         this.universeOfDiscourse = universeOfDiscourse;
     }
@@ -21,7 +21,7 @@ public class FuzzySet extends NonFuzzySet {
         if (universeOfDiscourse.valueInUniverseOfDiscourse(x)) {
             return membershipFunction.evaluate(x);
         }
-        throw new IllegalStateException("Argument: "+ x +
+        throw new IllegalStateException("Argument: " + x +
                 "out of bounds for given universe of discourse! Min: " +
                 universeOfDiscourse.getMinimum() +
                 " Max: " + universeOfDiscourse.getMaximum());

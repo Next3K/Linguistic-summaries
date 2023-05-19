@@ -1,8 +1,8 @@
-package org.example.model;
+package org.example.model.sets;
 
 
+import org.example.model.db.Entry;
 import org.example.model.functions.MembershipFunction;
-import org.example.model.sets.FuzzySet;
 
 import java.util.function.Function;
 
@@ -10,6 +10,7 @@ public class Summarizer extends FuzzySet {
 
     // label of the fuzzy set
     private final String label;
+    private final Entry.DatabaseColumn column;
 
     // generates textual description from summarizer
     private final Function<String, String> descriptionProducer;
@@ -17,9 +18,11 @@ public class Summarizer extends FuzzySet {
     public Summarizer(String label,
                       MembershipFunction membershipFunction,
                       UniverseOfDiscourse universeOfDiscourse,
+                      Entry.DatabaseColumn column,
                       Function<String, String> descriptionProducer) {
         super(membershipFunction, universeOfDiscourse);
 
+        this.column = column;
         this.descriptionProducer = descriptionProducer;
         this.label = label;
     }

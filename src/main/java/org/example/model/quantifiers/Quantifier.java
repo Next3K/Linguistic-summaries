@@ -1,7 +1,7 @@
 package org.example.model.quantifiers;
 
 import org.example.model.sets.FuzzySet;
-import org.example.model.UniverseOfDiscourse;
+import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.functions.MembershipFunction;
 
 public abstract class Quantifier extends FuzzySet {

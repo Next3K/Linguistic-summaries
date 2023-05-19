@@ -2,7 +2,7 @@ package org.example.model.statements;
 
 import lombok.Getter;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.Summarizer;
+import org.example.model.sets.Summarizer;
 import org.example.model.measures.Measures;
 
 import java.util.Objects;
