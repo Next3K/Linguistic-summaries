@@ -1,7 +1,7 @@
 package org.example.model.sets;
 
-import lombok.Getter;
 import org.example.model.functions.MembershipFunction;
+import lombok.Getter;
 
 import java.util.Random;
 

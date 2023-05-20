@@ -1,9 +1,9 @@
 package org.example.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
 
 import java.util.Map;
 import java.util.Set;

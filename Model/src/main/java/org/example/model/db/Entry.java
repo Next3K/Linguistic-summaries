@@ -38,6 +38,5 @@ public class Entry {
                 case EVAPOTRANSPIRATION -> "evapotranspiration";
             };
         }
-
     }
 }

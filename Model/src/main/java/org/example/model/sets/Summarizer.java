@@ -1,8 +1,8 @@
 package org.example.model.sets;
 
 
-import org.example.model.db.Entry;
 import org.example.model.functions.MembershipFunction;
+import org.example.model.db.Entry;
 
 import java.util.function.Function;
 

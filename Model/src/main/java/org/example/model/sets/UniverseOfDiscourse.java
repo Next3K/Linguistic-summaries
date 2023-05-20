@@ -1,8 +1,6 @@
 package org.example.model.sets;
 
 
-import org.example.model.sets.ContinuousNonFuzzySet;
-
 public class UniverseOfDiscourse extends ContinuousNonFuzzySet {
 
     public UniverseOfDiscourse(Double minimum, Double maximum) {

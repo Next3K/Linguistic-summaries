@@ -1,10 +1,11 @@
 package org.example;
 
-import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
 import org.example.model.sets.Summarizer;
+import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.statements.Statement;
+
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -31,7 +32,7 @@ public class Main {
 
         // generate statements
         List<Statement> statements =
-                Util.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, summarizers);
+                Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, summarizers);
 
         // sort by degree of truth
         statements.sort(Comparator.comparingDouble(Statement::getQualityMeasure));

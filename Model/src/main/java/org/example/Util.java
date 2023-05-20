@@ -1,15 +1,15 @@
 package org.example;
 
-import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
+import org.example.model.sets.FuzzySet;
+import org.example.model.sets.Summarizer;
+import org.example.model.sets.UniverseOfDiscourse;
+import org.example.model.LinguisticVariable;
 import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.functions.TriangularMembershipFunction;
 import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.quantifiers.RelativeQuantifier;
-import org.example.model.sets.FuzzySet;
-import org.example.model.sets.Summarizer;
-import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.statements.Statement;
 
 import java.util.*;
@@ -162,28 +162,6 @@ public class Util {
                 evaporation, Entry.DatabaseColumn.EVAPORATION,
                 radiation, Entry.DatabaseColumn.RADIATION,
                 evapotranspiration, Entry.DatabaseColumn.EVAPOTRANSPIRATION);
-    }
-
-    public static List<Statement> generateStatements(List<Entry> records,
-                                                     List<Quantifier> absoluteQuantifiers,
-                                                     List<Quantifier> relativeQuantifiers,
-                                                     Map<Entry.DatabaseColumn, List<Summarizer>> attributesAndSummarizers) {
-
-        List<Statement> statements = new ArrayList<>(10_000);
-
-        for (var quantifier : absoluteQuantifiers) {
-            System.out.println("generate stuff");
-        }
-
-        for (var quantifier : relativeQuantifiers) {
-            System.out.println("generate stuff");
-        }
-
-        for (var statement : statements) {
-            statement.calculateQualityMeasure();
-        }
-
-        return statements;
     }
 
     public static List<Entry> loadFromDatabase(Set<Entry.DatabaseColumn> columnsOfInterest) {
