@@ -1,14 +1,15 @@
 package org.example.model.statements;
 
 import lombok.Getter;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.Objects;
 
 @Getter
 public class TwoSubjectStatementFour extends TwoSubjectStatement{
 
-    private Summarizer summarizer;
+    private CompoundLabeledFuzzySet summarizer;
 
     protected TwoSubjectStatementFour(String subjectOne, String subjectTwo) {
         super(subjectOne, subjectTwo);

@@ -1,11 +1,11 @@
 package org.example.model.statements;
 
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.LabeledFuzzySet;
 
 public class SecondTypeStatement extends Statement {
 
-    protected SecondTypeStatement(Quantifier quantifier, Summarizer summarizer, Summarizer qualifier) {
+    protected SecondTypeStatement(Quantifier quantifier, LabeledFuzzySet summarizer, LabeledFuzzySet qualifier) {
         super(quantifier, summarizer);
 
         // check whether quantifier is OK
@@ -16,7 +16,7 @@ public class SecondTypeStatement extends Statement {
         this.qualifier = qualifier;
     }
 
-    protected final Summarizer qualifier;
+    protected final LabeledFuzzySet qualifier;
 
     @Override
     public Double calculateQualityMeasure() {

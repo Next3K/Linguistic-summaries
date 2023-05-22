@@ -1,7 +1,7 @@
 package org.example;
 
 import org.example.model.db.Entry;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.statements.Statement;
@@ -28,7 +28,7 @@ public class Main {
         List<Quantifier> absoluteQuantifiers = Util.loadDefaultAbsoluteQuantifiers();
 
         // chosen attributes with their chosen summarizers
-        Map<Entry.DatabaseColumn, List<Summarizer>> summarizers = Util.chooseAttributesAndTheirSummarizers();
+        Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> summarizers = Util.chooseAttributesAndTheirSummarizers();
 
         // generate statements
         List<Statement> statements =

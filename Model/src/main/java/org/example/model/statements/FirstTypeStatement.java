@@ -1,11 +1,11 @@
 package org.example.model.statements;
 
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.LabeledFuzzySet;
 
 public class FirstTypeStatement extends Statement {
 
-    public FirstTypeStatement(Quantifier quantifier, Summarizer summarizer) {
+    public FirstTypeStatement(Quantifier quantifier, LabeledFuzzySet summarizer) {
         super(quantifier, summarizer);
     }
 

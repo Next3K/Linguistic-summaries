@@ -2,7 +2,8 @@ package org.example.model.statements;
 
 import lombok.Getter;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.Objects;
 
@@ -11,8 +12,8 @@ public class TwoSubjectStatementThree extends TwoSubjectStatement {
     protected TwoSubjectStatementThree(String subjectOne,
                                        String subjectTwo,
                                        Quantifier quantifier,
-                                       Summarizer summarizer,
-                                       Summarizer qualifier) {
+                                       CompoundLabeledFuzzySet summarizer,
+                                       CompoundLabeledFuzzySet qualifier) {
         super(subjectOne, subjectTwo);
         this.quantifier = quantifier;
         this.summarizer = summarizer;
@@ -21,8 +22,8 @@ public class TwoSubjectStatementThree extends TwoSubjectStatement {
     }
 
     private final Quantifier quantifier;
-    private final Summarizer summarizer;
-    private final Summarizer qualifier;
+    private final CompoundLabeledFuzzySet summarizer;
+    private final CompoundLabeledFuzzySet qualifier;
 
     @Override
     public String getTextualRepresentation() {

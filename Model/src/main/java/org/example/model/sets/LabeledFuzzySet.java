@@ -6,7 +6,7 @@ import org.example.model.db.Entry;
 
 import java.util.function.Function;
 
-public class Summarizer extends FuzzySet {
+public class LabeledFuzzySet extends FuzzySet {
 
     // label of the fuzzy set
     private final String label;
@@ -15,11 +15,11 @@ public class Summarizer extends FuzzySet {
     // generates textual description from summarizer
     private final Function<String, String> descriptionProducer;
 
-    public Summarizer(String label,
-                      MembershipFunction membershipFunction,
-                      UniverseOfDiscourse universeOfDiscourse,
-                      Entry.DatabaseColumn column,
-                      Function<String, String> descriptionProducer) {
+    public LabeledFuzzySet(String label,
+                           MembershipFunction membershipFunction,
+                           UniverseOfDiscourse universeOfDiscourse,
+                           Entry.DatabaseColumn column,
+                           Function<String, String> descriptionProducer) {
         super(membershipFunction, universeOfDiscourse);
 
         this.column = column;

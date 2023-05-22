@@ -2,7 +2,8 @@ package org.example.model.statements;
 
 import org.example.model.measures.Measures;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.LabeledFuzzySet;
 import lombok.Getter;
 
 import java.util.Objects;
@@ -14,11 +15,11 @@ public abstract class Statement {
     protected static final String SUBJECT = "daily weather measurement";
 
     protected final Quantifier quantifier;
-    protected final Summarizer summarizer;
+    protected final CompoundLabeledFuzzySet summarizer;
 
     protected Double qualityMeasure;
 
-    protected Statement(Quantifier quantifier, Summarizer summarizer) {
+    protected Statement(Quantifier quantifier, CompoundLabeledFuzzySet summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
     }

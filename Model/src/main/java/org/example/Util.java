@@ -2,7 +2,7 @@ package org.example;
 
 import org.example.model.db.Entry;
 import org.example.model.sets.FuzzySet;
-import org.example.model.sets.Summarizer;
+import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.LinguisticVariable;
 import org.example.model.functions.TrapezoidMembershipFunction;
@@ -10,7 +10,6 @@ import org.example.model.functions.TriangularMembershipFunction;
 import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.quantifiers.RelativeQuantifier;
-import org.example.model.statements.Statement;
 
 import java.util.*;
 
@@ -223,7 +222,7 @@ public class Util {
                 sevenTwoZeroZero, oneZeroEightZeroZero, oneFourFourZeroZero));
     }
 
-    public static Map<Entry.DatabaseColumn, List<Summarizer>> chooseAttributesAndTheirSummarizers() {
+    public static Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> chooseAttributesAndTheirSummarizers() {
         return new HashMap<>();
     }
 
