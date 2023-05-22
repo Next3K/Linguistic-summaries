@@ -1,11 +1,13 @@
 package org.example.model.sets;
 
 
+import lombok.Getter;
 import org.example.model.functions.MembershipFunction;
 import org.example.model.db.Entry;
 
 import java.util.function.Function;
 
+@Getter
 public class LabeledFuzzySet extends FuzzySet {
 
     // label of the fuzzy set

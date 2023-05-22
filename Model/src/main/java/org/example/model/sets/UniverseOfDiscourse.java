@@ -1,21 +1,14 @@
 package org.example.model.sets;
 
 
-public class UniverseOfDiscourse extends ContinuousNonFuzzySet {
+public interface UniverseOfDiscourse {
 
-    public UniverseOfDiscourse(Double minimum, Double maximum) {
-        super(minimum, maximum);
-    }
+    double getMinimum();
 
-    public double getMinimum() {
-        return super.minimum;
-    }
+    double getMaximum();
 
-    public double getMaximum() {
-        return super.minimum;
-    }
+    boolean valueInUniverseOfDiscourse(Double value);
 
-    public boolean valueInUniverseOfDiscourse(Double value) {
-        return value <= minimum && value >= maximum;
-    }
+    Number getCardinality();
+
 }

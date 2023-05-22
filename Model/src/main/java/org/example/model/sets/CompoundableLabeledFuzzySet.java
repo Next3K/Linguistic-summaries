@@ -1,17 +1,18 @@
 package org.example.model.sets;
 
 import lombok.Getter;
+import org.example.model.db.Entry;
 
 import java.util.List;
 
 
 @Getter
-public class CompoundLabeledFuzzySet {
+public class CompoundableLabeledFuzzySet {
 
     public static final String AND = " and ";
     private final List<LabeledFuzzySet> subset;
 
-    public CompoundLabeledFuzzySet(List<LabeledFuzzySet> subsets) {
+    public CompoundableLabeledFuzzySet(List<LabeledFuzzySet> subsets) {
         if (subsets.isEmpty()) throw new IllegalArgumentException("Subset cannot be empty!");
         this.subset = subsets;
     }
@@ -24,8 +25,12 @@ public class CompoundLabeledFuzzySet {
         return builder.toString();
     }
 
-    public Double getSummarizerValueFor(double x) {
-        return subset.stream().map(e -> e.getSummarizerValueFor(x)).min(Double::compareTo).get();
+    public Double getSummarizerValueFor(Entry entry) {
+        return subset
+                .stream()
+                .map(e -> e.getSummarizerValueFor(entry.getValues().get(e.getColumn()).getValue()))
+                .min(Double::compareTo)
+                .get();
     }
 
 }

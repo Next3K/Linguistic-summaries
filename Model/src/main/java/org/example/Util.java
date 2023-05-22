@@ -1,6 +1,7 @@
 package org.example;
 
 import org.example.model.db.Entry;
+import org.example.model.sets.ContinuousUniverseOfDiscourse;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
@@ -17,7 +18,7 @@ public class Util {
 
     public static Map<LinguisticVariable, Entry.DatabaseColumn> getDefaultLinguisticVariables() {
 
-        UniverseOfDiscourse uni1 = new UniverseOfDiscourse(0d, 60d);
+        UniverseOfDiscourse uni1 = new ContinuousUniverseOfDiscourse(0d, 60d);
         LinguisticVariable minTemperature = new LinguisticVariable(
                 "Minimum temperature",
                 Set.of("cold", "cool", "moderate","warm","hot"),
@@ -30,7 +31,7 @@ public class Util {
                         "hot", new FuzzySet(new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni1)),
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
-        UniverseOfDiscourse uni2 = new UniverseOfDiscourse(10d, 60d);
+        UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(10d, 60d);
         LinguisticVariable maxTemperature = new LinguisticVariable(
                 "Maximum temperature",
                 Set.of("cold", "cool", "moderate","warm","hot"),
@@ -43,7 +44,7 @@ public class Util {
                         "hot", new FuzzySet(new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni2)),
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
-        UniverseOfDiscourse uni3 = new UniverseOfDiscourse(0d, 100d);
+        UniverseOfDiscourse uni3 = new ContinuousUniverseOfDiscourse(0d, 100d);
         LinguisticVariable morningHumidity = new LinguisticVariable(
                 "Morning humidity",
                 Set.of("dry", "comfortable", "dumpy"),
@@ -54,7 +55,7 @@ public class Util {
                         "dumpy", new FuzzySet(new TrapezoidMembershipFunction(50d, 70d, 100d, 110d), uni3)),
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
-        UniverseOfDiscourse uni4 = new UniverseOfDiscourse(0d, 100d);
+        UniverseOfDiscourse uni4 = new ContinuousUniverseOfDiscourse(0d, 100d);
         LinguisticVariable afternoonHumidity = new LinguisticVariable(
                 "Afternoon humidity",
                 Set.of("dry", "comfortable", "dumpy"),
@@ -65,7 +66,7 @@ public class Util {
                         "dumpy", new FuzzySet(new TrapezoidMembershipFunction(50d, 70d, 100d, 110d), uni4)),
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
-        UniverseOfDiscourse uni5 = new UniverseOfDiscourse(0d, 140d);
+        UniverseOfDiscourse uni5 = new ContinuousUniverseOfDiscourse(0d, 140d);
         LinguisticVariable windSpeed = new LinguisticVariable(
                 "Wind speed",
                 Set.of("calm", "breeze", "strong breeze", "near gale", "gale", "strong gale", "storm", "hurricane"),
@@ -82,7 +83,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.SIMPLE);
 
 
-        UniverseOfDiscourse uni6 = new UniverseOfDiscourse(0d, 80d);
+        UniverseOfDiscourse uni6 = new ContinuousUniverseOfDiscourse(0d, 80d);
         LinguisticVariable rainfall = new LinguisticVariable(
                 "Rainfall",
                 Set.of("mist to light", "moderate", "heavy", "very heavy", "intense", "extreme"),
@@ -97,7 +98,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
 
-        UniverseOfDiscourse uni7 = new UniverseOfDiscourse(0d, 14d);
+        UniverseOfDiscourse uni7 = new ContinuousUniverseOfDiscourse(0d, 14d);
         LinguisticVariable insolation = new LinguisticVariable(
                 "Insolation",
                 Set.of("fully cloudy", "moderately cloudy", "light cloudy", "cloudless"),
@@ -110,7 +111,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.SIMPLE);
 
 
-        UniverseOfDiscourse uni8 = new UniverseOfDiscourse(0d, 24d);
+        UniverseOfDiscourse uni8 = new ContinuousUniverseOfDiscourse(0d, 24d);
         LinguisticVariable evaporation = new LinguisticVariable(
                 "Evaporation",
                 Set.of("light", "gentle", "moderate", "high"),
@@ -123,7 +124,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
 
-        UniverseOfDiscourse uni9 = new UniverseOfDiscourse(0d, 40d);
+        UniverseOfDiscourse uni9 = new ContinuousUniverseOfDiscourse(0d, 40d);
         LinguisticVariable radiation = new LinguisticVariable(
                 "Radiation",
                 Set.of("light", "moderate", "high", "extreme"),
@@ -136,7 +137,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.COMPLEX);
 
 
-        UniverseOfDiscourse uni10 = new UniverseOfDiscourse(0d, 14d);
+        UniverseOfDiscourse uni10 = new ContinuousUniverseOfDiscourse(0d, 14d);
         LinguisticVariable evapotranspiration = new LinguisticVariable(
                 "evapotranspiration",
                 Set.of("light", "moderate", "high", "extreme"),
@@ -183,7 +184,7 @@ public class Util {
     }
 
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
-        UniverseOfDiscourse universe = new UniverseOfDiscourse(0d, 15_000d);
+        UniverseOfDiscourse universe = new ContinuousUniverseOfDiscourse(0d, 15_000d);
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
                 "About",

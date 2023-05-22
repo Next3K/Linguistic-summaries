@@ -1,75 +1,69 @@
 package org.example.model.measures;
 
+import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.statements.Statement;
-import org.example.model.statements.TwoSubjectStatement;
+import org.example.model.statements.FirstTypeSummary;
+import org.example.model.statements.SecondTypeSummary;
+import org.example.model.statements.Summary;
+import org.example.model.statements.TwoSubjectSummary;
+
+import java.util.List;
 
 public class Measures {
 
-    public static double calculateDegreeOfTruth(Statement statement) {
+    public static double calculateDegreeOfTruth(Summary statement) {
         Quantifier quantifier = statement.getQuantifier();
         double calculatedValue = 0.1d; // TODO implement
         return quantifier.getQuantified(calculatedValue);
     }
 
-    public static double calculateDegreeOfTruth(TwoSubjectStatement statement) {
-        Quantifier quantifier = statement.getQuantifier();
+    public static double calculateDegreeOfTruth(TwoSubjectSummary statement) {
         double calculatedValue = 0.1d; // TODO implement
-        return quantifier.getQuantified(calculatedValue);
+        return calculatedValue;
     }
 
-    public static double calculateDegreeOfImprecision(Statement statement) {
+    public static double calculateDegreeOfImprecision(Summary statement,List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfCovering(Statement statement) {
+    public static double calculateDegreeOfCovering(FirstTypeSummary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfAppropriateness(Statement statement) {
+    public static double calculateDegreeOfCovering(SecondTypeSummary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateLengthOfSummary(Statement statement) {
+    public static double calculateDegreeOfAppropriateness(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateOptimalSummary(Statement statement) {
+    public static double calculateLengthOfSummary(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfQuantifierImprecision(Statement statement) {
+    public static double calculateOptimalSummary(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfQuantifierCardinality(Statement statement) {
+    public static double calculateDegreeOfQuantifierImprecision(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfQualifierCardinality(Statement statement) {
+    public static double calculateDegreeOfQuantifierCardinality(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateDegreeOfQualifierImprecision(Statement statement) {
+    public static double calculateDegreeOfQualifierCardinality(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateLengthOfQualifier(Statement statement) {
+    public static double calculateDegreeOfQualifierImprecision(Summary statement, List<Entry> entries) {
         return 0;
     }
 
-    public static double calculateWeightedMeasure(Statement statement) {
-        return 0.30 * Measures.calculateDegreeOfTruth(statement) +
-                0.07 * Measures.calculateDegreeOfImprecision(statement) +
-                0.07 * Measures.calculateDegreeOfCovering(statement) +
-                0.07 * Measures.calculateDegreeOfAppropriateness(statement) +
-                0.07 * Measures.calculateLengthOfSummary(statement) +
-                0.07 * Measures.calculateOptimalSummary(statement) +
-                0.07 * Measures.calculateDegreeOfQuantifierImprecision(statement) +
-                0.07 * Measures.calculateDegreeOfQuantifierCardinality(statement) +
-                0.07 * Measures.calculateDegreeOfQualifierCardinality(statement) +
-                0.07 * Measures.calculateDegreeOfQualifierImprecision(statement) +
-                0.07 * Measures.calculateLengthOfQualifier(statement);
+    public static double calculateLengthOfQualifier(Summary statement, List<Entry> entries) {
+        return 0;
     }
 
 }

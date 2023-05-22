@@ -4,7 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.statements.Statement;
+import org.example.model.statements.Summary;
 
 import java.util.Comparator;
 import java.util.List;
@@ -31,11 +31,11 @@ public class Main {
         Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> summarizers = Util.chooseAttributesAndTheirSummarizers();
 
         // generate statements
-        List<Statement> statements =
+        List<Summary> statements =
                 Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, summarizers);
 
         // sort by degree of truth
-        statements.sort(Comparator.comparingDouble(Statement::getQualityMeasure));
+        statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure));
 
         // print
         statements.forEach(System.out::println);

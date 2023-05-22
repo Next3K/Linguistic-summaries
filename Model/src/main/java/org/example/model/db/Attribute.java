@@ -1,8 +1,10 @@
 package org.example.model.db;
 
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
 @EqualsAndHashCode
+@Getter
 public class Attribute {
     private final String name;
     private final Double value;
