@@ -2,12 +2,20 @@ package org.example.model.measures;
 
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.statements.Statement;
+import org.example.model.statements.TwoSubjectStatement;
 
 public class Measures {
 
     public static double calculateDegreeOfTruth(Statement statement) {
         Quantifier quantifier = statement.getQuantifier();
-        return quantifier.getQuantified(0.1);
+        double calculatedValue = 0.1d; // TODO implement
+        return quantifier.getQuantified(calculatedValue);
+    }
+
+    public static double calculateDegreeOfTruth(TwoSubjectStatement statement) {
+        Quantifier quantifier = statement.getQuantifier();
+        double calculatedValue = 0.1d; // TODO implement
+        return quantifier.getQuantified(calculatedValue);
     }
 
     public static double calculateDegreeOfImprecision(Statement statement) {
