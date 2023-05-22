@@ -1,7 +1,6 @@
 package org.example.model.statements;
 
 import org.example.model.db.Entry;
-import org.example.model.measures.Measures;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundableLabeledFuzzySet;
 import lombok.Getter;
@@ -20,6 +19,18 @@ public abstract class Summary {
 
     protected Double qualityMeasure;
 
+    private Double degreeOfTruth;
+    private Double degreeOfImprecision;
+    private Double degreeOfAppropriateness;
+    private Double lengthOfSummary;
+    private Double optimalSummary;
+    private Double degreeOfQuantifierImprecision;
+    private Double degreeOfQuantifierCardinality;
+    private Double degreeOfQualifierCardinality;
+    private Double degreeOfQualifierImprecision;
+    private Double lengthOfQualifier;
+    private Double degreeOfCovering;
+
     protected Summary(Quantifier quantifier, CompoundableLabeledFuzzySet summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
@@ -30,7 +41,7 @@ public abstract class Summary {
     }
 
     public abstract String getTextualRepresentation();
-    public abstract double calculateDegreeOfCovering(List<Entry> entries);
+    protected abstract double getDegreeOfCovering(List<Entry> entries);
 
     public Double calculateQualityMeasure(List<Entry> entries) {
         return Objects.requireNonNullElse(this.qualityMeasure, this.calculateWeightedMeasure(entries));
@@ -38,43 +49,61 @@ public abstract class Summary {
 
     public double calculateDegreeOfTruth(List<Entry> entries) {
         double valueCalculatedFromEntries = 3.14;
-        return this.quantifier.getQuantified(valueCalculatedFromEntries);
+        this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries);
+        return degreeOfTruth;
+    }
+
+    public double calculateDegreeOfCovering(List<Entry> entries) {
+        if (this.degreeOfCovering == null) {
+            this.degreeOfCovering = this.getDegreeOfCovering(entries);
+        }
+        return this.degreeOfCovering;
     }
 
     public double calculateDegreeOfImprecision(List<Entry> entries) {
-        return 0d;
+        this.degreeOfImprecision = 0d;
+        return this.degreeOfImprecision;
     }
 
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        return 0d;
+        this.degreeOfAppropriateness = 0d;
+        double t3 = this.getDegreeOfCovering(entries);
+        return degreeOfAppropriateness;
     }
 
     public double calculateLengthOfSummary(List<Entry> entries) {
-        return 0d;
+        this.lengthOfSummary = 0d;
+        return this.lengthOfSummary;
     }
 
     public double calculateOptimalSummary(List<Entry> entries) {
-        return 0d;
+        this.optimalSummary = 0d;
+        return optimalSummary;
     }
 
     public double calculateDegreeOfQuantifierImprecision(List<Entry> entries) {
-        return 0d;
+        this.degreeOfQuantifierImprecision = 0d;
+        return this.degreeOfQuantifierImprecision;
     }
 
     public double calculateDegreeOfQuantifierCardinality(List<Entry> entries) {
-        return 0d;
+        this.degreeOfQuantifierCardinality = 0d;
+        return this.degreeOfQuantifierCardinality;
     }
 
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        return 0d;
+        this.degreeOfQualifierCardinality = 1d;
+        return this.degreeOfQualifierCardinality;
     }
 
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        return 0d;
+        this.degreeOfQualifierImprecision = 1d;
+        return this.degreeOfQualifierImprecision;
     }
 
     public double calculateLengthOfQualifier(List<Entry> entries) {
-        return 0d;
+        this.lengthOfQualifier = 0d;
+        return this.lengthOfQualifier;
     }
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {

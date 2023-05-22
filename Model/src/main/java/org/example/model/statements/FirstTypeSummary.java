@@ -13,7 +13,7 @@ public class FirstTypeSummary extends Summary {
     }
 
     @Override
-    public double calculateDegreeOfCovering(List<Entry> entries) {
+    protected double getDegreeOfCovering(List<Entry> entries) {
         int m = entries.size();
         return (double) entries
                 .stream()

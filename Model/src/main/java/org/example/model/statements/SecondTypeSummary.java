@@ -32,7 +32,7 @@ public class SecondTypeSummary extends Summary {
     }
 
     @Override
-    public double calculateDegreeOfCovering(List<Entry> entries) {
+    protected double getDegreeOfCovering(List<Entry> entries) {
         double up = (double) entries
                 .stream()
                 .filter(e ->
