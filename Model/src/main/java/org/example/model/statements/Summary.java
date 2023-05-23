@@ -4,6 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundableLabeledFuzzySet;
 import lombok.Getter;
+import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
 import java.util.Objects;
@@ -21,15 +22,15 @@ public abstract class Summary {
 
     private Double degreeOfTruth;
     private Double degreeOfImprecision;
+    private Double degreeOfCovering;
     private Double degreeOfAppropriateness;
     private Double lengthOfSummary;
-    private Double optimalSummary;
     private Double degreeOfQuantifierImprecision;
     private Double degreeOfQuantifierCardinality;
-    private Double degreeOfQualifierCardinality;
+    private Double degreeOfSummarizerCardinality;
     private Double degreeOfQualifierImprecision;
+    private Double degreeOfQualifierCardinality;
     private Double lengthOfQualifier;
-    private Double degreeOfCovering;
 
     protected Summary(Quantifier quantifier, CompoundableLabeledFuzzySet summarizer) {
         this.quantifier = quantifier;
@@ -41,18 +42,33 @@ public abstract class Summary {
     }
 
     public abstract String getTextualRepresentation();
+
     protected abstract double getDegreeOfCovering(List<Entry> entries);
 
     public Double calculateQualityMeasure(List<Entry> entries) {
         return Objects.requireNonNullElse(this.qualityMeasure, this.calculateWeightedMeasure(entries));
     }
 
+    // T1
     public double calculateDegreeOfTruth(List<Entry> entries) {
         double valueCalculatedFromEntries = 3.14;
         this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries);
         return degreeOfTruth;
     }
 
+    // T2
+    public double calculateDegreeOfImprecision(List<Entry> entries) {
+        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        int n = subset.size();
+        double multiply = 1.0;
+        for (var set : subset) {
+            multiply *= set.getDegreeOfFuzziness();
+        }
+        this.degreeOfImprecision = 1 - Math.pow(multiply, 1d / n);
+        return this.degreeOfImprecision;
+    }
+
+    // T3
     public double calculateDegreeOfCovering(List<Entry> entries) {
         if (this.degreeOfCovering == null) {
             this.degreeOfCovering = this.getDegreeOfCovering(entries);
@@ -60,49 +76,62 @@ public abstract class Summary {
         return this.degreeOfCovering;
     }
 
-    public double calculateDegreeOfImprecision(List<Entry> entries) {
-        this.degreeOfImprecision = 0d;
-        return this.degreeOfImprecision;
-    }
-
+    // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        this.degreeOfAppropriateness = 0d;
+        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        int m = entries.size();
+        double multiply = 1.0d;
+        for (var set : subset) {
+            double r = (double) entries
+                    .stream()
+                    .filter(e -> set.getSummarizerValueFor(e) > 0)
+                    .count() / m;
+            multiply *= r;
+        }
         double t3 = this.getDegreeOfCovering(entries);
+        this.degreeOfAppropriateness = Math.abs(multiply - t3);
         return degreeOfAppropriateness;
     }
 
+    // T5
     public double calculateLengthOfSummary(List<Entry> entries) {
-        this.lengthOfSummary = 0d;
+        this.lengthOfSummary = 2 * Math.pow(0.5, this.summarizer.getSize());
         return this.lengthOfSummary;
     }
 
-    public double calculateOptimalSummary(List<Entry> entries) {
-        this.optimalSummary = 0d;
-        return optimalSummary;
-    }
-
+    // T6
     public double calculateDegreeOfQuantifierImprecision(List<Entry> entries) {
         this.degreeOfQuantifierImprecision = 0d;
         return this.degreeOfQuantifierImprecision;
     }
 
+    // T7
     public double calculateDegreeOfQuantifierCardinality(List<Entry> entries) {
         this.degreeOfQuantifierCardinality = 0d;
         return this.degreeOfQuantifierCardinality;
     }
 
-    public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        this.degreeOfQualifierCardinality = 1d;
-        return this.degreeOfQualifierCardinality;
+    // T8
+    public double calculateDegreeOfSummarizerCardinality(List<Entry> entries) {
+        this.degreeOfSummarizerCardinality = 0d;
+        return this.degreeOfSummarizerCardinality;
     }
 
+    // T9
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
         this.degreeOfQualifierImprecision = 1d;
         return this.degreeOfQualifierImprecision;
     }
 
+    // T10
+    public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
+        this.degreeOfQualifierCardinality = 1d;
+        return this.degreeOfQualifierCardinality;
+    }
+
+    // T11
     public double calculateLengthOfQualifier(List<Entry> entries) {
-        this.lengthOfQualifier = 0d;
+        this.lengthOfQualifier = 2 * Math.pow(0.5d, this.summarizer.getSize());
         return this.lengthOfQualifier;
     }
 
@@ -112,7 +141,7 @@ public abstract class Summary {
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
                 weights.get(4) * this.calculateLengthOfSummary(entries) +
-                weights.get(5) * this.calculateOptimalSummary(entries) +
+                weights.get(5) * this.calculateDegreeOfSummarizerCardinality(entries) +
                 weights.get(6) * this.calculateDegreeOfQuantifierImprecision(entries) +
                 weights.get(7) * this.calculateDegreeOfQuantifierCardinality(entries) +
                 weights.get(8) * this.calculateDegreeOfQualifierCardinality(entries) +
@@ -126,7 +155,7 @@ public abstract class Summary {
                 0.07 * this.calculateDegreeOfCovering(entries) +
                 0.07 * this.calculateDegreeOfAppropriateness(entries) +
                 0.07 * this.calculateLengthOfSummary(entries) +
-                0.07 * this.calculateOptimalSummary(entries) +
+                0.07 * this.calculateDegreeOfSummarizerCardinality(entries) +
                 0.07 * this.calculateDegreeOfQuantifierImprecision(entries) +
                 0.07 * this.calculateDegreeOfQuantifierCardinality(entries) +
                 0.07 * this.calculateDegreeOfQualifierCardinality(entries) +

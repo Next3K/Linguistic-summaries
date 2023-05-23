@@ -17,6 +17,10 @@ public class CompoundableLabeledFuzzySet {
         this.subset = subsets;
     }
 
+    public int getSize() {
+        return subset.size();
+    }
+
     public String getTextualRepresentation() {
         StringBuilder builder = new StringBuilder();
         for (var set : subset) {
@@ -28,7 +32,7 @@ public class CompoundableLabeledFuzzySet {
     public Double getSummarizerValueFor(Entry entry) {
         return subset
                 .stream()
-                .map(e -> e.getSummarizerValueFor(entry.getValues().get(e.getColumn()).getValue()))
+                .map(e -> e.getSummarizerValueFor(entry))
                 .min(Double::compareTo)
                 .get();
     }
