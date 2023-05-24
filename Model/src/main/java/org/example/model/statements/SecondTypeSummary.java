@@ -36,14 +36,29 @@ public class SecondTypeSummary extends Summary {
         double up = (double) entries
                 .stream()
                 .filter(e ->
-                        this.summarizer.getSummarizerValueFor(e) > 0
+                        this.summarizer.getMembershipFunctionValueFor(e) > 0
                         &&
-                        this.qualifier.getSummarizerValueFor(e) > 0)
+                        this.qualifier.getMembershipFunctionValueFor(e) > 0)
                 .count();
         double down = (double) entries
                 .stream()
-                .filter(e -> this.qualifier.getSummarizerValueFor(e) > 0)
+                .filter(e -> this.qualifier.getMembershipFunctionValueFor(e) > 0)
                 .count();
         return up / down;
+    }
+
+    @Override
+    public double calculateDegreeOfTruth(List<Entry> entries) {
+        double numerator = 0d;
+        double denominator = 0d;
+        for (var entry : entries) {
+            Double summarizerValue = this.summarizer.getMembershipFunctionValueFor(entry);
+            Double qualifierValue = this.qualifier.getMembershipFunctionValueFor(entry);
+            numerator += Math.min(summarizerValue, qualifierValue);
+            denominator += qualifierValue;
+        }
+        if (denominator == 0) return 0;
+        this.degreeOfTruth = numerator / denominator;
+        return degreeOfTruth;
     }
 }

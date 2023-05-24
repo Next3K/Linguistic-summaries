@@ -20,17 +20,17 @@ public abstract class Summary {
 
     protected Double qualityMeasure;
 
-    private Double degreeOfTruth;
-    private Double degreeOfImprecision;
-    private Double degreeOfCovering;
-    private Double degreeOfAppropriateness;
-    private Double lengthOfSummary;
-    private Double degreeOfQuantifierImprecision;
-    private Double degreeOfQuantifierCardinality;
-    private Double degreeOfSummarizerCardinality;
-    private Double degreeOfQualifierImprecision;
-    private Double degreeOfQualifierCardinality;
-    private Double lengthOfQualifier;
+    protected Double degreeOfTruth;
+    protected Double degreeOfImprecision;
+    protected Double degreeOfCovering;
+    protected Double degreeOfAppropriateness;
+    protected Double lengthOfSummary;
+    protected Double degreeOfQuantifierImprecision;
+    protected Double degreeOfQuantifierCardinality;
+    protected Double degreeOfSummarizerCardinality;
+    protected Double degreeOfQualifierImprecision;
+    protected Double degreeOfQualifierCardinality;
+    protected Double lengthOfQualifier;
 
     protected Summary(Quantifier quantifier, CompoundableLabeledFuzzySet summarizer) {
         this.quantifier = quantifier;
@@ -50,11 +50,7 @@ public abstract class Summary {
     }
 
     // T1
-    public double calculateDegreeOfTruth(List<Entry> entries) {
-        double valueCalculatedFromEntries = 3.14;
-        this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries);
-        return degreeOfTruth;
-    }
+    public abstract double calculateDegreeOfTruth(List<Entry> entries);
 
     // T2
     public double calculateDegreeOfImprecision(List<Entry> entries) {
