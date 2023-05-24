@@ -1,6 +1,6 @@
 package org.example.model.functions;
 
-public class BinaryFunction implements MembershipFunction{
+public class BinaryFunction implements MembershipFunction {
 
     private final double a;
     private final double b;
@@ -26,8 +26,4 @@ public class BinaryFunction implements MembershipFunction{
         return 1.0d;
     }
 
-    @Override
-    public Double getMinValue() {
-        return 0d;
-    }
 }

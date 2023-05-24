@@ -29,7 +29,7 @@ public class CompoundableLabeledFuzzySet {
         return builder.toString();
     }
 
-    public Double getSummarizerValueFor(Entry entry) {
+    public Double getMembershipFunctionValueFor(Entry entry) {
         return subset
                 .stream()
                 .map(e -> e.getSummarizerValueFor(entry))
