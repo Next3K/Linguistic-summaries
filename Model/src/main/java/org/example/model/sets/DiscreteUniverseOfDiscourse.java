@@ -1,11 +1,16 @@
 package org.example.model.sets;
 
-import java.util.List;
 
 public class DiscreteUniverseOfDiscourse implements UniverseOfDiscourse {
 
-    Integer min;
-    Integer max;
+    public DiscreteUniverseOfDiscourse(Integer min, Integer max) {
+        this.min = min;
+        this.max = max;
+    }
+
+    private final Integer min;
+    private final Integer max;
+
 
     @Override
     public double getMinimum() {
@@ -23,7 +28,7 @@ public class DiscreteUniverseOfDiscourse implements UniverseOfDiscourse {
     }
 
     @Override
-    public Number getCardinality() {
+    public Number calculateMeasure() {
         return max - min + 1;
     }
 }

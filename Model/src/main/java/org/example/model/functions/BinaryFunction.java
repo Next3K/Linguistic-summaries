@@ -25,4 +25,9 @@ public class BinaryFunction implements MembershipFunction{
     public Double getMaxValue() {
         return 1.0d;
     }
+
+    @Override
+    public Double getMinValue() {
+        return 0d;
+    }
 }

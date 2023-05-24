@@ -8,4 +8,5 @@ public interface MembershipFunction {
     Double getIntegral(double a, double b);
 
     Double getMaxValue();
+
 }

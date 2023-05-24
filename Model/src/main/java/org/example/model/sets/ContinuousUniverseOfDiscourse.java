@@ -26,7 +26,7 @@ public class ContinuousUniverseOfDiscourse implements UniverseOfDiscourse {
     }
 
     @Override
-    public Number getCardinality() {
+    public Number calculateMeasure() {
         return max - min;
     }
 

@@ -101,13 +101,15 @@ public abstract class Summary {
 
     // T6
     public double calculateDegreeOfQuantifierImprecision(List<Entry> entries) {
-        this.degreeOfQuantifierImprecision = 0d;
+        this.degreeOfQuantifierImprecision = 1 - quantifier.getDegreeOfFuzziness();
         return this.degreeOfQuantifierImprecision;
     }
 
     // T7
     public double calculateDegreeOfQuantifierCardinality(List<Entry> entries) {
-        this.degreeOfQuantifierCardinality = 0d;
+        this.degreeOfQuantifierCardinality = 1 -
+                (quantifier.getCardinalityLikeMeasure() /
+                quantifier.getUniverseOfDiscourse().calculateMeasure().doubleValue());
         return this.degreeOfQuantifierCardinality;
     }
 

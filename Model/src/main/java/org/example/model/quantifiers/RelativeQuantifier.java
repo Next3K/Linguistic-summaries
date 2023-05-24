@@ -1,5 +1,7 @@
 package org.example.model.quantifiers;
 
+import org.example.model.sets.ContinuousUniverseOfDiscourse;
+import org.example.model.sets.DiscreteUniverseOfDiscourse;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.functions.TrapezoidMembershipFunction;
@@ -31,7 +33,7 @@ public class RelativeQuantifier extends Quantifier {
     public enum RelativeQuantifierType {
         ALMOST_NONE, FEW, ABOUT_QUARTER, SOME, ABOUT_HALF, ABOUT_THREE_QUARTERS, MANY, ALMOST_ALL;
 
-        private final UniverseOfDiscourse universeOfDiscourse = new UniverseOfDiscourse(0d,1d);
+        private final UniverseOfDiscourse universeOfDiscourse = new ContinuousUniverseOfDiscourse(0d,1d);
 
         public String getInTextualForm() {
             return switch (this) {

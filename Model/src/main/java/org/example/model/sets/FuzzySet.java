@@ -48,7 +48,10 @@ public class FuzzySet extends ContinuousNonFuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        return 1.0;
+        double a = this.universeOfDiscourse.getMinimum();
+        double b = this.universeOfDiscourse.getMaximum();
+        double supp = this.getMembershipFunction().getIntegral(a, b);
+        return supp / (this.universeOfDiscourse.calculateMeasure().doubleValue());
     }
 
     public double getCardinalityLikeMeasure() {

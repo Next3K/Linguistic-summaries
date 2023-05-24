@@ -1,5 +1,6 @@
 package org.example.model.quantifiers;
 
+import org.example.model.sets.DiscreteUniverseOfDiscourse;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.functions.TrapezoidMembershipFunction;
@@ -49,7 +50,7 @@ public class AbsoluteQuantifier extends Quantifier {
     public enum AbsoluteQuantifierType {
         ABOUT, LESS_THAN, OVER;
 
-        private static final UniverseOfDiscourse universeOfDiscourse = new UniverseOfDiscourse(0d, 15_000d);
+        private static final UniverseOfDiscourse universeOfDiscourse = new DiscreteUniverseOfDiscourse(0, 15000);
 
         public String getInTextualForm() {
             return switch (this) {

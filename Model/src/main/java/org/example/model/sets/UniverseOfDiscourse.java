@@ -9,6 +9,6 @@ public interface UniverseOfDiscourse {
 
     boolean valueInUniverseOfDiscourse(Double value);
 
-    Number getCardinality();
+    Number calculateMeasure();
 
 }
