@@ -3,6 +3,7 @@ package org.example.model.statements;
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundableLabeledFuzzySet;
+import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
 
@@ -60,5 +61,31 @@ public class SecondTypeSummary extends Summary {
         if (denominator == 0) return 0;
         this.degreeOfTruth = numerator / denominator;
         return degreeOfTruth;
+    }
+
+    @Override
+    public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
+        List<LabeledFuzzySet> subset = this.qualifier.getSubset();
+        int n = subset.size();
+        double multiply = 1.0;
+        for (var set : subset) {
+            multiply *= set.getDegreeOfFuzziness();
+        }
+        this.degreeOfQualifierImprecision = 1 - Math.pow(multiply, 1.0 / n);
+        return this.degreeOfQualifierImprecision;
+    }
+
+    @Override
+    public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
+        List<LabeledFuzzySet> subset = this.qualifier.getSubset();
+        int n = subset.size();
+        double multiply = 1.0;
+        for (var set : subset) {
+            multiply *=
+                    set.getCardinalityLikeMeasure() /
+                    set.getUniverseOfDiscourse().getCardinality().doubleValue();
+        }
+        this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
+        return this.degreeOfQualifierCardinality;
     }
 }

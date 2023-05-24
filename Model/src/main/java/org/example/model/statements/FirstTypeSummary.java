@@ -33,6 +33,16 @@ public class FirstTypeSummary extends Summary {
         return degreeOfTruth;
     }
 
+    @Override
+    public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
+        return 1;
+    }
+
+    @Override
+    public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
+        return 1;
+    }
+
 
     @Override
     public String getTextualRepresentation() {

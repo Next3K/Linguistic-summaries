@@ -53,7 +53,7 @@ public abstract class Summary {
     public abstract double calculateDegreeOfTruth(List<Entry> entries);
 
     // T2
-    public double calculateDegreeOfImprecision(List<Entry> entries) {
+    public double calculateDegreeOfImprecision() {
         List<LabeledFuzzySet> subset = this.summarizer.getSubset();
         int n = subset.size();
         double multiply = 1.0;
@@ -90,73 +90,68 @@ public abstract class Summary {
     }
 
     // T5
-    public double calculateLengthOfSummary(List<Entry> entries) {
+    public double calculateLengthOfSummary() {
         this.lengthOfSummary = 2 * Math.pow(0.5, this.summarizer.getSize());
         return this.lengthOfSummary;
     }
 
     // T6
-    public double calculateDegreeOfQuantifierImprecision(List<Entry> entries) {
-        this.degreeOfQuantifierImprecision = 0d;
+    public double calculateDegreeOfQuantifierImprecision() {
+        this.degreeOfQuantifierImprecision = 1 - this.quantifier.getDegreeOfFuzziness();
         return this.degreeOfQuantifierImprecision;
     }
 
     // T7
-    public double calculateDegreeOfQuantifierCardinality(List<Entry> entries) {
-        this.degreeOfQuantifierCardinality = 0d;
+    public double calculateDegreeOfQuantifierCardinality() {
+        Quantifier set = this.quantifier;
+        this.degreeOfQuantifierCardinality = 1 - (set.getCardinalityLikeMeasure() /
+                set.getUniverseOfDiscourse().getCardinality().doubleValue());
         return this.degreeOfQuantifierCardinality;
     }
 
     // T8
-    public double calculateDegreeOfSummarizerCardinality(List<Entry> entries) {
-        this.degreeOfSummarizerCardinality = 0d;
+    public double calculateDegreeOfSummarizerCardinality() {
+        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        int n = subset.size();
+        double multiply = 1.0;
+        for (var set : subset) {
+            multiply *=
+                    set.getCardinalityLikeMeasure() /
+                            set.getUniverseOfDiscourse().getCardinality().doubleValue();
+        }
+        this.degreeOfSummarizerCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfSummarizerCardinality;
     }
 
     // T9
-    public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        this.degreeOfQualifierImprecision = 1d;
-        return this.degreeOfQualifierImprecision;
-    }
+    public abstract double calculateDegreeOfQualifierImprecision(List<Entry> entries);
 
     // T10
-    public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        this.degreeOfQualifierCardinality = 1d;
-        return this.degreeOfQualifierCardinality;
-    }
+    public abstract double calculateDegreeOfQualifierCardinality(List<Entry> entries);
 
     // T11
-    public double calculateLengthOfQualifier(List<Entry> entries) {
+    public double calculateLengthOfQualifier() {
         this.lengthOfQualifier = 2 * Math.pow(0.5d, this.summarizer.getSize());
         return this.lengthOfQualifier;
     }
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {
         return weights.get(0) * this.calculateDegreeOfTruth(entries) +
-                weights.get(1) * this.calculateDegreeOfImprecision(entries) +
+                weights.get(1) * this.calculateDegreeOfImprecision() +
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
-                weights.get(4) * this.calculateLengthOfSummary(entries) +
-                weights.get(5) * this.calculateDegreeOfSummarizerCardinality(entries) +
-                weights.get(6) * this.calculateDegreeOfQuantifierImprecision(entries) +
-                weights.get(7) * this.calculateDegreeOfQuantifierCardinality(entries) +
+                weights.get(4) * this.calculateLengthOfSummary() +
+                weights.get(5) * this.calculateDegreeOfSummarizerCardinality() +
+                weights.get(6) * this.calculateDegreeOfQuantifierImprecision() +
+                weights.get(7) * this.calculateDegreeOfQuantifierCardinality() +
                 weights.get(8) * this.calculateDegreeOfQualifierCardinality(entries) +
                 weights.get(9) * this.calculateDegreeOfQualifierImprecision(entries) +
-                weights.get(10) * this.calculateLengthOfQualifier(entries);
+                weights.get(10) * this.calculateLengthOfQualifier();
     }
 
     public double calculateWeightedMeasure(List<Entry> entries) {
-        return 0.30 * this.calculateDegreeOfTruth(entries) +
-                0.07 * this.calculateDegreeOfImprecision(entries) +
-                0.07 * this.calculateDegreeOfCovering(entries) +
-                0.07 * this.calculateDegreeOfAppropriateness(entries) +
-                0.07 * this.calculateLengthOfSummary(entries) +
-                0.07 * this.calculateDegreeOfSummarizerCardinality(entries) +
-                0.07 * this.calculateDegreeOfQuantifierImprecision(entries) +
-                0.07 * this.calculateDegreeOfQuantifierCardinality(entries) +
-                0.07 * this.calculateDegreeOfQualifierCardinality(entries) +
-                0.07 * this.calculateDegreeOfQualifierImprecision(entries) +
-                0.07 * this.calculateLengthOfQualifier(entries);
+        return this.calculateWeightedMeasure(entries,
+                List.of(0.30, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07));
     }
 
 }
