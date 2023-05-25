@@ -2,34 +2,70 @@
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
+import org.example.model.sets.CompoundableLabeledFuzzySet;
 import org.example.model.sets.LabeledFuzzySet;
+import org.example.model.statements.FirstTypeSummary;
+import org.example.model.statements.SecondTypeSummary;
 import org.example.model.statements.Summary;
 import org.example.model.statements.TwoSubjectSummary;
 
-import java.util.ArrayList;
-import java.util.List;import java.util.Map;
+import java.beans.Statement;
+import java.util.*;
+import java.util.stream.Collectors;
 
-public class Generator {
+ public class Generator {
 
 
     public static List<Summary> generateStatements(List<Entry> records,
                                                    List<Quantifier> absoluteQuantifiers,
                                                    List<Quantifier> relativeQuantifiers,
-                                                   Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> attributesAndSummarizers) {
+                                                   List<LabeledFuzzySet> attributesAndSummarizers) {
+        List<Set<LabeledFuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
-        List<Summary> statements = new ArrayList<>(10_000);
+        List<CompoundableLabeledFuzzySet> combinations =
+                subsets.stream().map(CompoundableLabeledFuzzySet::new).toList();
 
+        int size =
+                absoluteQuantifiers.size() * combinations.size() +
+                relativeQuantifiers.size() * combinations.size() +
+                relativeQuantifiers.size() * 2 * combinations.size();
+
+        List<Summary> statements = new ArrayList<>(size);
+
+        // first type statements
         for (var quantifier : absoluteQuantifiers) {
-            System.out.println("generate stuff");
+            for (var summarizer : combinations) {
+                Summary statement = new FirstTypeSummary(quantifier, summarizer);
+                statements.add(statement);
+            }
         }
 
         for (var quantifier : relativeQuantifiers) {
-            System.out.println("generate stuff");
+            for (var summarizer : combinations) {
+                Summary statement = new FirstTypeSummary(quantifier, summarizer);
+                statements.add(statement);
+            }
         }
 
-        for (var statement : statements) {
-            statement.calculateQualityMeasure(records);
+
+        // second type statements
+        for (var quantifier : relativeQuantifiers) {
+            for (var summarizer : combinations) {
+                for (var qualifier : combinations) {
+                    boolean disjoint = Collections.disjoint(summarizer.getSubset(), qualifier.getSubset());
+                    if (qualifier != summarizer && disjoint) {
+                        Summary statement = new SecondTypeSummary(quantifier, summarizer, qualifier);
+                        statements.add(statement);
+                    }
+                }
+            }
         }
+
+        // calculate T1 - T11
+        statements.forEach(statement -> statement.calculateQualityMeasure(records));
+
+        // sort by quality measure
+        statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure));
 
         return statements;
     }
@@ -40,4 +76,5 @@ public class Generator {
         List<TwoSubjectSummary> statements = new ArrayList<>(100);
         return null;
     }
+
 }

@@ -8,6 +8,7 @@ import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 public abstract class Summary {
@@ -54,7 +55,7 @@ public abstract class Summary {
 
     // T2
     public double calculateDegreeOfImprecision() {
-        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -74,7 +75,7 @@ public abstract class Summary {
 
     // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
         int m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
@@ -112,7 +113,7 @@ public abstract class Summary {
 
     // T8
     public double calculateDegreeOfSummarizerCardinality() {
-        List<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {

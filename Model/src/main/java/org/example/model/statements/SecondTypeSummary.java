@@ -9,9 +9,9 @@ import java.util.List;
 
 public class SecondTypeSummary extends Summary {
 
-    protected SecondTypeSummary(Quantifier quantifier,
-                                CompoundableLabeledFuzzySet summarizer,
-                                CompoundableLabeledFuzzySet qualifier) {
+    public SecondTypeSummary(Quantifier quantifier,
+                             CompoundableLabeledFuzzySet summarizer,
+                             CompoundableLabeledFuzzySet qualifier) {
         super(quantifier, summarizer);
 
         // check whether quantifier is OK
@@ -83,7 +83,7 @@ public class SecondTypeSummary extends Summary {
         for (var set : subset) {
             multiply *=
                     set.getCardinalityLikeMeasure() /
-                    set.getUniverseOfDiscourse().getCardinality().doubleValue();
+                    set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;
