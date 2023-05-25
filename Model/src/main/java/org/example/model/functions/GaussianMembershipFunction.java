@@ -24,7 +24,7 @@ public class GaussianMembershipFunction implements MembershipFunction {
 
     @Override
     public Double getMaxValue() {
-        return 0d;
+        return 1d;
     }
 
     private double gaussianFunction(Double x) {
