@@ -6,20 +6,20 @@ public class TriangularMembershipFunction implements MembershipFunction {
         this.a = a;
         this.b = b;
         this.mid = mid;
-        this.leftLineCoefA = (1d - 0d) / (this.mid - this.a);
-        this.leftLineCoefB = -1 * leftLineCoefA * this.a;
-        this.rightLineCoefA = (0d - 1d) / (this.b - this.mid);
-        this.rightLineCoefB = -1 * rightLineCoefA * this.b;
+        this.leftLineCoefficientA = (1d - 0d) / (this.mid - this.a);
+        this.leftLineCoefficientB = -1 * leftLineCoefficientA * this.a;
+        this.rightLineCoefficientA = (0d - 1d) / (this.b - this.mid);
+        this.rightLineCoefficientB = -1 * rightLineCoefficientA * this.b;
     }
 
     private final double a;
     private final double b;
     private final double mid;
 
-    private final double leftLineCoefA;
-    private final double leftLineCoefB;
-    private final double rightLineCoefA;
-    private final double rightLineCoefB;
+    private final double leftLineCoefficientA;
+    private final double leftLineCoefficientB;
+    private final double rightLineCoefficientA;
+    private final double rightLineCoefficientB;
 
     @Override
     public Double evaluate(Double x) {
@@ -38,18 +38,18 @@ public class TriangularMembershipFunction implements MembershipFunction {
 
         // left center
         if (min >= this.a && max <= this.mid) {
-            return areaUnderLine(leftLineCoefA, leftLineCoefB, min, max);
+            return areaUnderLine(leftLineCoefficientA, leftLineCoefficientB, min, max);
 
         }
 
         // right center
         if (min >= this.mid && max <= this.b) {
-            return areaUnderLine(rightLineCoefA, rightLineCoefB, min, max);
+            return areaUnderLine(rightLineCoefficientA, rightLineCoefficientB, min, max);
 
         }
 
-        double leftPart = areaUnderLine(leftLineCoefA, leftLineCoefB, min, this.mid);
-        double rightPart = areaUnderLine(rightLineCoefA, rightLineCoefB, this.mid, max);
+        double leftPart = areaUnderLine(leftLineCoefficientA, leftLineCoefficientB, min, this.mid);
+        double rightPart = areaUnderLine(rightLineCoefficientA, rightLineCoefficientB, this.mid, max);
         return leftPart + rightPart;
     }
 
