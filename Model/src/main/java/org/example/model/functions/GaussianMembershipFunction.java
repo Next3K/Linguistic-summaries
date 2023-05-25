@@ -9,7 +9,7 @@ public class GaussianMembershipFunction implements MembershipFunction {
     public GaussianMembershipFunction(double mean, double standardDeviation) {
         this.mean = mean;
         this.standardDeviation = standardDeviation;
-        this.normalizationConstant = 1.0d / gaussianFunction(mean);
+        this.normalizationConstant = 1.0d / gauss(mean, mean, standardDeviation);
     }
 
     @Override
@@ -28,8 +28,13 @@ public class GaussianMembershipFunction implements MembershipFunction {
     }
 
     private double gaussianFunction(Double x) {
-        double exponent = -Math.pow(x - mean, 2) / (2 * Math.pow(standardDeviation, 2));
+        return this.normalizationConstant * gauss(x, this.mean, this.standardDeviation);
+    }
+
+    private static double gauss(double x, double mean, double standardDeviation) {
         double coefficient = 1 / (standardDeviation * Math.sqrt(2 * Math.PI));
+        double exponent = -0.5 * Math.pow((x - mean) / standardDeviation, 2);
         return coefficient * Math.exp(exponent);
     }
+
 }
