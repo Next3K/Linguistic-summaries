@@ -6,38 +6,41 @@ import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.statements.Summary;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
 
-        Map<LinguisticVariable, Entry.DatabaseColumn> columnsCorrespondingToVariables =
-                Util.getDefaultLinguisticVariables();
+        // load database
+        List<Entry> records = Util.loadFromDatabase();
 
-        // load database, chose which columns are important
-        List<Entry> records = Util.loadFromDatabase(
-                Set.of(Entry.DatabaseColumn.MAX_TEMPERATURE,
-                        Entry.DatabaseColumn.MIN_TEMPERATURE,
-                        Entry.DatabaseColumn.EVAPOTRANSPIRATION,
-                        Entry.DatabaseColumn.RADIATION));
+        // load default relative quantifiers
+        List<Quantifier> relativeQuantifiers = new ArrayList<>(Util.loadDefaultRelativeQuantifiers());
 
-        List<Quantifier> relativeQuantifiers = Util.loadDefaultRelativeQuantifiers();
-        List<Quantifier> absoluteQuantifiers = Util.loadDefaultAbsoluteQuantifiers();
+        // load default absolute quantifiers
+        List<Quantifier> absoluteQuantifiers = new ArrayList<>(Util.loadDefaultAbsoluteQuantifiers());
 
-        // chosen attributes with their chosen summarizers
-        Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> summarizers = Util.chooseAttributesAndTheirSummarizers();
+        // load all defined variables
+        List<LinguisticVariable> linguisticVariables = Util.getDefaultLinguisticVariables();
+
+        // users chose which fuzzy sets are of interest
+        List<LabeledFuzzySet> fuzzySets = new ArrayList<>(10);
+        LinguisticVariable someLinguisticVariableOne = linguisticVariables.get(0);
+        LinguisticVariable someLinguisticVariableTwo = linguisticVariables.get(1);
+        fuzzySets.addAll(getLabeledFuzzySets(someLinguisticVariableOne, List.of("warm", "hot")));
+        fuzzySets.addAll(getLabeledFuzzySets(someLinguisticVariableTwo, List.of("cool", "moderate")));
 
         // generate statements
         List<Summary> statements =
-                Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, summarizers);
-
-        // sort by degree of truth
-        statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure));
+                Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, fuzzySets);
 
         // print
         statements.forEach(System.out::println);
+    }
+
+    public static List<LabeledFuzzySet> getLabeledFuzzySets(LinguisticVariable variable,
+                                                            List<String> labelsOfChosenSet) {
+        return variable.getLabeledFuzzySetsForChosenFuzzySets(labelsOfChosenSet);
     }
 }

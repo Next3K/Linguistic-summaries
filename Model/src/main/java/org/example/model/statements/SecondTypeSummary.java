@@ -9,9 +9,9 @@ import java.util.List;
 
 public class SecondTypeSummary extends Summary {
 
-    protected SecondTypeSummary(Quantifier quantifier,
-                                CompoundableLabeledFuzzySet summarizer,
-                                CompoundableLabeledFuzzySet qualifier) {
+    public SecondTypeSummary(Quantifier quantifier,
+                             CompoundableLabeledFuzzySet summarizer,
+                             CompoundableLabeledFuzzySet qualifier) {
         super(quantifier, summarizer);
 
         // check whether quantifier is OK

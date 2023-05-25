@@ -3,16 +3,16 @@ package org.example.model.sets;
 import lombok.Getter;
 import org.example.model.db.Entry;
 
-import java.util.List;
+import java.util.Set;
 
 
 @Getter
 public class CompoundableLabeledFuzzySet {
 
     public static final String AND = " and ";
-    private final List<LabeledFuzzySet> subset;
+    private final Set<LabeledFuzzySet> subset;
 
-    public CompoundableLabeledFuzzySet(List<LabeledFuzzySet> subsets) {
+    public CompoundableLabeledFuzzySet(Set<LabeledFuzzySet> subsets) {
         if (subsets.isEmpty()) throw new IllegalArgumentException("Subset cannot be empty!");
         this.subset = subsets;
     }
@@ -23,8 +23,13 @@ public class CompoundableLabeledFuzzySet {
 
     public String getTextualRepresentation() {
         StringBuilder builder = new StringBuilder();
+        int count = 0;
         for (var set : subset) {
-            builder.append(set.getTextualRepresentation()).append(AND);
+            builder.append(set.getTextualRepresentation());
+            if (count != set.size - 1) {
+                builder.append(AND);
+            }
+            count++;
         }
         return builder.toString();
     }
