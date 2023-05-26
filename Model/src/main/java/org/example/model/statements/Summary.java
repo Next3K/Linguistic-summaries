@@ -38,8 +38,8 @@ public abstract class Summary {
         this.summarizer = summarizer;
     }
 
-    public String getTextualSummaryForRecords(List<Entry> records) {
-        return getTextualRepresentation() + " [" + calculateQualityMeasure(records) + "]";
+    public String getTextualSummary() {
+        return getTextualRepresentation() + " [" + this.qualityMeasure + "]";
     }
 
     public abstract String getTextualRepresentation();
