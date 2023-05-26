@@ -14,9 +14,9 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
     }
 
     private final double a;
-    private final double b;
     private final double A;
     private final double B;
+    private final double b;
 
     private final double leftLineCoefficientA;
     private final double leftLineCoefficientB;
@@ -28,12 +28,10 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
         if (x <= a || x >= b) return 0.0;
         else if (x >= A && x <= B) return 1.0;
         else {
-            // x < A
-            if (x < A) {
-                return x * 1 / (A - a) - (a / (A - a));
+            if (x <= A) {
+                return leftLineCoefficientA * x + leftLineCoefficientB;
             }
-            // x > B
-            return x * 1 / (b - B) - (B / (b - B));
+            return rightLineCoefficientA * x + rightLineCoefficientB;
         }
     }
 
@@ -41,19 +39,17 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
     public Double getIntegral(double min, double max) {
         double fullTrapeze = 0.5 * 1 * (Math.abs(A - B) + Math.abs(a - b));
 
+        min = Math.max(min, this.a);
+        max = Math.min(max, this.b);
+
         if (min <= a && max >= b) {
             return fullTrapeze;
         }
 
-        if (min >= a && min <= b) {
-            return cutOffTrapeze(a - min);
-        }
+        double leftCutOff = cutOffTrapezeFromLeft(min - a);
+        double rightCutOff = fullTrapeze - cutOffTrapezeFromLeft(max - a);
 
-        if (max >= a && max <= b) {
-            return cutOffTrapeze(b - min);
-        }
-
-        return fullTrapeze;
+        return fullTrapeze - leftCutOff - rightCutOff;
     }
 
     @Override
@@ -61,7 +57,7 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
         return 1.0d;
     }
 
-    private double cutOffTrapeze(double offset) {
+    private double cutOffTrapezeFromLeft(double offset) {
         double firstTriangleWidth = this.A - this.a;
         double rectangleWidth = this.B - this.A;
 
@@ -75,4 +71,5 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
                     .areaUnderLine(rightLineCoefficientA, rightLineCoefficientB, this.B, this.a + offset);
         }
     }
+
 }
