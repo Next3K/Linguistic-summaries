@@ -18,7 +18,7 @@ public class Util {
         UniverseOfDiscourse uni1 = new ContinuousUniverseOfDiscourse(0d, 60d);
         LinguisticVariable minTemperature = new LinguisticVariable(
                 "minimum temperature",
-                Set.of("cold", "cool", "moderate","warm","hot"),
+                Set.of("cold", "cool", "moderate", "warm", "hot"),
                 uni1,
                 Map.of(
                         "cold", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni1),
@@ -32,7 +32,7 @@ public class Util {
         UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(10d, 60d);
         LinguisticVariable maxTemperature = new LinguisticVariable(
                 "maximum temperature",
-                Set.of("cold", "cool", "moderate","warm","hot"),
+                Set.of("cold", "cool", "moderate", "warm", "hot"),
                 uni2,
                 Map.of(
                         "cold", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni2),
@@ -157,7 +157,6 @@ public class Util {
                 Entry.DatabaseColumn.EVAPOTRANSPIRATION);
 
 
-
         return List.of(
                 minTemperature,
                 maxTemperature,
@@ -242,24 +241,20 @@ public class Util {
     }
 
     public static <T> List<Set<T>> generateSubsets(List<T> set) {
-        List<Set<T>> subsets = new ArrayList<>(1 << set.size());
-        generateSubsetsHelper(set, new ArrayList<>(), subsets, 0);
+        int n = set.size();
+        int numberOfSubsets = 1 << n;
+        List<Set<T>> subsets = new ArrayList<>(numberOfSubsets);
+
+        for (int i = 1; i < numberOfSubsets; i++) {
+            HashSet<T> tmp = new HashSet<>();
+            for (int j = 0; j < n; j++) {
+                if (((0b1 << j) & numberOfSubsets) == 1) {
+                    tmp.add(set.get(j));
+                }
+            }
+            subsets.add(tmp);
+        }
         return subsets;
-    }
-
-    private static <T> void generateSubsetsHelper(List<T> set,
-                                                  List<T> currentSubset,
-                                                  List<Set<T>> subsets,
-                                                  int startIndex) {
-        if (!currentSubset.isEmpty()) {
-            subsets.add(new HashSet<>(currentSubset));
-        }
-
-        for (int i = startIndex; i < set.size(); i++) {
-            currentSubset.add(set.get(i));
-            generateSubsetsHelper(set, currentSubset, subsets, i + 1);
-            currentSubset.remove(currentSubset.size() - 1);
-        }
     }
 
 }
