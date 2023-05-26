@@ -1,5 +1,6 @@
 package org.example;
 
+import org.example.model.db.Connect;
 import org.example.model.db.Entry;
 import org.example.model.sets.*;
 import org.example.model.LinguisticVariable;
@@ -171,12 +172,18 @@ public class Util {
     }
 
     public static List<Entry> loadFromDatabase(Set<Entry.DatabaseColumn> columnsOfInterest) {
-        return new ArrayList<>(14_854);
+        Connect dbase = new Connect();
+
+        List<Entry> entries = dbase.selectAllRows();
+        return entries;
     }
 
     // load entire database
     public static List<Entry> loadFromDatabase() {
-        return new ArrayList<>(14_854);
+        Connect dbase = new Connect();
+
+        List<Entry> entries = dbase.selectAllRows();
+        return entries;
     }
 
     public static List<Quantifier> loadDefaultRelativeQuantifiers() {

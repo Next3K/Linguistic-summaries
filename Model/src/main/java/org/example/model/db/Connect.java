@@ -6,7 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 
 //Database schema
 //-------------------------------------
@@ -32,7 +35,7 @@ import java.util.Calendar;
 
 public class Connect {
     private static final String DRIVER = "org.sqlite.JDBC";
-    private static final String DB_URL = "jdbc:sqlite:Model/src/main/resources/ksr_weather.db";
+    private static final String DB_URL = "jdbc:sqlite:Model/src/main/java/org/example/model/db/ksr_weather.db";
     private Connection conn;
     private Statement stat;
 
@@ -46,15 +49,28 @@ public class Connect {
         }
     }
 
-    public void selectAllRows() {
+    public List<Entry> selectAllRows() {
+        List<Entry> entries = new ArrayList<Entry>();
         try {
             ResultSet result = stat.executeQuery("SELECT * FROM weather;");
             while(result.next()) {
-                //Add data to
+                entries.add(new Entry(Entry.SubjectType.CURRENT, Map.of(
+                        Entry.DatabaseColumn.MAX_TEMPERATURE, result.getDouble("max_t"),
+                        Entry.DatabaseColumn.MIN_TEMPERATURE, result.getDouble("min_t"),
+                        Entry.DatabaseColumn.MORNING_HUMIDITY, result.getDouble("rh1"),
+                        Entry.DatabaseColumn.AFTERNOON_HUMIDITY, result.getDouble("rh2"),
+                        Entry.DatabaseColumn.WIND, result.getDouble("wind"),
+                        Entry.DatabaseColumn.RAINFALL, result.getDouble("rain"),
+                        Entry.DatabaseColumn.INSOLATION, result.getDouble("ssh"),
+                        Entry.DatabaseColumn.EVAPORATION, result.getDouble("evap"),
+                        Entry.DatabaseColumn.RADIATION, result.getDouble("radiation"),
+                        Entry.DatabaseColumn.EVAPOTRANSPIRATION, result.getDouble("fao56_et")
+                        )));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return entries;
     }
 
     public void closeConnection() {

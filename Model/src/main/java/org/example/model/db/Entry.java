@@ -15,6 +15,15 @@ public class Entry {
     }
 
     private SubjectType subjectType;
+
+    public SubjectType getSubjectType() {
+        return subjectType;
+    }
+
+    public Map<DatabaseColumn, Double> getValues() {
+        return values;
+    }
+
     private Map<DatabaseColumn, Double> values;
 
     public enum SubjectType {

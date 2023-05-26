@@ -18,6 +18,9 @@ public class Main {
         // load database
         List<Entry> records = Util.loadFromDatabase();
 
+        System.out.println(records.get(1).getSubjectType());
+        System.out.println(records.get(1).getValues());
+
         // load default relative quantifiers
         List<Quantifier> relativeQuantifiers = Util.loadDefaultRelativeQuantifiers();
 
