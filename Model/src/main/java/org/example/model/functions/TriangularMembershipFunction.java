@@ -4,17 +4,17 @@ public class TriangularMembershipFunction implements MembershipFunction {
 
     public TriangularMembershipFunction(double a, double mid, double b) {
         this.a = a;
-        this.b = b;
         this.mid = mid;
+        this.b = b;
         this.leftLineCoefficientA = (1d - 0d) / (this.mid - this.a);
-        this.leftLineCoefficientB = -1 * leftLineCoefficientA * this.a;
+        this.leftLineCoefficientB = (- leftLineCoefficientA) * this.a;
         this.rightLineCoefficientA = (0d - 1d) / (this.b - this.mid);
-        this.rightLineCoefficientB = -1 * rightLineCoefficientA * this.b;
+        this.rightLineCoefficientB = (- rightLineCoefficientA) * this.b;
     }
 
     private final double a;
-    private final double b;
     private final double mid;
+    private final double b;
 
     private final double leftLineCoefficientA;
     private final double leftLineCoefficientB;
@@ -25,21 +25,22 @@ public class TriangularMembershipFunction implements MembershipFunction {
     public Double evaluate(Double x) {
         if (x < a || x > b) return 0.0;
         if (x < mid) {
-            return x * 1 / (mid - a) - (a / (mid - a));
+            return leftLineCoefficientA * x + leftLineCoefficientB;
         }
-        return x * 1 / (b - mid) - (mid / (b - mid));
+        return rightLineCoefficientA * x + rightLineCoefficientB;
     }
 
     @Override
     public Double getIntegral(double min, double max) {
         if (max <= this.a) return 0.0d; // to the left
         if (min >= this.b) return 0.0d; // to the right
-        if (min >= this.a && max < this.b) return 0d; // in the center
+
+        min = Math.max(min, this.a);
+        max = Math.min(max, this.b);
 
         // left center
         if (min >= this.a && max <= this.mid) {
             return areaUnderLine(leftLineCoefficientA, leftLineCoefficientB, min, max);
-
         }
 
         // right center
