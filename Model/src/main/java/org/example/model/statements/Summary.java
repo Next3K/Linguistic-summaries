@@ -46,8 +46,9 @@ public abstract class Summary {
 
     protected abstract double getDegreeOfCovering(List<Entry> entries);
 
-    public Double calculateQualityMeasure(List<Entry> entries) {
-        return Objects.requireNonNullElse(this.qualityMeasure, this.calculateWeightedMeasure(entries));
+    public Double calculateQualityMeasure(List<Entry> entries,
+                                          List<Double> weights) {
+        return Objects.requireNonNullElse(this.qualityMeasure, this.calculateWeightedMeasure(entries, weights));
     }
 
     // T1
@@ -103,7 +104,6 @@ public abstract class Summary {
     }
 
     // T7
-
     public double calculateDegreeOfQuantifierCardinality() {
         Quantifier set = this.quantifier;
         this.degreeOfQuantifierCardinality = 1 - (set.getCardinality() /
@@ -138,7 +138,7 @@ public abstract class Summary {
     }
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {
-        return weights.get(0) * this.calculateDegreeOfTruth(entries) +
+        double sumWeights = weights.get(0) * this.calculateDegreeOfTruth(entries) +
                 weights.get(1) * this.calculateDegreeOfImprecision() +
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
@@ -149,11 +149,13 @@ public abstract class Summary {
                 weights.get(8) * this.calculateDegreeOfQualifierCardinality(entries) +
                 weights.get(9) * this.calculateDegreeOfQualifierImprecision(entries) +
                 weights.get(10) * this.calculateLengthOfQualifier();
+
+        return sumWeights / weights.stream().mapToDouble(Double::doubleValue).sum();
     }
 
-    public double calculateWeightedMeasure(List<Entry> entries) {
-        return this.calculateWeightedMeasure(entries,
-                List.of(0.30, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07));
-    }
+//    public double calculateWeightedMeasure(List<Entry> entries) {
+//        return this.calculateWeightedMeasure(entries,
+//                List.of(0.30, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07));
+//    }
 
 }

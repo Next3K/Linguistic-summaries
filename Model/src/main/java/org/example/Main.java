@@ -12,6 +12,9 @@ public class Main {
 
     public static void main(String[] args) {
 
+        List<Double> weights =
+                new ArrayList<>(List.of(0.30, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07));
+
         // load database
         List<Entry> records = Util.loadFromDatabase();
 
@@ -34,7 +37,12 @@ public class Main {
 
         // generate statements for database
         List<Summary> statements =
-                Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, fuzzySets);
+                Generator.generateStatements(
+                        records,
+                        relativeQuantifiers,
+                        absoluteQuantifiers,
+                        fuzzySets,
+                        weights);
 
         // print report
         for (var s : statements) {

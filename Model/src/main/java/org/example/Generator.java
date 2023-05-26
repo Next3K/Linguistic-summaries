@@ -19,7 +19,9 @@ import java.util.stream.Collectors;
     public static List<Summary> generateStatements(List<Entry> records,
                                                    List<Quantifier> absoluteQuantifiers,
                                                    List<Quantifier> relativeQuantifiers,
-                                                   List<LabeledFuzzySet> attributesAndSummarizers) {
+                                                   List<LabeledFuzzySet> attributesAndSummarizers,
+                                                   List<Double> weights) {
+
         List<Set<LabeledFuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
         List<CompoundableLabeledFuzzySet> combinations =
@@ -62,7 +64,7 @@ import java.util.stream.Collectors;
         }
 
         // calculate T1 - T11
-        statements.forEach(statement -> statement.calculateQualityMeasure(records));
+        statements.forEach(statement -> statement.calculateQualityMeasure(records, weights));
 
         // sort by quality measure
         statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure));
