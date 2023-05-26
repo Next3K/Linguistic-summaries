@@ -79,10 +79,10 @@ public abstract class Summary {
         int m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
-            double r = (double) entries
+            double r = ((double) entries
                     .stream()
                     .filter(e -> set.getSummarizerValueFor(e) > 0)
-                    .count() / m;
+                    .count()) / m;
             multiply *= r;
         }
         double t3 = this.getDegreeOfCovering(entries);
