@@ -10,13 +10,11 @@ import org.example.model.functions.TriangularMembershipFunction;
 public class RelativeQuantifier extends Quantifier {
 
     private final FuzzySet set;
-    private final RelativeQuantifierType type;
     private final String textualForm;
 
     // standard relative quantifiers
     public RelativeQuantifier(RelativeQuantifierType type) {
         super(type.getFuzzySet().getMembershipFunction(), type.getFuzzySet().getUniverseOfDiscourse());
-        this.type = type;
         this.set = type.getFuzzySet();
         this.textualForm = type.getInTextualForm();
     }
@@ -25,7 +23,6 @@ public class RelativeQuantifier extends Quantifier {
     public RelativeQuantifier(String label, FuzzySet fuzzySet) {
         super(fuzzySet.getMembershipFunction(), fuzzySet.getUniverseOfDiscourse());
         this.set = fuzzySet;
-        this.type = null;
         this.textualForm = label;
     }
 
