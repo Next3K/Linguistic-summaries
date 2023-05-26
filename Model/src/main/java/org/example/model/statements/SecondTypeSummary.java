@@ -6,6 +6,7 @@ import org.example.model.sets.CompoundableLabeledFuzzySet;
 import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
+import java.util.Set;
 
 public class SecondTypeSummary extends Summary {
 
@@ -65,7 +66,7 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        List<LabeledFuzzySet> subset = this.qualifier.getSubset();
+        Set<LabeledFuzzySet> subset = this.qualifier.getSubset();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -77,7 +78,7 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        List<LabeledFuzzySet> subset = this.qualifier.getSubset();
+        Set<LabeledFuzzySet> subset = this.qualifier.getSubset();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {

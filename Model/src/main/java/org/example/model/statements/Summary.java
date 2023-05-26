@@ -38,7 +38,7 @@ public abstract class Summary {
         this.summarizer = summarizer;
     }
 
-    String getTextualSummaryForRecords(List<Entry> records) {
+    public String getTextualSummaryForRecords(List<Entry> records) {
         return getTextualRepresentation() + " [" + calculateQualityMeasure(records) + "]";
     }
 

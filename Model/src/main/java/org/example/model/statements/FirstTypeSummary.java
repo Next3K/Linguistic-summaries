@@ -46,8 +46,11 @@ public class FirstTypeSummary extends Summary {
 
     @Override
     public String getTextualRepresentation() {
-        return quantifier.getTextualRepresentation() + " " +
-                SUBJECT + " are/have " + summarizer;
+        return quantifier.getTextualRepresentation() +
+                " " +
+                SUBJECT +
+                " are/have " +
+                summarizer.getTextualRepresentation();
     }
 
 }

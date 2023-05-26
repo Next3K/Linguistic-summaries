@@ -36,7 +36,9 @@ public class Main {
                 Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, fuzzySets);
 
         // print
-        statements.forEach(System.out::println);
+        for (var s : statements) {
+            System.out.println(s.getTextualRepresentation());
+        }
     }
 
     public static List<LabeledFuzzySet> getLabeledFuzzySets(LinguisticVariable variable,

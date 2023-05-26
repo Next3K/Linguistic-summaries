@@ -196,39 +196,41 @@ public class Util {
     }
 
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
-        UniverseOfDiscourse universe = new DiscreteUniverseOfDiscourse(0, 15000);
+        UniverseOfDiscourse universe = new DiscreteUniverseOfDiscourse(0, 14_854);
+
+        String about = "About";
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 280d,
                 new FuzzySet(new TrapezoidMembershipFunction(-1, 0d, 450d, 700d), universe));
 
 
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 1200d,
                 new FuzzySet(new TrapezoidMembershipFunction(400d, 900d, 1550d, 2050d), universe));
 
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 3600d,
                 new FuzzySet(new TrapezoidMembershipFunction(1750d, 2750d, 4450d, 5450d), universe));
 
         Quantifier sevenTwoZeroZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 7200d,
                 new FuzzySet(new TrapezoidMembershipFunction(4500, 6500d, 8100d, 10100d), universe));
 
         Quantifier oneZeroEightZeroZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 10800d,
                 new FuzzySet(new TrapezoidMembershipFunction(8200, 10200d, 11800d, 13800d), universe));
 
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
-                "About",
+                about,
                 14600d,
-                new FuzzySet(new TrapezoidMembershipFunction(2400, 3400, 1500, 1600), universe));
+                new FuzzySet(new TrapezoidMembershipFunction(12400, 13400, 1500, 1600), universe));
 
 
         return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
