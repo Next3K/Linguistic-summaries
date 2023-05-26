@@ -16,10 +16,10 @@ public class Main {
         List<Entry> records = Util.loadFromDatabase();
 
         // load default relative quantifiers
-        List<Quantifier> relativeQuantifiers = new ArrayList<>(Util.loadDefaultRelativeQuantifiers());
+        List<Quantifier> relativeQuantifiers = Util.loadDefaultRelativeQuantifiers();
 
         // load default absolute quantifiers
-        List<Quantifier> absoluteQuantifiers = new ArrayList<>(Util.loadDefaultAbsoluteQuantifiers());
+        List<Quantifier> absoluteQuantifiers = Util.loadDefaultAbsoluteQuantifiers();
 
         // load all defined variables
         List<LinguisticVariable> linguisticVariables = Util.getDefaultLinguisticVariables();

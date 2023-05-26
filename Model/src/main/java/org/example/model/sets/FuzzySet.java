@@ -10,6 +10,7 @@ public class FuzzySet extends ContinuousNonFuzzySet {
 
     protected final MembershipFunction membershipFunction;
     protected final UniverseOfDiscourse universeOfDiscourse;
+    private static final Random random = new Random();
 
     public FuzzySet(MembershipFunction membershipFunction, UniverseOfDiscourse universeOfDiscourse) {
         super(universeOfDiscourse.getMinimum(), universeOfDiscourse.getMaximum());
@@ -29,18 +30,17 @@ public class FuzzySet extends ContinuousNonFuzzySet {
 
 
     public boolean isNormal() {
-        var value = membershipFunction.getMaxValue();
-        return value <= 1 && value >= 0;
+        return membershipFunction.getMaxValue() == 1;
     }
 
     public boolean isConvex() {
-        Random r = new Random();
         double diff = universeOfDiscourse.getMaximum() - universeOfDiscourse.getMinimum();
         for (int i = 0; i < 50; i++) {
-            double a = universeOfDiscourse.getMinimum() + r.nextDouble() * diff;
-            double b = universeOfDiscourse.getMinimum() + r.nextDouble() * diff;
-            if (calculateMembershipFunctionValue((a + b) / 2.0d) < Math.min(
-                    calculateMembershipFunctionValue(a), calculateMembershipFunctionValue(b))) {
+            double a = universeOfDiscourse.getMinimum() + random.nextDouble() * diff;
+            double b = universeOfDiscourse.getMinimum() + random.nextDouble() * diff;
+            double mid = (a + b) / 2.0d;
+            if (calculateMembershipFunctionValue(mid) <
+                    Math.min(calculateMembershipFunctionValue(a), calculateMembershipFunctionValue(b))) {
                 return false;
             }
         }

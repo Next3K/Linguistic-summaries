@@ -172,12 +172,12 @@ public class Util {
     }
 
     public static List<Entry> loadFromDatabase(Set<Entry.DatabaseColumn> columnsOfInterest) {
-        return new ArrayList<>(15000);
+        return new ArrayList<>(14_854);
     }
 
     // load entire database
     public static List<Entry> loadFromDatabase() {
-        return new ArrayList<>(15000);
+        return new ArrayList<>(14_854);
     }
 
     public static List<Quantifier> loadDefaultRelativeQuantifiers() {
