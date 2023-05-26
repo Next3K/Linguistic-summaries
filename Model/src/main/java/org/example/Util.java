@@ -29,7 +29,7 @@ public class Util {
                 LinguisticVariable.SyntacticRuleType.COMPLEX,
                 Entry.DatabaseColumn.MIN_TEMPERATURE);
 
-        UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(10d, 60d);
+        UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(0d, 60d);
         LinguisticVariable maxTemperature = new LinguisticVariable(
                 "maximum temperature",
                 Set.of("cold", "cool", "moderate", "warm", "hot"),
@@ -69,7 +69,7 @@ public class Util {
 
         UniverseOfDiscourse uni5 = new ContinuousUniverseOfDiscourse(0d, 140d);
         LinguisticVariable windSpeed = new LinguisticVariable(
-                "Wind speed",
+                "wind speed",
                 Set.of("calm", "breeze", "strong breeze", "near gale", "gale", "strong gale", "storm", "hurricane"),
                 uni5,
                 Map.of(
@@ -104,12 +104,12 @@ public class Util {
         UniverseOfDiscourse uni7 = new ContinuousUniverseOfDiscourse(0d, 14d);
         LinguisticVariable insolation = new LinguisticVariable(
                 "insolation",
-                Set.of("fully cloudy", "moderately cloudy", "light cloudy", "cloudless"),
+                Set.of("fully cloudy", "moderately cloudy", "lightly cloudy", "cloudless"),
                 uni7,
                 Map.of(
                         "fully cloudy", new FuzzySet(new TriangularMembershipFunction(-1d, 0d, 4d), uni7),
                         "moderately cloudy", new FuzzySet(new TriangularMembershipFunction(0d, 4d, 8d), uni7),
-                        "light cloudy", new FuzzySet(new TriangularMembershipFunction(4d, 8d, 12d), uni7),
+                        "lightly cloudy", new FuzzySet(new TriangularMembershipFunction(4d, 8d, 12d), uni7),
                         "cloudless", new FuzzySet(new TrapezoidMembershipFunction(8d, 12d, 14d, 16d), uni7)),
                 LinguisticVariable.SyntacticRuleType.SIMPLE,
                 Entry.DatabaseColumn.INSOLATION);
@@ -157,7 +157,7 @@ public class Util {
                 Entry.DatabaseColumn.EVAPOTRANSPIRATION);
 
 
-        return List.of(
+        return new ArrayList<>(List.of(
                 minTemperature,
                 maxTemperature,
                 morningHumidity,
@@ -167,7 +167,7 @@ public class Util {
                 insolation,
                 evaporation,
                 radiation,
-                evapotranspiration);
+                evapotranspiration));
     }
 
     public static List<Entry> loadFromDatabase(Set<Entry.DatabaseColumn> columnsOfInterest) {
@@ -255,6 +255,12 @@ public class Util {
             subsets.add(tmp);
         }
         return subsets;
+    }
+
+
+    public static List<LabeledFuzzySet> getLabeledFuzzySets(LinguisticVariable variable,
+                                                            List<String> labelsOfChosenSet) {
+        return variable.getLabeledFuzzySetsForChosenFuzzySets(labelsOfChosenSet);
     }
 
 }

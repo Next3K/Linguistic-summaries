@@ -24,25 +24,21 @@ public class Main {
         // load all defined variables
         List<LinguisticVariable> linguisticVariables = Util.getDefaultLinguisticVariables();
 
-        // users chose which fuzzy sets are of interest
         List<LabeledFuzzySet> fuzzySets = new ArrayList<>(10);
+
+        // users chose which fuzzy sets are of interest
         LinguisticVariable someLinguisticVariableOne = linguisticVariables.get(0);
         LinguisticVariable someLinguisticVariableTwo = linguisticVariables.get(1);
-        fuzzySets.addAll(getLabeledFuzzySets(someLinguisticVariableOne, List.of("warm", "hot")));
-        fuzzySets.addAll(getLabeledFuzzySets(someLinguisticVariableTwo, List.of("cool", "moderate")));
+        fuzzySets.addAll(Util.getLabeledFuzzySets(someLinguisticVariableOne, List.of("warm", "hot")));
+        fuzzySets.addAll(Util.getLabeledFuzzySets(someLinguisticVariableTwo, List.of("cool", "moderate")));
 
-        // generate statements
+        // generate statements for database
         List<Summary> statements =
                 Generator.generateStatements(records, relativeQuantifiers, absoluteQuantifiers, fuzzySets);
 
-        // print
+        // print report
         for (var s : statements) {
             System.out.println(s.getTextualRepresentation());
         }
-    }
-
-    public static List<LabeledFuzzySet> getLabeledFuzzySets(LinguisticVariable variable,
-                                                            List<String> labelsOfChosenSet) {
-        return variable.getLabeledFuzzySetsForChosenFuzzySets(labelsOfChosenSet);
     }
 }

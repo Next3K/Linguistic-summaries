@@ -29,8 +29,11 @@ public class SecondTypeSummary extends Summary {
     @Override
     public String getTextualRepresentation() {
         return quantifier.getTextualRepresentation() + " " +
-                SUBJECT + " being/having " +  qualifier.getTextualRepresentation() +
-                " are also / have also "  + summarizer.getTextualRepresentation();
+                SUBJECT +
+                " being/having " +
+                qualifier.getTextualRepresentation() +
+                " are also / have also "
+                + summarizer.getTextualRepresentation();
     }
 
     @Override

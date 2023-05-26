@@ -1,6 +1,5 @@
 package org.example.model;
 
-import org.example.Util;
 import org.example.model.db.Entry;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.LabeledFuzzySet;
