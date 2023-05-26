@@ -1,5 +1,7 @@
 package org.example.model.functions;
 
+import org.example.model.sets.*;
+
 public class TriangularMembershipFunction implements MembershipFunction {
 
     public TriangularMembershipFunction(double a, double mid, double b) {
@@ -7,9 +9,9 @@ public class TriangularMembershipFunction implements MembershipFunction {
         this.mid = mid;
         this.b = b;
         this.leftLineCoefficientA = (1d - 0d) / (this.mid - this.a);
-        this.leftLineCoefficientB = (- leftLineCoefficientA) * this.a;
+        this.leftLineCoefficientB = (-leftLineCoefficientA) * this.a;
         this.rightLineCoefficientA = (0d - 1d) / (this.b - this.mid);
-        this.rightLineCoefficientB = (- rightLineCoefficientA) * this.b;
+        this.rightLineCoefficientB = (-rightLineCoefficientA) * this.b;
     }
 
     private final double a;
@@ -57,6 +59,16 @@ public class TriangularMembershipFunction implements MembershipFunction {
     @Override
     public Double getMaxValue() {
         return 1.0d;
+    }
+
+    @Override
+    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
+        double q = Math.max(this.a, universe.getMinimum());
+        double r = Math.min(this.b, universe.getMaximum());
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) q, (int) r);
+        }
+        return new ContinuousNonFuzzySet(q, r);
     }
 
     public static double areaUnderLine(double a, double b, double X1, double X2) {

@@ -1,13 +1,14 @@
 package org.example.model.sets;
 
-import java.util.List;
 
 public class DiscreteNonFuzzySet extends NonFuzzySet {
 
-    private final List<Double> listOfValues;
+    private final int min;
+    private final int max;
 
-    public DiscreteNonFuzzySet(List<Double> listOfValues) {
-        super(listOfValues.get(0), listOfValues.get(listOfValues.size() - 1), (double) listOfValues.size());
-        this.listOfValues = listOfValues;
+    public DiscreteNonFuzzySet(int a, int b) {
+        super((double) a, (double) b);
+        this.min = a;
+        this.max = b;
     }
 }

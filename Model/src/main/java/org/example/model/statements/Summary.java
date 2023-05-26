@@ -106,7 +106,7 @@ public abstract class Summary {
 
     public double calculateDegreeOfQuantifierCardinality() {
         Quantifier set = this.quantifier;
-        this.degreeOfQuantifierCardinality = 1 - (set.getCardinalityLikeMeasure() /
+        this.degreeOfQuantifierCardinality = 1 - (set.getCardinality() /
                 set.getUniverseOfDiscourse().calculateMeasure().doubleValue());
         return this.degreeOfQuantifierCardinality;
     }
@@ -118,7 +118,7 @@ public abstract class Summary {
         double multiply = 1.0;
         for (var set : subset) {
             multiply *=
-                    set.getCardinalityLikeMeasure() /
+                    set.getCardinality() /
                             set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
         }
         this.degreeOfSummarizerCardinality = 1 - Math.pow(multiply, 1.0 / n);

@@ -1,5 +1,7 @@
 package org.example.model.functions;
 
+import org.example.model.sets.*;
+
 public class GaussianMembershipFunction implements MembershipFunction {
 
     private final double mean;
@@ -29,6 +31,15 @@ public class GaussianMembershipFunction implements MembershipFunction {
     public Double getMaxValue() {
         return 1d;
     }
+
+    @Override
+    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) universe.getMinimum(), (int) universe.getMaximum());
+        }
+        return new ContinuousNonFuzzySet(universe.getMinimum(), universe.getMaximum());
+    }
+
 
     private static double gauss(double x, double mean, double standardDeviation) {
         double value = 1 / (Math.sqrt(2 * Math.PI) * standardDeviation);

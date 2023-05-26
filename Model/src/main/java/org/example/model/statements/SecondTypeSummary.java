@@ -63,7 +63,7 @@ public class SecondTypeSummary extends Summary {
             denominator += qualifierValue;
         }
         if (denominator == 0) return 0;
-        this.degreeOfTruth = numerator / denominator;
+        this.degreeOfTruth = quantifier.getQuantified(numerator / denominator);
         return degreeOfTruth;
     }
 
@@ -86,7 +86,7 @@ public class SecondTypeSummary extends Summary {
         double multiply = 1.0;
         for (var set : subset) {
             multiply *=
-                    set.getCardinalityLikeMeasure() /
+                    set.getCardinality() /
                     set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);

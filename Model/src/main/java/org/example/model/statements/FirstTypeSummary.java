@@ -29,7 +29,7 @@ public class FirstTypeSummary extends Summary {
         }
         double m = (this.quantifier.isRelative()) ?
                 this.quantifier.getUniverseOfDiscourse().calculateMeasure().doubleValue() : 1d;
-        this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries) / m;
+        this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries / m);
         return degreeOfTruth;
     }
 

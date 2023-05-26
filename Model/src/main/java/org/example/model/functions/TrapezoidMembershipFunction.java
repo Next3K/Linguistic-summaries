@@ -1,12 +1,14 @@
 package org.example.model.functions;
 
+import org.example.model.sets.*;
+
 public class TrapezoidMembershipFunction implements MembershipFunction {
 
     public TrapezoidMembershipFunction(double a, double A, double B, double b) {
         this.a = a;
-        this.b = b;
         this.A = A;
         this.B = B;
+        this.b = b;
         this.leftLineCoefficientA = (1d - 0d) / (this.A - this.a);
         this.leftLineCoefficientB = -1 * leftLineCoefficientA * this.a;
         this.rightLineCoefficientA = (0d - 1d) / (this.b - this.B);
@@ -56,6 +58,17 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
     public Double getMaxValue() {
         return 1.0d;
     }
+
+    @Override
+    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
+        double q = Math.max(this.a, universe.getMinimum());
+        double r = Math.min(this.b, universe.getMaximum());
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) q, (int) r);
+        }
+        return new ContinuousNonFuzzySet(q, r);
+    }
+
 
     private double cutOffTrapezeFromLeft(double offset) {
         double firstTriangleWidth = this.A - this.a;

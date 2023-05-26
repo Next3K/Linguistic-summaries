@@ -48,13 +48,22 @@ public class FuzzySet extends ContinuousNonFuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        double a = this.universeOfDiscourse.getMinimum();
-        double b = this.universeOfDiscourse.getMaximum();
-        double supp = this.getMembershipFunction().getIntegral(a, b);
-        return supp / (this.universeOfDiscourse.calculateMeasure().doubleValue());
+        return this.getSupportMeasure() / this.universeOfDiscourse.calculateMeasure().doubleValue();
     }
 
-    public double getCardinalityLikeMeasure() {
+    public double getSupportMeasure() {
+        return membershipFunction.getSupport(null).measure;
+    }
+
+    public double getCardinality() {
+        if (universeOfDiscourse instanceof DiscreteUniverseOfDiscourse) {
+            double sum = 0;
+            for (int i = (int) universeOfDiscourse.getMinimum(); i < (int) universeOfDiscourse.getMaximum(); i++) {
+                sum += membershipFunction.evaluate((double) i);
+            }
+            return sum;
+
+        }
         return membershipFunction.getIntegral(universeOfDiscourse.getMinimum(), universeOfDiscourse.getMaximum());
     }
 }

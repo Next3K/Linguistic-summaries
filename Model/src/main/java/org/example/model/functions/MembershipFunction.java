@@ -1,7 +1,9 @@
 package org.example.model.functions;
 
+import org.example.model.sets.NonFuzzySet;
+import org.example.model.sets.UniverseOfDiscourse;
+
 public interface MembershipFunction {
-    public static final double MAXIMUM_VALUE = 1.0;
 
     Double evaluate(Double x);
 
@@ -9,4 +11,5 @@ public interface MembershipFunction {
 
     Double getMaxValue();
 
+    NonFuzzySet getSupport(UniverseOfDiscourse universe);
 }
