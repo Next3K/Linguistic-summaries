@@ -63,7 +63,10 @@ public class SecondTypeSummary extends Summary {
             numerator += Math.min(summarizerValue, qualifierValue);
             denominator += qualifierValue;
         }
-        if (denominator == 0) return 0;
+        if (denominator == 0) {
+            this.degreeOfTruth = 0d;
+            return 0;
+        }
         this.degreeOfTruth = quantifier.getQuantified(numerator / denominator);
         return degreeOfTruth;
     }
