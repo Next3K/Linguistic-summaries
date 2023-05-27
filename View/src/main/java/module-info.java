@@ -4,6 +4,7 @@ module project {
     requires java.desktop;
     requires model;
     requires javafx.swing;
+    requires javafx.graphics;
     //requires json.simple;
     //requires com.fasterxml.jackson.core;
     //requires com.fasterxml.jackson.databind;

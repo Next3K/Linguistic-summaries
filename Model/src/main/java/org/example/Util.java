@@ -132,7 +132,7 @@ public class Util {
 
         UniverseOfDiscourse uni9 = new ContinuousUniverseOfDiscourse(0d, 40d);
         LinguisticVariable radiation = new LinguisticVariable(
-                "Radiation",
+                "radiation",
                 Set.of("light", "moderate", "high", "extreme"),
                 uni9,
                 Map.of(
