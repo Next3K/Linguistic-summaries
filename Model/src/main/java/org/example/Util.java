@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.model.db.Connect;
 import org.example.model.db.Entry;
+import org.example.model.functions.GaussianMembershipFunction;
 import org.example.model.sets.*;
 import org.example.model.LinguisticVariable;
 import org.example.model.functions.TrapezoidMembershipFunction;
@@ -209,34 +210,34 @@ public class Util {
         Quantifier twoEightZero = new AbsoluteQuantifier(
                 about,
                 280d,
-                new FuzzySet(new TrapezoidMembershipFunction(-1, 0d, 450d, 700d), universe));
+                new FuzzySet(new GaussianMembershipFunction(280, 170d), universe));
 
 
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
                 about,
                 1200d,
-                new FuzzySet(new TrapezoidMembershipFunction(400d, 900d, 1550d, 2050d), universe));
+                new FuzzySet(new GaussianMembershipFunction(1200, 300d), universe));
 
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
                 about,
                 3600d,
-                new FuzzySet(new TrapezoidMembershipFunction(1750d, 2750d, 4450d, 5450d), universe));
+                new FuzzySet(new GaussianMembershipFunction(3600, 850d), universe));
 
         Quantifier sevenTwoZeroZero = new AbsoluteQuantifier(
                 about,
                 7200d,
-                new FuzzySet(new TrapezoidMembershipFunction(4500, 6500d, 8100d, 10100d), universe));
+                new FuzzySet(new GaussianMembershipFunction(7200, 900d), universe));
 
         Quantifier oneZeroEightZeroZero = new AbsoluteQuantifier(
                 about,
                 10800d,
-                new FuzzySet(new TrapezoidMembershipFunction(8200, 10200d, 11800d, 13800d), universe));
+                new FuzzySet(new GaussianMembershipFunction(10800, 1000d), universe));
 
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
                 about,
                 14600d,
-                new FuzzySet(new TrapezoidMembershipFunction(12400, 13400, 1500, 16000), universe));
+                new FuzzySet(new GaussianMembershipFunction(14600, 1200d), universe));
 
 
         return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,

@@ -96,4 +96,10 @@ public class SecondTypeSummary extends Summary {
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;
     }
+
+    @Override
+    public double calculateLengthOfQualifier() {
+        this.lengthOfQualifier = 2 * Math.pow(0.5d, this.qualifier.getSize());
+        return this.lengthOfQualifier;
+    }
 }

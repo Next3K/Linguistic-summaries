@@ -131,10 +131,7 @@ public abstract class Summary {
     public abstract double calculateDegreeOfQualifierCardinality(List<Entry> entries);
 
     // T11
-    public double calculateLengthOfQualifier() {
-        this.lengthOfQualifier = 2 * Math.pow(0.5d, this.summarizer.getSize());
-        return this.lengthOfQualifier;
-    }
+    public abstract double calculateLengthOfQualifier();
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {
         double sumWeights = weights.get(0) * this.calculateDegreeOfTruth(entries) +

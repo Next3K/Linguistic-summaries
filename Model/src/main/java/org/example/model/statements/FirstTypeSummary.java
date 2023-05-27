@@ -14,8 +14,8 @@ public class FirstTypeSummary extends Summary {
 
     @Override
     protected double getDegreeOfCovering(List<Entry> entries) {
-        int m = entries.size();
-        return ((double) entries
+        double m = entries.size();
+        return (entries
                 .stream()
                 .filter(e -> this.summarizer.getMembershipFunctionValueFor(e) > 0)
                 .count()) / m;
@@ -43,6 +43,12 @@ public class FirstTypeSummary extends Summary {
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
         this.degreeOfQualifierCardinality = 0d;
         return this.degreeOfQualifierCardinality;
+    }
+
+    @Override
+    public double calculateLengthOfQualifier() {
+        this.lengthOfQualifier = 2 * Math.pow(0.5d, 0);
+        return this.lengthOfQualifier;
     }
 
 
