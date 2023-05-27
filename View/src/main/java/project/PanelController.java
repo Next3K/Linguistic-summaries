@@ -231,12 +231,11 @@ public class PanelController {
             case "Almost none" -> 0;
             case "Few" -> 1;
             case "About quarter" -> 2;
-            case "afternoon humidity" -> 3;
-            case "Some" -> 4;
-            case "About half" -> 5;
-            case "About three quarters" -> 6;
-            case "Many" -> 7;
-            case "Almost all" -> 8;
+            case "Some" -> 3;
+            case "About half" -> 4;
+            case "About three quarters" -> 5;
+            case "Many" -> 6;
+            case "Almost all" -> 7;
             default -> 10;
         };
     }
