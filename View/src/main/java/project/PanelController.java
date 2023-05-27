@@ -144,6 +144,16 @@ public class PanelController {
                         weights);
 
         System.out.println("Skonczylem generowanie");
+
+//        TableColumn<Item, String> nameColumn = new TableColumn<>("Nazwa");
+//        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+//
+//        TableColumn<Item, String> valueColumn = new TableColumn<>("Wartość");
+//        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
+
+////        tableView.getColumns().addAll(nameColumn, valueColumn);
+
+
         for (var s : statements) {
             System.out.println(s.getTextualSummary());
         }
@@ -201,12 +211,12 @@ public class PanelController {
 
     private int checkAbsoluteVariableId(String name) {
         return switch (name) {
-            case "About 280.0" -> 0;
-            case "About 1200.0" -> 1;
-            case "About 3600.0" -> 2;
-            case "About 7200.0" -> 3;
-            case "About 10800.0" -> 4;
-            case "About 14600.0" -> 5;
+            case "About 280" -> 0;
+            case "About 1200" -> 1;
+            case "About 3600" -> 2;
+            case "About 7200" -> 3;
+            case "About 10800" -> 4;
+            case "About 14600" -> 5;
             default -> 6;
         };
     }

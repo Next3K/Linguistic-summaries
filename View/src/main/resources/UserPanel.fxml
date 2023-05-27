@@ -139,17 +139,17 @@
                                     <Label text="T9:" GridPane.rowIndex="8" />
                                     <Label text="T10:" GridPane.rowIndex="9" />
                                     <Label text="T11:" GridPane.rowIndex="10" />
-                                    <TextField fx:id="txtT2" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField fx:id="txtT1" text="0.0" GridPane.columnIndex="1" />
-                                    <TextField fx:id="txtT3" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                    <TextField fx:id="txtT4" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField fx:id="txtT5" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                                    <TextField fx:id="txtT6" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                    <TextField fx:id="txtT10" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                    <TextField fx:id="txtT9" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="8" />
-                                    <TextField fx:id="txtT8" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                                    <TextField fx:id="txtT7" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                    <TextField fx:id="txtT11" text="0.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                    <TextField fx:id="txtT2" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="txtT1" text="0.3" GridPane.columnIndex="1" />
+                                    <TextField fx:id="txtT3" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="txtT4" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="txtT5" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                    <TextField fx:id="txtT6" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                    <TextField fx:id="txtT10" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                    <TextField fx:id="txtT9" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="8" />
+                                    <TextField fx:id="txtT8" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                    <TextField fx:id="txtT7" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                    <TextField fx:id="txtT11" text="0.07" GridPane.columnIndex="1" GridPane.rowIndex="10" />
                                  </children>
                               </GridPane>
                            </children>
