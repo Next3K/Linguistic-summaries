@@ -119,74 +119,74 @@
                                  <children>
                                     <Label text="Wagi miar jakości:">
                                        <VBox.margin>
-                                          <Insets bottom="5.0" left="10.0" top="10.0" />
+                                          <Insets bottom="8.0" left="10.0" top="10.0" />
                                        </VBox.margin>
                                     </Label>
                                     <HBox prefHeight="100.0" prefWidth="200.0">
                                        <children>
                                           <Label text="T1:">
                                              <HBox.margin>
-                                                <Insets left="20.0" top="4.0" />
+                                                <Insets left="40.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT1" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.3" />
                                           <Label text="T2:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT2" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T3:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT3" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T4:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT4" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T5:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT5" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T6:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT6" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T7:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT7" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T8:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT8" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T9:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT9" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T10:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT10" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
                                           <Label text="T11:">
                                              <HBox.margin>
-                                                <Insets left="30.0" right="5.0" top="4.0" />
+                                                <Insets left="25.0" right="5.0" top="4.0" />
                                              </HBox.margin>
                                           </Label>
                                           <TextField fx:id="txtT11" maxWidth="60.0" prefHeight="20.0" prefWidth="80.0" text="0.07" />
