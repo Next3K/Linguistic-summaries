@@ -13,7 +13,7 @@ import java.util.Set;
 public abstract class Summary {
 
     // subject of the summary
-    protected static final String SUBJECT = "daily weather measurement";
+    protected static final String SUBJECT = "daily weather measurements";
 
     protected final Quantifier quantifier;
     protected final CompoundableLabeledFuzzySet summarizer;

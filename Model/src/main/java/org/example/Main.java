@@ -35,13 +35,13 @@ public class Main {
         LinguisticVariable morningHumidityVariable = linguisticVariables.get(2);
 
         fuzzySets.addAll(Util.getLabeledFuzzySets(minTempVariable, List.of("warm")));
-//        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
+        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
         fuzzySets.addAll(Util.getLabeledFuzzySets(morningHumidityVariable, List.of("dry")));
 
         // just one relative quantifier
-        ArrayList<Quantifier> oneQualifier = new ArrayList<>();
+        ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));
         // zero absolute quantifiers
-        ArrayList<Quantifier> zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(0)));
+        ArrayList<Quantifier> zerQualifier = new ArrayList<>();
 
         List<Summary> statements =
                 Generator.generateStatements(
