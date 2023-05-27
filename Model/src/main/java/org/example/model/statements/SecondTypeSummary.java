@@ -38,14 +38,15 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     protected double getDegreeOfCovering(List<Entry> entries) {
-        double up = (double) entries
+        double up = entries
                 .stream()
                 .filter(e ->
                         this.summarizer.getMembershipFunctionValueFor(e) > 0
                         &&
                         this.qualifier.getMembershipFunctionValueFor(e) > 0)
                 .count();
-        double down = (double) entries
+        if (up == 0) return 0;
+        double down = entries
                 .stream()
                 .filter(e -> this.qualifier.getMembershipFunctionValueFor(e) > 0)
                 .count();

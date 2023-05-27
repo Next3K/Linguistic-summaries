@@ -76,10 +76,10 @@ public abstract class Summary {
     // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
         Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
-        int m = entries.size();
+        double m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
-            double r = ((double) entries
+            double r = (entries
                     .stream()
                     .filter(e -> set.getSummarizerValueFor(e) > 0)
                     .count()) / m;

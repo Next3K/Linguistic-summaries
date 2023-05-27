@@ -33,19 +33,35 @@ public class Main {
         List<LabeledFuzzySet> fuzzySets = new ArrayList<>(10);
 
         // users chose which fuzzy sets are of interest
-        LinguisticVariable someLinguisticVariableOne = linguisticVariables.get(0);
-        LinguisticVariable someLinguisticVariableTwo = linguisticVariables.get(1);
-        fuzzySets.addAll(Util.getLabeledFuzzySets(someLinguisticVariableOne, List.of("warm", "hot")));
-        fuzzySets.addAll(Util.getLabeledFuzzySets(someLinguisticVariableTwo, List.of("cool", "moderate")));
+        LinguisticVariable minTempVariable = linguisticVariables.get(0);
+        LinguisticVariable maxTempVariable = linguisticVariables.get(1);
+        LinguisticVariable morningHumidityVariable = linguisticVariables.get(2);
 
-        // generate statements for database
+        fuzzySets.addAll(Util.getLabeledFuzzySets(minTempVariable, List.of("warm")));
+        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
+        fuzzySets.addAll(Util.getLabeledFuzzySets(morningHumidityVariable, List.of("dry")));
+
+        // just one relative quantifier
+        ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));
+        // zero absolute quantifiers
+        ArrayList<Quantifier> zerQualifier = new ArrayList<>();
+
         List<Summary> statements =
                 Generator.generateStatements(
                         records,
-                        absoluteQuantifiers,
-                        relativeQuantifiers,
+                        zerQualifier,
+                        oneQualifier,
                         fuzzySets,
                         weights);
+
+        // generate statements for database
+//        List<Summary> statements =
+//                Generator.generateStatements(
+//                        records,
+//                        absoluteQuantifiers,
+//                        relativeQuantifiers,
+//                        fuzzySets,
+//                        weights);
 
         // print report
         for (var s : statements) {
