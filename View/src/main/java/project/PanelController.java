@@ -1,5 +1,7 @@
 package project;
 
+import javafx.beans.binding.Bindings;
+import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -57,6 +59,11 @@ public class PanelController {
 
         comboQuantifier.setDisable(true);
 
+
+        listSummarizers.setStyle("-fx-font-size: 10px;");
+
+        btnGenerate.setDisable(true);
+
         TableColumn<Results, String> result = new TableColumn<>("Result");
         result.setCellValueFactory(new PropertyValueFactory<>("text"));
         result.setStyle("-fx-font-size: 10px;");
@@ -109,7 +116,7 @@ public class PanelController {
         T11.setCellValueFactory(new PropertyValueFactory<>("T11"));
         T11.setStyle("-fx-font-size: 10px;");
 
-        result.setPrefWidth(770);
+        result.setPrefWidth(900);
         T.setPrefWidth(30);
         T1.setPrefWidth(30);
         T2.setPrefWidth(30);
@@ -136,6 +143,7 @@ public class PanelController {
         radioAbsolute.setOnAction(event -> {
             if (radioAbsolute.isSelected()) {
                 radioRelative.setSelected(false);
+                btnGenerate.setDisable(true);
                 comboQuantifier.setDisable(false);
                 comboQuantifier.getItems().clear();
                 for (int i = 0; i < absoluteQuantifiers.size(); i++) {
@@ -147,11 +155,18 @@ public class PanelController {
         radioRelative.setOnAction(event -> {
             if (radioRelative.isSelected()) {
                 radioAbsolute.setSelected(false);
+                btnGenerate.setDisable(true);
                 comboQuantifier.setDisable(false);
                 comboQuantifier.getItems().clear();
                 for (int i = 0; i < relativeQuantifiers.size(); i++) {
                     comboQuantifier.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
                 }
+            }
+        });
+
+        comboQuantifier.setOnAction(event -> {
+            if (comboQuantifier.getValue() != null) {
+                btnGenerate.setDisable(false);
             }
         });
 
@@ -172,6 +187,7 @@ public class PanelController {
         languages.setExpanded(true);
         listSummarizers.setRoot(languages);
         listSummarizers.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+
 
 
     }
