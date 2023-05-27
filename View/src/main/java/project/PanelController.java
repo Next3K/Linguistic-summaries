@@ -4,6 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import org.example.Generator;
 import org.example.Util;
 import org.example.model.LinguisticVariable;
@@ -55,6 +56,12 @@ public class PanelController {
         linguisticVariables = Util.getDefaultLinguisticVariables();
 
         comboQuantifier.setDisable(true);
+
+        TableColumn<Results, String> nameColumn = new TableColumn<>("Result");
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
+        nameColumn.setPrefWidth(1160);
+
+        tableGenerated.getColumns().add(nameColumn);
 
 
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -108,9 +115,10 @@ public class PanelController {
 
     @FXML
     public void onBtnGenerate(ActionEvent actionEvent) {
+        fuzzySets.clear();
+        ArrayList<Quantifier> oneQualifier;
+        ArrayList<Quantifier> zerQualifier;
         checkSelectedItems();
-        ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));
-        ArrayList<Quantifier> zerQualifier = new ArrayList<>();
 
         if (radioRelative.isSelected()) {
             oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(checkRelativeVariableId(comboQuantifier.getValue().toString()))));
@@ -145,18 +153,15 @@ public class PanelController {
 
         System.out.println("Skonczylem generowanie");
 
-//        TableColumn<Item, String> nameColumn = new TableColumn<>("Nazwa");
-//        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//
-//        TableColumn<Item, String> valueColumn = new TableColumn<>("Wartość");
-//        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
-////        tableView.getColumns().addAll(nameColumn, valueColumn);
+        tableGenerated.getItems().clear();
 
 
         for (var s : statements) {
+            tableGenerated.getItems().add(new Results(s.getTextualSummary()));
             System.out.println(s.getTextualSummary());
         }
+
+        System.out.println("\n\n\n");
     }
 
     private void checkSelectedItems() {
