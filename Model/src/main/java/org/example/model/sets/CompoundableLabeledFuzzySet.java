@@ -26,7 +26,7 @@ public class CompoundableLabeledFuzzySet {
         int count = 0;
         for (var set : subset) {
             builder.append(set.getTextualRepresentation());
-            if (count != set.measure - 1) {
+            if (count < subset.size() - 1) {
                 builder.append(AND);
             }
             count++;

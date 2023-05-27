@@ -85,7 +85,7 @@ public class RelativeQuantifier extends Quantifier {
     }
 
     @Override
-    public Boolean isRelative() {
+    public boolean isRelative() {
         return true;
     }
 }

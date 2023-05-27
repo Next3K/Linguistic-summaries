@@ -89,7 +89,7 @@ public class AbsoluteQuantifier extends Quantifier {
     }
 
     @Override
-    public Boolean isRelative() {
+    public boolean isRelative() {
         return false;
     }
 }

@@ -236,7 +236,7 @@ public class Util {
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
                 about,
                 14600d,
-                new FuzzySet(new TrapezoidMembershipFunction(12400, 13400, 1500, 1600), universe));
+                new FuzzySet(new TrapezoidMembershipFunction(12400, 13400, 1500, 16000), universe));
 
 
         return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
@@ -255,7 +255,7 @@ public class Util {
         for (int i = 1; i < numberOfSubsets; i++) {
             HashSet<T> tmp = new HashSet<>();
             for (int j = 0; j < n; j++) {
-                if (((0b1 << j) & numberOfSubsets) == 1) {
+                if (((0b1 << j) & i) == (0b1 << j)) {
                     tmp.add(set.get(j));
                 }
             }

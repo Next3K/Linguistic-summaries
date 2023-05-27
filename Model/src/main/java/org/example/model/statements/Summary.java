@@ -7,7 +7,6 @@ import lombok.Getter;
 import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.Set;
 
 @Getter
@@ -46,9 +45,9 @@ public abstract class Summary {
 
     protected abstract double getDegreeOfCovering(List<Entry> entries);
 
-    public Double calculateQualityMeasure(List<Entry> entries,
-                                          List<Double> weights) {
-        return Objects.requireNonNullElse(this.qualityMeasure, this.calculateWeightedMeasure(entries, weights));
+    public void calculateQualityMeasure(List<Entry> entries,
+                                        List<Double> weights) {
+        this.qualityMeasure = this.calculateWeightedMeasure(entries, weights);
     }
 
     // T1

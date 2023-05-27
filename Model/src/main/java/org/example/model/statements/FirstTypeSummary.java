@@ -28,19 +28,21 @@ public class FirstTypeSummary extends Summary {
             valueCalculatedFromEntries += this.summarizer.getMembershipFunctionValueFor(entry);
         }
         double m = (this.quantifier.isRelative()) ?
-                this.quantifier.getUniverseOfDiscourse().calculateMeasure().doubleValue() : 1d;
+                (double) entries.size() : 1d;
         this.degreeOfTruth = this.quantifier.getQuantified(valueCalculatedFromEntries / m);
         return degreeOfTruth;
     }
 
     @Override
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        return 1;
+        this.degreeOfQualifierImprecision = 0d;
+        return this.degreeOfQualifierImprecision;
     }
 
     @Override
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        return 1;
+        this.degreeOfQualifierCardinality = 0d;
+        return this.degreeOfQualifierCardinality;
     }
 
 

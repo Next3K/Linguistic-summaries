@@ -52,7 +52,7 @@ public class FuzzySet extends ContinuousNonFuzzySet {
     }
 
     public double getSupportMeasure() {
-        return membershipFunction.getSupport(null).measure;
+        return membershipFunction.getSupport(this.universeOfDiscourse).measure;
     }
 
     public double getCardinality() {

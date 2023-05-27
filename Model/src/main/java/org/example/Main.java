@@ -42,8 +42,8 @@ public class Main {
         List<Summary> statements =
                 Generator.generateStatements(
                         records,
-                        relativeQuantifiers,
                         absoluteQuantifiers,
+                        relativeQuantifiers,
                         fuzzySets,
                         weights);
 

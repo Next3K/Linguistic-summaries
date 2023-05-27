@@ -64,7 +64,7 @@ public class LinguisticVariable {
         for (var fuzzySetLabel : chosenSetsLabels) {
             FuzzySet fuzzySet = this.semanticRule.get(fuzzySetLabel);
             tmp.add(new LabeledFuzzySet(
-                    this.name,
+                    fuzzySetLabel,
                     fuzzySet.getMembershipFunction(),
                     this.universeOfDiscourse,
                     this.column,

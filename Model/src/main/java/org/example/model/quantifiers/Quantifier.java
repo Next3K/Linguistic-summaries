@@ -18,5 +18,5 @@ public abstract class Quantifier extends FuzzySet {
 
     public abstract Double getQuantified(Double d);
 
-    public abstract Boolean isRelative();
+    public abstract boolean isRelative();
 }
