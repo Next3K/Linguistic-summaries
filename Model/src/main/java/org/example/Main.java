@@ -51,14 +51,6 @@ public class Main {
                         fuzzySets,
                         weights);
 
-        // generate statements for database
-//        List<Summary> statements =
-//                Generator.generateStatements(
-//                        records,
-//                        absoluteQuantifiers,
-//                        relativeQuantifiers,
-//                        fuzzySets,
-//                        weights);
 
         // print report
         for (var s : statements) {
