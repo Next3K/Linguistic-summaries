@@ -18,21 +18,20 @@ public class Results {
     private String T11;
 
 
-
     public Results(Summary sum) {
         this.text = sum.getTextualRepresentation();
-        this.T = sum.getQualityMeasure().toString();
-        this.T1 = sum.getDegreeOfTruth().toString();
-        this.T2 = sum.getDegreeOfImprecision().toString();
-        this.T3 = sum.getDegreeOfCovering().toString();
-        this.T4 = sum.getDegreeOfAppropriateness().toString();
-        this.T5 = sum.getLengthOfSummary().toString();
-        this.T6 = sum.getDegreeOfQualifierImprecision().toString();
-        this.T7 = sum.getDegreeOfQualifierCardinality().toString();
-        this.T8 = sum.getDegreeOfSummarizerCardinality().toString();
-        this.T9 = sum.getDegreeOfQualifierImprecision().toString();
-        this.T10 = sum.getDegreeOfQualifierCardinality().toString();
-        this.T11 = sum.getLengthOfQualifier().toString();
+        this.T = String.format("%.2f", sum.getQualityMeasure());
+        this.T1 = String.format("%.2f", sum.getDegreeOfTruth());
+        this.T2 = String.format("%.2f", sum.getDegreeOfImprecision());
+        this.T3 = String.format("%.2f", sum.getDegreeOfCovering());
+        this.T4 = String.format("%.2f", sum.getDegreeOfAppropriateness());
+        this.T5 = String.format("%.2f", sum.getLengthOfSummary());
+        this.T6 = String.format("%.2f", sum.getDegreeOfQualifierImprecision());
+        this.T7 = String.format("%.2f", sum.getDegreeOfQualifierCardinality());
+        this.T8 = String.format("%.2f", sum.getDegreeOfSummarizerCardinality());
+        this.T9 = String.format("%.2f", sum.getDegreeOfQualifierImprecision());
+        this.T10 = String.format("%.2f", sum.getDegreeOfQualifierCardinality());
+        this.T11 = String.format("%.2f", sum.getLengthOfQualifier());
 
     }
 

@@ -109,19 +109,19 @@ public class PanelController {
         T11.setCellValueFactory(new PropertyValueFactory<>("T11"));
         T11.setStyle("-fx-font-size: 10px;");
 
-        result.setPrefWidth(650);
-        T.setPrefWidth(40);
-        T1.setPrefWidth(40);
-        T2.setPrefWidth(40);
-        T3.setPrefWidth(40);
-        T4.setPrefWidth(40);
-        T5.setPrefWidth(40);
-        T6.setPrefWidth(40);
-        T7.setPrefWidth(40);
-        T8.setPrefWidth(40);
-        T9.setPrefWidth(40);
-        T10.setPrefWidth(40);
-        T11.setPrefWidth(40);
+        result.setPrefWidth(770);
+        T.setPrefWidth(30);
+        T1.setPrefWidth(30);
+        T2.setPrefWidth(30);
+        T3.setPrefWidth(30);
+        T4.setPrefWidth(30);
+        T5.setPrefWidth(30);
+        T6.setPrefWidth(30);
+        T7.setPrefWidth(30);
+        T8.setPrefWidth(30);
+        T9.setPrefWidth(30);
+        T10.setPrefWidth(30);
+        T11.setPrefWidth(30);
 
 
 
