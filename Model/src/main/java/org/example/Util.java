@@ -86,7 +86,7 @@ public class Util {
                 Entry.DatabaseColumn.WIND);
 
 
-        UniverseOfDiscourse uni6 = new ContinuousUniverseOfDiscourse(0d, 80d);
+        UniverseOfDiscourse uni6 = new ContinuousUniverseOfDiscourse(0d, 300d);
         LinguisticVariable rainfall = new LinguisticVariable(
                 "rainfall",
                 Set.of("mist to light", "moderate", "heavy", "very heavy", "intense", "extreme"),
