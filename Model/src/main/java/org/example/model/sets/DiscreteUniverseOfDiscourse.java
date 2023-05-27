@@ -24,7 +24,8 @@ public class DiscreteUniverseOfDiscourse implements UniverseOfDiscourse {
 
     @Override
     public boolean valueInUniverseOfDiscourse(Double value) {
-        return value <= max && value >= min;
+        int val = value.intValue();
+        return val <= max && val >= min;
     }
 
     @Override

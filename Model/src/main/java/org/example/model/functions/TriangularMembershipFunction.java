@@ -71,6 +71,18 @@ public class TriangularMembershipFunction implements MembershipFunction {
         return new ContinuousNonFuzzySet(q, r);
     }
 
+    @Override
+    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+        double leftPoint = (y - leftLineCoefficientB) / leftLineCoefficientA;
+        double rightPoint = (y - rightLineCoefficientB) / rightLineCoefficientA;
+        leftPoint = Math.max(leftPoint, universe.getMinimum());
+        rightPoint = Math.min(rightPoint, universe.getMaximum());
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
+        }
+        return new ContinuousNonFuzzySet(leftPoint, rightPoint);
+    }
+
     public static double areaUnderLine(double a, double b, double X1, double X2) {
         return 0.5d * a * X2 * X2 + X2 * b - 0.5d * a * X1 * X1 - X1 * b;
     }

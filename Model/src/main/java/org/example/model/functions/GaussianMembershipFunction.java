@@ -40,6 +40,19 @@ public class GaussianMembershipFunction implements MembershipFunction {
         return new ContinuousNonFuzzySet(universe.getMinimum(), universe.getMaximum());
     }
 
+    @Override
+    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+        double tmp = Math.sqrt(-2 * Math.pow(this.stDev, 2) * Math.log(y));
+        double leftPoint = this.mean - tmp;
+        double rightPoint = this.mean + tmp;
+        leftPoint = Math.max(leftPoint, universe.getMinimum());
+        rightPoint = Math.min(rightPoint, universe.getMaximum());
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
+        }
+        return new ContinuousNonFuzzySet(leftPoint, rightPoint);
+    }
+
 
     private static double gauss(double x, double mean, double standardDeviation) {
         double value = 1 / (Math.sqrt(2 * Math.PI) * standardDeviation);

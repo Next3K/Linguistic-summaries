@@ -270,4 +270,16 @@ public class Util {
         return variable.getLabeledFuzzySetsForChosenFuzzySets(labelsOfChosenSet);
     }
 
+    public double and(LabeledFuzzySet a, LabeledFuzzySet b, Entry e) {
+        return Math.min(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
+    }
+
+    public double or(LabeledFuzzySet a, LabeledFuzzySet b, Entry e) {
+        return Math.max(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
+    }
+
+    public double not(LabeledFuzzySet a,  Entry e) {
+        return 1 - a.getMembershipFunctionValueFor(e);
+    }
+
 }

@@ -38,4 +38,15 @@ public class BinaryFunction implements MembershipFunction {
         return new ContinuousNonFuzzySet(q, r);
     }
 
+    @Override
+    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+        if (y != getMaxValue()) {
+            return new NonFuzzySet(0d, 0d);
+        }
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) universe.getMinimum(), (int) universe.getMaximum());
+        }
+        return new ContinuousNonFuzzySet(universe.getMinimum(), universe.getMaximum());
+    }
+
 }

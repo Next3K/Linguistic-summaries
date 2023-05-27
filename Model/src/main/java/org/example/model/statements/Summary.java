@@ -81,7 +81,7 @@ public abstract class Summary {
         for (var set : subset) {
             double r = (entries
                     .stream()
-                    .filter(e -> set.getSummarizerValueFor(e) > 0)
+                    .filter(e -> set.getMembershipFunctionValueFor(e) > 0)
                     .count()) / m;
             multiply *= r;
         }
