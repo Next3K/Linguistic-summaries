@@ -80,7 +80,7 @@ public class AbsoluteQuantifier extends Quantifier {
 
     @Override
     public String getTextualRepresentation() {
-        return this.textualForm + " " + value;
+        return this.textualForm + " " + value.intValue();
     }
 
     @Override
