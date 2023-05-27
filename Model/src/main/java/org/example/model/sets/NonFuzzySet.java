@@ -14,6 +14,10 @@ public class NonFuzzySet {
         this.minimum = minimum;
         this.maximum = maximum;
         this.measure = maximum - minimum;
-        if (measure <= 0) throw new IllegalStateException("Invalid universe of discourse! Size smaller than 0");
+        if (measure < 0) throw new IllegalStateException("Invalid universe of discourse! Size smaller than 0");
+    }
+
+    public boolean isEmpty() {
+        return measure == 0;
     }
 }

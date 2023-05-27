@@ -33,11 +33,8 @@ public class LabeledFuzzySet extends FuzzySet {
         return descriptionProducer.apply(label);
     }
 
-    public Double getSummarizerValueFor(double x) {
-        return this.calculateMembershipFunctionValue(x);
-    }
 
-    public Double getSummarizerValueFor(Entry e) {
+    public Double getMembershipFunctionValueFor(Entry e) {
         return this.calculateMembershipFunctionValue(e.getValues().get(this.column));
     }
 }

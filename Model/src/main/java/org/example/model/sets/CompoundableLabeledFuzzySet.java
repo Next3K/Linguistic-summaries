@@ -37,9 +37,9 @@ public class CompoundableLabeledFuzzySet {
     public Double getMembershipFunctionValueFor(Entry entry) {
         return subset
                 .stream()
-                .map(e -> e.getSummarizerValueFor(entry))
+                .map(e -> e.getMembershipFunctionValueFor(entry))
                 .min(Double::compareTo)
-                .get();
+                .orElseGet(() -> 0d);
     }
 
 }

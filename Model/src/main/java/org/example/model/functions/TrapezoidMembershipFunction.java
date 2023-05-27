@@ -69,6 +69,18 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
         return new ContinuousNonFuzzySet(q, r);
     }
 
+    @Override
+    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+        double leftPoint = (y - leftLineCoefficientB) / leftLineCoefficientA;
+        double rightPoint = (y - rightLineCoefficientB) / rightLineCoefficientA;
+        leftPoint = Math.max(leftPoint, universe.getMinimum());
+        rightPoint = Math.min(rightPoint, universe.getMaximum());
+        if (universe instanceof DiscreteUniverseOfDiscourse) {
+            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
+        }
+        return new ContinuousNonFuzzySet(leftPoint, rightPoint);
+    }
+
 
     private double cutOffTrapezeFromLeft(double offset) {
         double firstTriangleWidth = this.A - this.a;

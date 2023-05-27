@@ -12,4 +12,6 @@ public interface MembershipFunction {
     Double getMaxValue();
 
     NonFuzzySet getSupport(UniverseOfDiscourse universe);
+
+    NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y);
 }

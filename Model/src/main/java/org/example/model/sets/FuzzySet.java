@@ -33,7 +33,7 @@ public class FuzzySet extends ContinuousNonFuzzySet {
         return membershipFunction.getMaxValue() == 1;
     }
 
-    public boolean isConvex() {
+    public boolean convexityCheck() {
         double diff = universeOfDiscourse.getMaximum() - universeOfDiscourse.getMinimum();
         for (int i = 0; i < 50; i++) {
             double a = universeOfDiscourse.getMinimum() + random.nextDouble() * diff;
@@ -52,6 +52,10 @@ public class FuzzySet extends ContinuousNonFuzzySet {
     }
 
     public double getSupportMeasure() {
+        return membershipFunction.getSupport(this.universeOfDiscourse).measure;
+    }
+
+    public double getAlfaCutMeasure(double y) {
         return membershipFunction.getSupport(this.universeOfDiscourse).measure;
     }
 
