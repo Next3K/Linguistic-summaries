@@ -238,7 +238,21 @@ public class PanelController {
 
         for (var s : statements) {
             tableGenerated.getItems().add(new Results(s));
-            System.out.println(s.getTextualSummary());
+            System.out.println(
+                    s.getTextualRepresentation()
+                            +";"+ String.format("%.2f", s.getQualityMeasure())
+                            +";"+ String.format("%.2f", s.getDegreeOfTruth())
+                            +";"+ String.format("%.2f", s.getDegreeOfImprecision())
+                            +";"+ String.format("%.2f", s.getDegreeOfCovering())
+                            +";"+ String.format("%.2f", s.getDegreeOfAppropriateness())
+                            +";"+ String.format("%.2f", s.getLengthOfSummary())
+                            +";"+ String.format("%.2f", s.getDegreeOfQualifierImprecision())
+                            +";"+ String.format("%.2f", s.getDegreeOfQualifierCardinality())
+                            +";"+ String.format("%.2f", s.getDegreeOfSummarizerCardinality())
+                            +";"+ String.format("%.2f", s.getDegreeOfQualifierImprecision())
+                            +";"+ String.format("%.2f", s.getDegreeOfQualifierCardinality())
+                            +";"+ String.format("%.2f", s.getLengthOfQualifier())
+                    );
         }
 
         System.out.println("\n\n\n");
