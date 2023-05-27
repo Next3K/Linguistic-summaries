@@ -1,31 +1,35 @@
 package org.example.model.functions;
 
+import lombok.Getter;
 import org.example.model.sets.*;
 
+@Getter
 public class GaussianMembershipFunction implements MembershipFunction {
 
     private final double mean;
     private final double stDev;
-    private final double normalizationConstant;
 
     public GaussianMembershipFunction(double mean, double standardDeviation) {
         this.mean = mean;
         this.stDev = standardDeviation;
-        this.normalizationConstant = this.stDev * Math.sqrt(2 * Math.PI);
     }
 
     @Override
     public Double evaluate(Double x) {
-        return gauss(x, this.mean, this.stDev) * this.normalizationConstant;
+        return gauss(x, this.mean, this.stDev);
     }
 
     @Override
     public Double getIntegral(double a, double b) {
-        double area = 0.5 * (
-                errorFunction((b - this.mean) / (Math.sqrt(2) * this.stDev)) -
-                        errorFunction((a - this.mean) / (Math.sqrt(2) * this.stDev)));
-        return area * normalizationConstant;
+        double valB = (this.mean - b) / (Math.sqrt(2) * this.stDev);
+        double valA = (this.mean - a) / (Math.sqrt(2) * this.stDev);
+        double num = Math.sqrt(Math.PI / 2.0) * (-1 * this.stDev);
+        double err2 = errorFunction(valB);
+        double err1 = errorFunction(valA);
+        return num * (err2 - err1);
     }
+
+
 
     @Override
     public Double getMaxValue() {
@@ -55,17 +59,20 @@ public class GaussianMembershipFunction implements MembershipFunction {
 
 
     private static double gauss(double x, double mean, double standardDeviation) {
-        double value = 1 / (Math.sqrt(2 * Math.PI) * standardDeviation);
         double exponent = -0.5 * Math.pow((x - mean) / standardDeviation, 2);
-        return value * Math.exp(exponent);
+        return Math.exp(exponent);
     }
 
     private static double errorFunction(double x) {
-        return 1 - (1 / Math.pow(1 +
-                0.278393 * x +
-                0.230389 * Math.pow(x, 2) +
-                0.000972 * Math.pow(x, 3) +
-                0.078108 * Math.pow(x, 4), 4));
+        if (x < 0) {
+            return -errorFunction(-x);
+        } else {
+            return 1 - (1 / Math.pow(1 +
+                    0.278393 * x +
+                    0.230389 * Math.pow(x, 2) +
+                    0.000972 * Math.pow(x, 3) +
+                    0.078108 * Math.pow(x, 4), 4));
+        }
     }
 
 }
