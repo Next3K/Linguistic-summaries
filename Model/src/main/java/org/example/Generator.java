@@ -67,7 +67,7 @@ import java.util.stream.Collectors;
         statements.forEach(statement -> statement.calculateQualityMeasure(records, weights));
 
         // sort by quality measure
-        statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure));
+        statements.sort(Comparator.comparingDouble(Summary::getQualityMeasure).reversed());
 
         return statements;
     }
