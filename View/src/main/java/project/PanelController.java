@@ -57,11 +57,75 @@ public class PanelController {
 
         comboQuantifier.setDisable(true);
 
-        TableColumn<Results, String> nameColumn = new TableColumn<>("Result");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("text"));
-        nameColumn.setPrefWidth(1160);
+        TableColumn<Results, String> result = new TableColumn<>("Result");
+        result.setCellValueFactory(new PropertyValueFactory<>("text"));
+        result.setStyle("-fx-font-size: 10px;");
 
-        tableGenerated.getColumns().add(nameColumn);
+        TableColumn<Results, String> T = new TableColumn<>("T");
+        T.setCellValueFactory(new PropertyValueFactory<>("T"));
+        T.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T1 = new TableColumn<>("T1");
+        T1.setCellValueFactory(new PropertyValueFactory<>("T1"));
+        T1.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T2 = new TableColumn<>("T2");
+        T2.setCellValueFactory(new PropertyValueFactory<>("T2"));
+        T2.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T3 = new TableColumn<>("T3");
+        T3.setCellValueFactory(new PropertyValueFactory<>("T3"));
+        T3.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T4 = new TableColumn<>("T4");
+        T4.setCellValueFactory(new PropertyValueFactory<>("T4"));
+        T4.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T5 = new TableColumn<>("T5");
+        T5.setCellValueFactory(new PropertyValueFactory<>("T5"));
+        T5.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T6 = new TableColumn<>("T6");
+        T6.setCellValueFactory(new PropertyValueFactory<>("T6"));
+        T6.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T7 = new TableColumn<>("T7");
+        T7.setCellValueFactory(new PropertyValueFactory<>("T7"));
+        T7.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T8 = new TableColumn<>("T8");
+        T8.setCellValueFactory(new PropertyValueFactory<>("T8"));
+        T8.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T9 = new TableColumn<>("T9");
+        T9.setCellValueFactory(new PropertyValueFactory<>("T9"));
+        T9.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T10 = new TableColumn<>("T10");
+        T10.setCellValueFactory(new PropertyValueFactory<>("T10"));
+        T10.setStyle("-fx-font-size: 10px;");
+
+        TableColumn<Results, String> T11 = new TableColumn<>("T11");
+        T11.setCellValueFactory(new PropertyValueFactory<>("T11"));
+        T11.setStyle("-fx-font-size: 10px;");
+
+        result.setPrefWidth(650);
+        T.setPrefWidth(40);
+        T1.setPrefWidth(40);
+        T2.setPrefWidth(40);
+        T3.setPrefWidth(40);
+        T4.setPrefWidth(40);
+        T5.setPrefWidth(40);
+        T6.setPrefWidth(40);
+        T7.setPrefWidth(40);
+        T8.setPrefWidth(40);
+        T9.setPrefWidth(40);
+        T10.setPrefWidth(40);
+        T11.setPrefWidth(40);
+
+
+
+        tableGenerated.getColumns().addAll(result, T, T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11);
 
 
         ToggleGroup toggleGroup = new ToggleGroup();
@@ -157,7 +221,7 @@ public class PanelController {
 
 
         for (var s : statements) {
-            tableGenerated.getItems().add(new Results(s.getTextualSummary()));
+            tableGenerated.getItems().add(new Results(s));
             System.out.println(s.getTextualSummary());
         }
 
