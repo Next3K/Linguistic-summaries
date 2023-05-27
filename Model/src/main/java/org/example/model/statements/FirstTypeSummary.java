@@ -45,6 +45,12 @@ public class FirstTypeSummary extends Summary {
         return this.degreeOfQualifierCardinality;
     }
 
+    @Override
+    public double calculateLengthOfQualifier() {
+        this.lengthOfQualifier = 2 * Math.pow(0.5d, 0);
+        return this.lengthOfQualifier;
+    }
+
 
     @Override
     public String getTextualRepresentation() {
