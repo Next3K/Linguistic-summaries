@@ -7,12 +7,13 @@ import org.example.model.sets.CompoundableLabeledFuzzySet;
 import java.util.Objects;
 
 @Getter
-public class DoubleSummaryTypeThree extends TwoSubjectSummary {
-    protected DoubleSummaryTypeThree(String subjectOne,
-                                     String subjectTwo,
-                                     Quantifier quantifier,
-                                     CompoundableLabeledFuzzySet summarizer,
-                                     CompoundableLabeledFuzzySet qualifier) {
+public class TwoSubjectSummaryTypeTwo extends TwoSubjectSummary {
+
+    protected TwoSubjectSummaryTypeTwo(String subjectOne,
+                                       String subjectTwo,
+                                       Quantifier quantifier,
+                                       CompoundableLabeledFuzzySet summarizer,
+                                       CompoundableLabeledFuzzySet qualifier) {
         super(subjectOne, subjectTwo);
         this.quantifier = quantifier;
         this.summarizer = summarizer;
@@ -27,8 +28,8 @@ public class DoubleSummaryTypeThree extends TwoSubjectSummary {
     @Override
     public String getTextualRepresentation() {
         return quantifier.getTextualRepresentation() + " " +
-                subjectOne + " which are/have: " +
-                subjectTwo + " in comparison to " +
+                subjectOne + " in comparison to " +
+                subjectTwo + " which are/have: " +
                 qualifier.getTextualRepresentation() + "," + " are/have: " +
                 summarizer.getTextualRepresentation();
     }

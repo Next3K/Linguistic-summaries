@@ -7,12 +7,12 @@ import org.example.model.sets.CompoundableLabeledFuzzySet;
 import java.util.Objects;
 
 @Getter
-public class DoubleSummaryTypeOne extends TwoSubjectSummary {
+public class TwoSubjectSummaryTypeOne extends TwoSubjectSummary {
 
-    protected DoubleSummaryTypeOne(String subjectOne,
-                                   String subjectTwo,
-                                   Quantifier quantifier,
-                                   CompoundableLabeledFuzzySet summarizer) {
+    protected TwoSubjectSummaryTypeOne(String subjectOne,
+                                       String subjectTwo,
+                                       Quantifier quantifier,
+                                       CompoundableLabeledFuzzySet summarizer) {
         super(subjectOne, subjectTwo);
         this.quantifier = quantifier;
         this.summarizer = summarizer;

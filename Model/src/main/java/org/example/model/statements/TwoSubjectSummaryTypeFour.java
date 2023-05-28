@@ -6,11 +6,11 @@ import org.example.model.sets.CompoundableLabeledFuzzySet;
 import java.util.Objects;
 
 @Getter
-public class DoubleSummaryTypeFour extends TwoSubjectSummary {
+public class TwoSubjectSummaryTypeFour extends TwoSubjectSummary {
 
     private CompoundableLabeledFuzzySet summarizer;
 
-    protected DoubleSummaryTypeFour(String subjectOne, String subjectTwo) {
+    protected TwoSubjectSummaryTypeFour(String subjectOne, String subjectTwo) {
         super(subjectOne, subjectTwo);
     }
 
