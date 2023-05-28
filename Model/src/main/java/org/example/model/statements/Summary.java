@@ -139,11 +139,11 @@ public abstract class Summary {
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
                 weights.get(4) * this.calculateLengthOfSummary() +
-                weights.get(5) * this.calculateDegreeOfSummarizerCardinality() +
-                weights.get(6) * this.calculateDegreeOfQuantifierImprecision() +
-                weights.get(7) * this.calculateDegreeOfQuantifierCardinality() +
-                weights.get(8) * this.calculateDegreeOfQualifierCardinality(entries) +
-                weights.get(9) * this.calculateDegreeOfQualifierImprecision(entries) +
+                weights.get(5) * this.calculateDegreeOfQuantifierImprecision() +
+                weights.get(6) * this.calculateDegreeOfQuantifierCardinality() +
+                weights.get(7) * this.calculateDegreeOfSummarizerCardinality() +
+                weights.get(8) * this.calculateDegreeOfQualifierImprecision(entries) +
+                weights.get(9) * this.calculateDegreeOfQualifierCardinality(entries) +
                 weights.get(10) * this.calculateLengthOfQualifier();
 
         return sumWeights / weights.stream().mapToDouble(Double::doubleValue).sum();

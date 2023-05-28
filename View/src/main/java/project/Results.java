@@ -26,8 +26,8 @@ public class Results {
         this.T3 = String.format("%.2f", sum.getDegreeOfCovering());
         this.T4 = String.format("%.2f", sum.getDegreeOfAppropriateness());
         this.T5 = String.format("%.2f", sum.getLengthOfSummary());
-        this.T6 = String.format("%.2f", sum.getDegreeOfQualifierImprecision());
-        this.T7 = String.format("%.2f", sum.getDegreeOfQualifierCardinality());
+        this.T6 = String.format("%.2f", sum.getDegreeOfQuantifierImprecision());
+        this.T7 = String.format("%.2f", sum.getDegreeOfQuantifierCardinality());
         this.T8 = String.format("%.2f", sum.getDegreeOfSummarizerCardinality());
         this.T9 = String.format("%.2f", sum.getDegreeOfQualifierImprecision());
         this.T10 = String.format("%.2f", sum.getDegreeOfQualifierCardinality());
