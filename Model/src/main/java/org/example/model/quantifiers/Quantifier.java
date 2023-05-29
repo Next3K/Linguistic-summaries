@@ -9,7 +9,7 @@ public abstract class Quantifier extends FuzzySet {
     public Quantifier(MembershipFunction membershipFunction, UniverseOfDiscourse universeOfDiscourse) {
         super(membershipFunction, universeOfDiscourse);
 
-        if (!(convexityCheck() && isNormal())) {
+        if (!(isConvex() && isNormal())) {
             throw new IllegalArgumentException("Fuzzy set for quantifier has to be convex and normal, but wasn't");
         }
     }

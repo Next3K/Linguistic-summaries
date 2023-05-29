@@ -2,7 +2,7 @@ package org.example.model.statements;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundableLabeledFuzzySet;
+import org.example.model.sets.CompoundLabeledFuzzySet;
 import lombok.Getter;
 import org.example.model.sets.LabeledFuzzySet;
 
@@ -16,7 +16,7 @@ public abstract class Summary {
     protected static final String SUBJECT = "daily weather measurements";
 
     protected final Quantifier quantifier;
-    protected final CompoundableLabeledFuzzySet summarizer;
+    protected final CompoundLabeledFuzzySet summarizer;
 
     protected Double qualityMeasure;
 
@@ -32,7 +32,7 @@ public abstract class Summary {
     protected Double degreeOfQualifierCardinality;
     protected Double lengthOfQualifier;
 
-    protected Summary(Quantifier quantifier, CompoundableLabeledFuzzySet summarizer) {
+    protected Summary(Quantifier quantifier, CompoundLabeledFuzzySet summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
     }
@@ -55,7 +55,7 @@ public abstract class Summary {
 
     // T2
     public double calculateDegreeOfImprecision() {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -75,7 +75,7 @@ public abstract class Summary {
 
     // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
         double m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
@@ -112,7 +112,7 @@ public abstract class Summary {
 
     // T8
     public double calculateDegreeOfSummarizerCardinality() {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubset();
+        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {

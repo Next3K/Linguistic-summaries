@@ -2,22 +2,21 @@ package org.example.model.sets;
 
 
 import lombok.Getter;
+import org.example.model.functions.MembershipFunction;
 
 @Getter
 public class NonFuzzySet {
 
-    protected final Double minimum;
-    protected final Double maximum;
-    protected final Double measure;
+    protected final MembershipFunction membershipFunction;
+    // przestrzeń na pewno musi byc tak w fuzzy set
+    protected final UniverseOfDiscourse universe;
 
-    public NonFuzzySet(Double minimum, Double maximum) {
-        this.minimum = minimum;
-        this.maximum = maximum;
-        this.measure = maximum - minimum;
-        if (measure < 0) throw new IllegalStateException("Invalid universe of discourse! Size smaller than 0");
+    public NonFuzzySet(MembershipFunction membershipFunction, UniverseOfDiscourse universe) {
+        this.membershipFunction = membershipFunction;
+        this.universe = universe;
     }
 
     public boolean isEmpty() {
-        return measure == 0;
+        return universe.isEmpty();
     }
 }

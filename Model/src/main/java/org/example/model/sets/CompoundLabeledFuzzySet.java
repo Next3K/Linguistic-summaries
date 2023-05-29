@@ -7,27 +7,26 @@ import java.util.Set;
 
 
 @Getter
-public class CompoundableLabeledFuzzySet {
+public class CompoundLabeledFuzzySet {
 
-    public static final String AND = " and ";
-    private final Set<LabeledFuzzySet> subset;
+    private final Set<LabeledFuzzySet> subsets;
 
-    public CompoundableLabeledFuzzySet(Set<LabeledFuzzySet> subsets) {
+    public CompoundLabeledFuzzySet(Set<LabeledFuzzySet> subsets) {
         if (subsets.isEmpty()) throw new IllegalArgumentException("Subset cannot be empty!");
-        this.subset = subsets;
+        this.subsets = subsets;
     }
 
     public int getSize() {
-        return subset.size();
+        return subsets.size();
     }
 
     public String getTextualRepresentation() {
         StringBuilder builder = new StringBuilder();
         int count = 0;
-        for (var set : subset) {
+        for (var set : subsets) {
             builder.append(set.getTextualRepresentation());
-            if (count < subset.size() - 1) {
-                builder.append(AND);
+            if (count < subsets.size() - 1) {
+                builder.append(" and ");
             }
             count++;
         }
@@ -35,7 +34,7 @@ public class CompoundableLabeledFuzzySet {
     }
 
     public Double getMembershipFunctionValueFor(Entry entry) {
-        return subset
+        return subsets
                 .stream()
                 .map(e -> e.getMembershipFunctionValueFor(entry))
                 .min(Double::compareTo)

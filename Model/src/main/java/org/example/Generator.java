@@ -2,16 +2,14 @@
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundableLabeledFuzzySet;
+import org.example.model.sets.CompoundLabeledFuzzySet;
 import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.statements.FirstTypeSummary;
 import org.example.model.statements.SecondTypeSummary;
 import org.example.model.statements.Summary;
 import org.example.model.statements.TwoSubjectSummary;
 
-import java.beans.Statement;
 import java.util.*;
-import java.util.stream.Collectors;
 
  public class Generator {
 
@@ -24,8 +22,8 @@ import java.util.stream.Collectors;
 
         List<Set<LabeledFuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
-        List<CompoundableLabeledFuzzySet> combinations =
-                subsets.stream().map(CompoundableLabeledFuzzySet::new).toList();
+        List<CompoundLabeledFuzzySet> combinations =
+                subsets.stream().map(CompoundLabeledFuzzySet::new).toList();
 
         int size =
                 absoluteQuantifiers.size() * combinations.size() +
@@ -54,7 +52,7 @@ import java.util.stream.Collectors;
         for (var quantifier : relativeQuantifiers) {
             for (var summarizer : combinations) {
                 for (var qualifier : combinations) {
-                    boolean disjoint = Collections.disjoint(summarizer.getSubset(), qualifier.getSubset());
+                    boolean disjoint = Collections.disjoint(summarizer.getSubsets(), qualifier.getSubsets());
                     if (qualifier != summarizer && disjoint) {
                         Summary statement = new SecondTypeSummary(quantifier, summarizer, qualifier);
                         statements.add(statement);

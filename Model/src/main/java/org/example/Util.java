@@ -20,16 +20,13 @@ public class Util {
         UniverseOfDiscourse uni1 = new ContinuousUniverseOfDiscourse(0d, 60d);
         LinguisticVariable minTemperature = new LinguisticVariable(
                 "minimum temperature",
-                Set.of("cold", "cool", "moderate", "warm", "hot"),
-                uni1,
-                Map.of(
-                        "cold", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni1),
-                        "cool", new FuzzySet(new TriangularMembershipFunction(5d, 15d, 25d), uni1),
-                        "moderate", new FuzzySet(new TriangularMembershipFunction(15d, 25d, 35d), uni1),
-                        "warm", new FuzzySet(new TriangularMembershipFunction(25d, 35d, 45d), uni1),
-                        "hot", new FuzzySet(new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni1)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.MIN_TEMPERATURE);
+                Set.of(
+                        new FuzzySet("cold", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni1),
+                        new FuzzySet("cool", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(5d, 15d, 25d), uni1),
+                        new FuzzySet("moderate", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(15d, 25d, 35d), uni1),
+                        new FuzzySet("warm", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(25d, 35d, 45d), uni1),
+                        new FuzzySet("hot", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni1),
+                uni1));
 
         UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(0d, 60d);
         LinguisticVariable maxTemperature = new LinguisticVariable(

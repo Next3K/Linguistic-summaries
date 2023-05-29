@@ -1,17 +1,28 @@
 package org.example.model.functions;
 
+import lombok.Getter;
 import org.example.model.sets.NonFuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
 
-public interface MembershipFunction {
+@Getter
+public abstract class MembershipFunction {
 
-    Double evaluate(Double x);
+    protected UniverseOfDiscourse universeOfDiscourse;
 
-    Double getIntegral(double a, double b);
+    public MembershipFunction(UniverseOfDiscourse universeOfDiscourse) {
+        if (universeOfDiscourse.calculateMeasure().doubleValue() == 0) {
+            throw new IllegalArgumentException("Universe cannot be empty!");
+        }
+        this.universeOfDiscourse = universeOfDiscourse;
+    }
 
-    Double getMaxValue();
+    public abstract Double evaluate(Double x);
 
-    NonFuzzySet getSupport(UniverseOfDiscourse universe);
+    public abstract Double getIntegral();
 
-    NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y);
+    public abstract Double getMaxValue();
+
+    public abstract NonFuzzySet getSupport();
+
+    public abstract NonFuzzySet getAlfaCut(double y);
 }

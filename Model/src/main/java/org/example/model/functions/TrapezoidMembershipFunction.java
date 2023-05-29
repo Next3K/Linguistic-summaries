@@ -2,9 +2,10 @@ package org.example.model.functions;
 
 import org.example.model.sets.*;
 
-public class TrapezoidMembershipFunction implements MembershipFunction {
+public class TrapezoidMembershipFunction extends MembershipFunction {
 
     public TrapezoidMembershipFunction(double a, double A, double B, double b) {
+        super(new ContinuousUniverseOfDiscourse(a, b));
         this.a = a;
         this.A = A;
         this.B = B;
@@ -38,7 +39,10 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
     }
 
     @Override
-    public Double getIntegral(double min, double max) {
+    public Double getIntegral() {
+        double min = universeOfDiscourse.getMinimum();
+        double max = universeOfDiscourse.getMaximum();
+
         double fullTrapeze = 0.5 * 1 * (Math.abs(A - B) + Math.abs(a - b));
 
         min = Math.max(min, this.a);
@@ -60,12 +64,12 @@ public class TrapezoidMembershipFunction implements MembershipFunction {
     }
 
     @Override
-    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
-        double q = Math.max(this.a, universe.getMinimum());
-        double r = Math.min(this.b, universe.getMaximum());
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) q, (int) r);
-        }
+    public NonFuzzySet getSupport() {
+        double q = Math.max(this.a, this.universeOfDiscourse.getMinimum());
+        double r = Math.min(this.b, this.universeOfDiscourse.getMaximum());
+//        if (universe instanceof DiscreteUniverseOfDiscourse) {
+//            return new DiscreteNonFuzzySet((int) q, (int) r);
+//        }
         return new ContinuousNonFuzzySet(q, r);
     }
 

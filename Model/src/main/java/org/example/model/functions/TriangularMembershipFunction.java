@@ -2,9 +2,10 @@ package org.example.model.functions;
 
 import org.example.model.sets.*;
 
-public class TriangularMembershipFunction implements MembershipFunction {
+public class TriangularMembershipFunction extends MembershipFunction {
 
     public TriangularMembershipFunction(double a, double mid, double b) {
+        super(new ContinuousUniverseOfDiscourse(a, b));
         this.a = a;
         this.mid = mid;
         this.b = b;
@@ -33,7 +34,10 @@ public class TriangularMembershipFunction implements MembershipFunction {
     }
 
     @Override
-    public Double getIntegral(double min, double max) {
+    public Double getIntegral() {
+        double min = this.universeOfDiscourse.getMinimum();
+        double max = this.universeOfDiscourse.getMaximum();
+
         if (max <= this.a) return 0.0d; // to the left
         if (min >= this.b) return 0.0d; // to the right
 
@@ -62,26 +66,22 @@ public class TriangularMembershipFunction implements MembershipFunction {
     }
 
     @Override
-    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
-        double q = Math.max(this.a, universe.getMinimum());
-        double r = Math.min(this.b, universe.getMaximum());
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) q, (int) r);
-        }
-        return new ContinuousNonFuzzySet(q, r);
+    public NonFuzzySet getSupport() {
+        return new ContinuousNonFuzzySet(universeOfDiscourse.getMinimum(), universeOfDiscourse.getMaximum());
     }
 
     @Override
-    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+    public NonFuzzySet getAlfaCut(double y) {
         double leftPoint = (y - leftLineCoefficientB) / leftLineCoefficientA;
         double rightPoint = (y - rightLineCoefficientB) / rightLineCoefficientA;
-        leftPoint = Math.max(leftPoint, universe.getMinimum());
-        rightPoint = Math.min(rightPoint, universe.getMaximum());
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
-        }
+        leftPoint = Math.max(leftPoint, universeOfDiscourse.getMinimum());
+        rightPoint = Math.min(rightPoint, universeOfDiscourse.getMaximum());
+//        if (universe instanceof DiscreteUniverseOfDiscourse) {
+//            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
+//        }
         return new ContinuousNonFuzzySet(leftPoint, rightPoint);
     }
+
 
     public static double areaUnderLine(double a, double b, double X1, double X2) {
         return 0.5d * a * X2 * X2 + X2 * b - 0.5d * a * X1 * X1 - X1 * b;

@@ -2,13 +2,14 @@ package org.example.model.functions;
 
 import org.example.model.sets.*;
 
-public class BinaryFunction implements MembershipFunction {
+public class BinaryFunction extends MembershipFunction {
 
     private final double a;
     private final double b;
 
 
     public BinaryFunction(double a, double b) {
+        super(new ContinuousUniverseOfDiscourse(a, b));
         this.a = a;
         this.b = b;
     }
@@ -19,7 +20,7 @@ public class BinaryFunction implements MembershipFunction {
     }
 
     @Override
-    public Double getIntegral(double a, double b) {
+    public Double getIntegral() {
         return (b - a) * 1;
     }
 
@@ -29,24 +30,26 @@ public class BinaryFunction implements MembershipFunction {
     }
 
     @Override
-    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
-        double q = Math.max(this.a, universe.getMinimum());
-        double r = Math.min(this.b, universe.getMaximum());
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) q, (int) r);
-        }
+    public NonFuzzySet getSupport() {
+        double q = Math.max(this.a, this.universeOfDiscourse.getMinimum());
+        double r = Math.min(this.b, this.universeOfDiscourse.getMaximum());
+//        if (universe instanceof DiscreteUniverseOfDiscourse) {
+//            return new DiscreteNonFuzzySet((int) q, (int) r);
+//        }
         return new ContinuousNonFuzzySet(q, r);
     }
 
     @Override
-    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
+    public NonFuzzySet getAlfaCut(double y) {
         if (y != getMaxValue()) {
-            return new NonFuzzySet(0d, 0d);
+            return new NonFuzzySet(new BinaryFunction(0, 1), new ContinuousUniverseOfDiscourse(0, 0));
         }
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) universe.getMinimum(), (int) universe.getMaximum());
-        }
-        return new ContinuousNonFuzzySet(universe.getMinimum(), universe.getMaximum());
+//        if (universe instanceof DiscreteUniverseOfDiscourse) {
+//            return new DiscreteNonFuzzySet((int) universe.getMinimum(), (int) universe.getMaximum());
+//        }
+        return new ContinuousNonFuzzySet(
+                this.universeOfDiscourse.getMinimum(),
+                this.universeOfDiscourse.getMaximum());
     }
 
 }
