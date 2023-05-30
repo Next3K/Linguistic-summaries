@@ -1,46 +1,51 @@
 package org.example.model.sets;
 
-import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
 import org.example.model.functions.MembershipFunction;
 import lombok.Getter;
 
 import java.util.Random;
-import java.util.function.Function;
+
 
 @Getter
-public class FuzzySet extends NonFuzzySet {
+public class FuzzySet {
 
-    // trzeba sprawdzać czy przestrzeń rozważan jest niepusta
     private static final Random random = new Random();
-
     private final String label;
     private final Entry.DatabaseColumn column;
-    private final Function<String, String> descriptionProducer;
+    private final DescriptionType descriptionType;
+    protected final MembershipFunction membershipFunction;
+    protected final UniverseOfDiscourseTwo universeOfDiscourse;
 
     public FuzzySet(String label,
                     Entry.DatabaseColumn column,
-                    Function<String, String> descriptionProducer,
                     MembershipFunction membershipFunction,
-                    UniverseOfDiscourse universe) {
-        super(membershipFunction, universe);
+                    UniverseOfDiscourseTwo universeOfDiscourse) {
+        this.membershipFunction = membershipFunction;
         this.column = column;
-        this.descriptionProducer = descriptionProducer;
         this.label = label;
+        this.universeOfDiscourse = universeOfDiscourse;
+        this.descriptionType = DescriptionType.COMPLEX;
     }
 
     public FuzzySet(String label,
                     Entry.DatabaseColumn column,
                     MembershipFunction membershipFunction,
-                    UniverseOfDiscourse universe) {
-        super(membershipFunction, universe);
+                    UniverseOfDiscourseTwo universeOfDiscourse,
+                    DescriptionType descriptionProducer) {
+        this.membershipFunction = membershipFunction;
         this.column = column;
-        this.descriptionProducer = LinguisticVariable::complexDescription;
+        this.descriptionType = descriptionProducer;
         this.label = label;
+        this.universeOfDiscourse = universeOfDiscourse;
     }
 
     public Double calculateMembershipFunctionValue(double x) {
         return membershipFunction.evaluate(x);
+    }
+
+    public Double getMembershipFunctionValueFor(Entry e) {
+        return this.calculateMembershipFunctionValue(e.getValues().get(this.column));
     }
 
     public boolean isNormal() {
@@ -48,8 +53,8 @@ public class FuzzySet extends NonFuzzySet {
     }
 
     public boolean isConvex() {
-        double min = membershipFunction.getUniverseOfDiscourse().getMinimum();
-        double max = membershipFunction.getUniverseOfDiscourse().getMinimum();
+        double min = membershipFunction.getUniverseOfDiscourse().getMin().doubleValue();
+        double max = membershipFunction.getUniverseOfDiscourse().getMax().doubleValue();
         double diff = max - min;
         for (int i = 0; i < 50; i++) {
             double a = min + random.nextDouble() * diff;
@@ -64,15 +69,7 @@ public class FuzzySet extends NonFuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        return this.getSupport()
-                .getMembershipFunction()
-                .getUniverseOfDiscourse()
-                .calculateMeasure()
-                .doubleValue() /
-                this.membershipFunction
-                        .getUniverseOfDiscourse()
-                        .calculateMeasure()
-                        .doubleValue();
+        return this.getSupport().calculateSize() / this.membershipFunction.getUniverseOfDiscourse().calculateSize();
     }
 
     public NonFuzzySet getSupport() {
@@ -85,8 +82,8 @@ public class FuzzySet extends NonFuzzySet {
 
     public double getCardinality() {
         double sum = 0;
-        UniverseOfDiscourse universeOfDiscourse = this.membershipFunction.getUniverseOfDiscourse();
-        for (int i = (int) universeOfDiscourse.getMinimum(); i < (int) universeOfDiscourse.getMaximum(); i++) {
+        NonFuzzySet uni = this.membershipFunction.getUniverseOfDiscourse();
+        for (int i = uni.getMin().intValue(); i < uni.getMax().intValue(); i++) {
             sum += membershipFunction.evaluate((double) i);
         }
         return sum;
@@ -96,7 +93,24 @@ public class FuzzySet extends NonFuzzySet {
         return membershipFunction.getIntegral();
     }
 
-    public getTextualRepresentation() {
-        return descriptionProducer.apply(label);
+    public String getTextualRepresentation() {
+        return switch (descriptionType) {
+            case SIMPLE -> simpleDescription();
+            case COMPLEX -> complexDescription();
+        };
+    }
+
+    // example: "Student is/have: buffed"
+    private String simpleDescription() {
+        return this.label;
+    }
+
+    // example: "Student is/have: strongman musculature"
+    private String complexDescription() {
+        return this.column.variableName() + " " + this.label;
+    }
+
+    public enum DescriptionType {
+        SIMPLE, COMPLEX
     }
 }

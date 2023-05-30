@@ -3,10 +3,9 @@ package org.example.model.statements;
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundLabeledFuzzySet;
-import org.example.model.sets.LabeledFuzzySet;
 
 import java.util.List;
-import java.util.Set;
+
 
 public class SecondTypeSummary extends Summary {
 
@@ -42,8 +41,8 @@ public class SecondTypeSummary extends Summary {
                 .stream()
                 .filter(e ->
                         this.summarizer.getMembershipFunctionValueFor(e) > 0
-                        &&
-                        this.qualifier.getMembershipFunctionValueFor(e) > 0)
+                                &&
+                                this.qualifier.getMembershipFunctionValueFor(e) > 0)
                 .count();
         if (up == 0) return 0;
         double down = entries
@@ -91,7 +90,7 @@ public class SecondTypeSummary extends Summary {
         for (var set : subset) {
             multiply *=
                     set.getCardinality() /
-                    set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
+                            set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;

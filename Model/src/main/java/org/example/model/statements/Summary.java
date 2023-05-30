@@ -4,7 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundLabeledFuzzySet;
 import lombok.Getter;
-import org.example.model.sets.LabeledFuzzySet;
+import org.example.model.sets.FuzzySet;
 
 import java.util.List;
 import java.util.Set;
@@ -55,7 +55,7 @@ public abstract class Summary {
 
     // T2
     public double calculateDegreeOfImprecision() {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -75,7 +75,7 @@ public abstract class Summary {
 
     // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getSubsets();
         double m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
@@ -112,7 +112,7 @@ public abstract class Summary {
 
     // T8
     public double calculateDegreeOfSummarizerCardinality() {
-        Set<LabeledFuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -148,10 +148,4 @@ public abstract class Summary {
 
         return sumWeights / weights.stream().mapToDouble(Double::doubleValue).sum();
     }
-
-//    public double calculateWeightedMeasure(List<Entry> entries) {
-//        return this.calculateWeightedMeasure(entries,
-//                List.of(0.30, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07, 0.07));
-//    }
-
 }

@@ -3,7 +3,7 @@
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundLabeledFuzzySet;
-import org.example.model.sets.LabeledFuzzySet;
+import org.example.model.sets.FuzzySet;
 import org.example.model.statements.FirstTypeSummary;
 import org.example.model.statements.SecondTypeSummary;
 import org.example.model.statements.Summary;
@@ -17,10 +17,10 @@ import java.util.*;
     public static List<Summary> generateStatements(List<Entry> records,
                                                    List<Quantifier> absoluteQuantifiers,
                                                    List<Quantifier> relativeQuantifiers,
-                                                   List<LabeledFuzzySet> attributesAndSummarizers,
+                                                   List<FuzzySet> attributesAndSummarizers,
                                                    List<Double> weights) {
 
-        List<Set<LabeledFuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
+        List<Set<FuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
         List<CompoundLabeledFuzzySet> combinations =
                 subsets.stream().map(CompoundLabeledFuzzySet::new).toList();
@@ -72,7 +72,7 @@ import java.util.*;
 
     public static List<TwoSubjectSummary> generateTwoSubjectStatements(List<Entry> records,
                                                                        List<Quantifier> relativeQuantifiers,
-                                                                       Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> attributesAndSummarizers) {
+                                                                       Map<Entry.DatabaseColumn, List<FuzzySet>> attributesAndSummarizers) {
         List<TwoSubjectSummary> statements = new ArrayList<>(100);
         return null;
     }

@@ -3,11 +3,11 @@ package org.example;
 import org.example.model.db.Connect;
 import org.example.model.db.Entry;
 import org.example.model.functions.GaussianMembershipFunction;
+import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.sets.*;
 import org.example.model.LinguisticVariable;
 import org.example.model.functions.TrapezoidMembershipFunction;
 import org.example.model.functions.TriangularMembershipFunction;
-import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.quantifiers.RelativeQuantifier;
 
@@ -17,156 +17,284 @@ public class Util {
 
     public static List<LinguisticVariable> getDefaultLinguisticVariables() {
 
-        UniverseOfDiscourse uni1 = new ContinuousUniverseOfDiscourse(0d, 60d);
+        UniverseOfDiscourseTwo uni1 = new UniverseOfDiscourseTwo(0d, 60d);
         LinguisticVariable minTemperature = new LinguisticVariable(
-                "minimum temperature",
-                Set.of(
-                        new FuzzySet("cold", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni1),
-                        new FuzzySet("cool", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(5d, 15d, 25d), uni1),
-                        new FuzzySet("moderate", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(15d, 25d, 35d), uni1),
-                        new FuzzySet("warm", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TriangularMembershipFunction(25d, 35d, 45d), uni1),
-                        new FuzzySet("hot", Entry.DatabaseColumn.MIN_TEMPERATURE, null, new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni1),
-                uni1));
+                Set.of(new FuzzySet(
+                                "cold",
+                                Entry.DatabaseColumn.MIN_TEMPERATURE,
+                                new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d),
+                                uni1),
+                        new FuzzySet("cool",
+                                Entry.DatabaseColumn.MIN_TEMPERATURE,
+                                new TriangularMembershipFunction(5d, 15d, 25d),
+                                uni1),
+                        new FuzzySet(
+                                "moderate",
+                                Entry.DatabaseColumn.MIN_TEMPERATURE,
+                                new TriangularMembershipFunction(15d, 25d, 35d),
+                                uni1),
+                        new FuzzySet(
+                                "warm",
+                                Entry.DatabaseColumn.MIN_TEMPERATURE,
+                                new TriangularMembershipFunction(25d, 35d, 45d),
+                                uni1),
+                        new FuzzySet(
+                                "hot",
+                                Entry.DatabaseColumn.MIN_TEMPERATURE,
+                                new TrapezoidMembershipFunction(35d, 45d, 60d, 100d),
+                                uni1)),
+                uni1);
 
-        UniverseOfDiscourse uni2 = new ContinuousUniverseOfDiscourse(0d, 60d);
+
+        UniverseOfDiscourseTwo uni2 = new UniverseOfDiscourseTwo(0d, 60d);
         LinguisticVariable maxTemperature = new LinguisticVariable(
-                "maximum temperature",
-                Set.of("cold", "cool", "moderate", "warm", "hot"),
-                uni2,
-                Map.of(
-                        "cold", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni2),
-                        "cool", new FuzzySet(new TriangularMembershipFunction(5d, 15d, 25d), uni2),
-                        "moderate", new FuzzySet(new TriangularMembershipFunction(15d, 25d, 35d), uni2),
-                        "warm", new FuzzySet(new TriangularMembershipFunction(25d, 35d, 45d), uni2),
-                        "hot", new FuzzySet(new TrapezoidMembershipFunction(35d, 45d, 60d, 100d), uni2)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.MAX_TEMPERATURE);
+                Set.of(new FuzzySet(
+                                "cold",
+                                Entry.DatabaseColumn.MAX_TEMPERATURE,
+                                new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d),
+                                uni2),
+                        new FuzzySet("cool",
+                                Entry.DatabaseColumn.MAX_TEMPERATURE,
+                                new TriangularMembershipFunction(5d, 15d, 25d),
+                                uni2),
+                        new FuzzySet(
+                                "moderate",
+                                Entry.DatabaseColumn.MAX_TEMPERATURE,
+                                new TriangularMembershipFunction(15d, 25d, 35d),
+                                uni2),
+                        new FuzzySet(
+                                "warm",
+                                Entry.DatabaseColumn.MAX_TEMPERATURE,
+                                new TriangularMembershipFunction(25d, 35d, 45d),
+                                uni2),
+                        new FuzzySet(
+                                "hot",
+                                Entry.DatabaseColumn.MAX_TEMPERATURE,
+                                new TrapezoidMembershipFunction(35d, 45d, 60d, 100d),
+                                uni2)),
+                uni2);
 
-        UniverseOfDiscourse uni3 = new ContinuousUniverseOfDiscourse(0d, 100d);
+        UniverseOfDiscourseTwo uni3 = new UniverseOfDiscourseTwo(0d, 100d);
         LinguisticVariable morningHumidity = new LinguisticVariable(
-                "morning humidity",
-                Set.of("dry", "comfortable", "dumpy"),
-                uni3,
-                Map.of(
-                        "dry", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 10d, 30d), uni3),
-                        "comfortable", new FuzzySet(new TrapezoidMembershipFunction(10d, 30d, 50d, 70d), uni3),
-                        "dumpy", new FuzzySet(new TrapezoidMembershipFunction(50d, 70d, 100d, 110d), uni3)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.MORNING_HUMIDITY);
+                Set.of(new FuzzySet(
+                                "dry",
+                                Entry.DatabaseColumn.MORNING_HUMIDITY,
+                                new TrapezoidMembershipFunction(-1d, 0d, 10d, 30d),
+                                uni3),
+                        new FuzzySet("comfortable",
+                                Entry.DatabaseColumn.MORNING_HUMIDITY,
+                                new TrapezoidMembershipFunction(10d, 30d, 50d, 70d),
+                                uni3),
+                        new FuzzySet(
+                                "dumpy",
+                                Entry.DatabaseColumn.MORNING_HUMIDITY,
+                                new TrapezoidMembershipFunction(50d, 70d, 100d, 110d),
+                                uni3)),
+                uni3);
 
-        UniverseOfDiscourse uni4 = new ContinuousUniverseOfDiscourse(0d, 100d);
+        UniverseOfDiscourseTwo uni4 = new UniverseOfDiscourseTwo(0d, 100d);
         LinguisticVariable afternoonHumidity = new LinguisticVariable(
-                "afternoon humidity",
-                Set.of("dry", "comfortable", "dumpy"),
-                uni4,
-                Map.of(
-                        "dry", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 10d, 30d), uni4),
-                        "comfortable", new FuzzySet(new TrapezoidMembershipFunction(10d, 30d, 50d, 70d), uni4),
-                        "dumpy", new FuzzySet(new TrapezoidMembershipFunction(50d, 70d, 100d, 110d), uni4)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.AFTERNOON_HUMIDITY);
+                Set.of(new FuzzySet(
+                                "dry",
+                                Entry.DatabaseColumn.AFTERNOON_HUMIDITY,
+                                new TrapezoidMembershipFunction(-1d, 0d, 10d, 30d),
+                                uni4),
+                        new FuzzySet("comfortable",
+                                Entry.DatabaseColumn.AFTERNOON_HUMIDITY,
+                                new TrapezoidMembershipFunction(10d, 30d, 50d, 70d),
+                                uni4),
+                        new FuzzySet(
+                                "dumpy",
+                                Entry.DatabaseColumn.AFTERNOON_HUMIDITY,
+                                new TrapezoidMembershipFunction(50d, 70d, 100d, 110d),
+                                uni4)),
+                uni4);
 
-        UniverseOfDiscourse uni5 = new ContinuousUniverseOfDiscourse(0d, 140d);
+
+
+        UniverseOfDiscourseTwo uni5 = new UniverseOfDiscourseTwo(0d, 140d);
         LinguisticVariable windSpeed = new LinguisticVariable(
-                "wind speed",
-                Set.of("calm", "breeze", "strong breeze", "near gale", "gale", "strong gale", "storm", "hurricane"),
-                uni5,
-                Map.of(
-                        "calm", new FuzzySet(new TriangularMembershipFunction(-1d, 0d, 10d), uni5),
-                        "breeze", new FuzzySet(new TrapezoidMembershipFunction(0d, 10d, 25d, 35d), uni5),
-                        "strong breeze", new FuzzySet(new TrapezoidMembershipFunction(25d, 35d, 45d, 55d), uni5),
-                        "near gale", new FuzzySet(new TriangularMembershipFunction(45d, 55d, 65d), uni5),
-                        "gale", new FuzzySet(new TrapezoidMembershipFunction(55d, 65d, 70d, 80d), uni5),
-                        "strong gale", new FuzzySet(new TrapezoidMembershipFunction(70d, 80d, 95d, 105d), uni5),
-                        "storm", new FuzzySet(new TrapezoidMembershipFunction(95d, 105d, 115d, 125d), uni5),
-                        "hurricane", new FuzzySet(new TrapezoidMembershipFunction(115d, 125d, 140d, 150d), uni5)),
-                LinguisticVariable.SyntacticRuleType.SIMPLE,
-                Entry.DatabaseColumn.WIND);
+                Set.of(new FuzzySet(
+                                "cold",
+                                Entry.DatabaseColumn.WIND,
+                                new TriangularMembershipFunction(-1d, 0d, 10d),
+                                uni5),
+                        new FuzzySet("cool",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(0d, 10d, 25d, 35d),
+                                uni5),
+                        new FuzzySet(
+                                "moderate",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(25d, 35d, 45d, 55d),
+                                uni5),
+                        new FuzzySet(
+                                "warm",
+                                Entry.DatabaseColumn.WIND,
+                                new TriangularMembershipFunction(45d, 55d, 65d),
+                                uni5),
+                        new FuzzySet(
+                                "moderate",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(55d, 65d, 70d, 80d),
+                                uni5),
+                        new FuzzySet(
+                                "warm",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(70d, 80d, 95d, 105d),
+                                uni5),
+                        new FuzzySet(
+                                "warm",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(95d, 105d, 115d, 125d),
+                                uni5),
+                        new FuzzySet(
+                                "hot",
+                                Entry.DatabaseColumn.WIND,
+                                new TrapezoidMembershipFunction(115d, 125d, 140d, 150d),
+                                uni5)),
+                uni5);
 
-
-        UniverseOfDiscourse uni6 = new ContinuousUniverseOfDiscourse(0d, 300d);
+        UniverseOfDiscourseTwo uni6 = new UniverseOfDiscourseTwo(0d, 300d);
         LinguisticVariable rainfall = new LinguisticVariable(
-                "rainfall",
-                Set.of("mist to light", "moderate", "heavy", "very heavy", "intense", "extreme"),
-                uni6,
-                Map.of(
-                        "mist to light", new FuzzySet(new TriangularMembershipFunction(-1d, 0d, 10d), uni6),
-                        "moderate", new FuzzySet(new TriangularMembershipFunction(0d, 10d, 20d), uni6),
-                        "heavy", new FuzzySet(new TrapezoidMembershipFunction(10d, 20d, 25d, 35d), uni6),
-                        "very heavy", new FuzzySet(new TrapezoidMembershipFunction(25d, 35d, 40d, 50d), uni6),
-                        "intense", new FuzzySet(new TrapezoidMembershipFunction(40d, 50d, 55d, 65d), uni6),
-                        "extreme", new FuzzySet(new TrapezoidMembershipFunction(55d, 65d, 70d, 80d), uni6)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.RAINFALL);
+                Set.of(new FuzzySet(
+                                "mist to light",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TriangularMembershipFunction(-1d, 0d, 10d),
+                                uni6),
+                        new FuzzySet("moderate",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TriangularMembershipFunction(0d, 10d, 20d),
+                                uni6),
+                        new FuzzySet(
+                                "heavy",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TrapezoidMembershipFunction(10d, 20d, 25d, 35d),
+                                uni6),
+                        new FuzzySet(
+                                "very heavy",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TrapezoidMembershipFunction(25d, 35d, 40d, 50d),
+                                uni6),
+                        new FuzzySet(
+                                "intense",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TrapezoidMembershipFunction(40d, 50d, 55d, 65d),
+                                uni6),
+                        new FuzzySet(
+                                "extreme",
+                                Entry.DatabaseColumn.RAINFALL,
+                                new TrapezoidMembershipFunction(55d, 65d, 70d, 80d),
+                                uni6)),
+                uni6);
 
-
-        UniverseOfDiscourse uni7 = new ContinuousUniverseOfDiscourse(0d, 14d);
+        UniverseOfDiscourseTwo uni7 = new UniverseOfDiscourseTwo(0d, 14d);
         LinguisticVariable insolation = new LinguisticVariable(
-                "insolation",
-                Set.of("fully cloudy", "moderately cloudy", "lightly cloudy", "cloudless"),
-                uni7,
-                Map.of(
-                        "fully cloudy", new FuzzySet(new TriangularMembershipFunction(-1d, 0d, 4d), uni7),
-                        "moderately cloudy", new FuzzySet(new TriangularMembershipFunction(0d, 4d, 8d), uni7),
-                        "lightly cloudy", new FuzzySet(new TriangularMembershipFunction(4d, 8d, 12d), uni7),
-                        "cloudless", new FuzzySet(new TrapezoidMembershipFunction(8d, 12d, 14d, 16d), uni7)),
-                LinguisticVariable.SyntacticRuleType.SIMPLE,
-                Entry.DatabaseColumn.INSOLATION);
+                Set.of(new FuzzySet(
+                                "fully cloudy",
+                                Entry.DatabaseColumn.INSOLATION,
+                                new TriangularMembershipFunction(-1d, 0d, 4d),
+                                uni7),
+                        new FuzzySet("moderately cloudy",
+                                Entry.DatabaseColumn.INSOLATION,
+                                new TriangularMembershipFunction(0d, 4d, 8d),
+                                uni7),
+                        new FuzzySet(
+                                "lightly cloudy",
+                                Entry.DatabaseColumn.INSOLATION,
+                                new TriangularMembershipFunction(4d, 8d, 12d),
+                                uni7),
+                        new FuzzySet(
+                                "cloudless",
+                                Entry.DatabaseColumn.INSOLATION,
+                                new TrapezoidMembershipFunction(8d, 12d, 14d, 16d),
+                                uni7)),
+                uni7);
 
 
-        UniverseOfDiscourse uni8 = new ContinuousUniverseOfDiscourse(0d, 24d);
+        UniverseOfDiscourseTwo uni8 = new UniverseOfDiscourseTwo(0d, 24d);
         LinguisticVariable evaporation = new LinguisticVariable(
-                "evaporation",
-                Set.of("light", "gentle", "moderate", "high"),
-                uni8,
-                Map.of(
-                        "light", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 4d, 8d), uni8),
-                        "gentle", new FuzzySet(new TrapezoidMembershipFunction(4d, 8d, 10d, 14d), uni8),
-                        "moderate", new FuzzySet(new TrapezoidMembershipFunction(10d, 14d, 16d, 20d), uni8),
-                        "high", new FuzzySet(new TrapezoidMembershipFunction(16d, 20d, 24d, 30d), uni8)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.EVAPORATION);
+                Set.of(new FuzzySet(
+                                "light",
+                                Entry.DatabaseColumn.EVAPORATION,
+                                new TrapezoidMembershipFunction(-1d, 0d, 4d, 8d),
+                                uni8),
+                        new FuzzySet("gentle",
+                                Entry.DatabaseColumn.EVAPORATION,
+                                new TrapezoidMembershipFunction(4d, 8d, 10d, 14d),
+                                uni8),
+                        new FuzzySet(
+                                "moderate",
+                                Entry.DatabaseColumn.EVAPORATION,
+                                new TrapezoidMembershipFunction(10d, 14d, 16d, 20d),
+                                uni8),
+                        new FuzzySet(
+                                "high",
+                                Entry.DatabaseColumn.EVAPORATION,
+                                new TrapezoidMembershipFunction(16d, 20d, 24d, 30d),
+                                uni8)),
+                uni8);
 
-
-        UniverseOfDiscourse uni9 = new ContinuousUniverseOfDiscourse(0d, 40d);
+        UniverseOfDiscourseTwo uni9 = new UniverseOfDiscourseTwo(0d, 40d);
         LinguisticVariable radiation = new LinguisticVariable(
-                "radiation",
-                Set.of("light", "moderate", "high", "extreme"),
-                uni9,
-                Map.of(
-                        "light", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d), uni9),
-                        "moderate", new FuzzySet(new TriangularMembershipFunction(5d, 15d, 25d), uni9),
-                        "high", new FuzzySet(new TriangularMembershipFunction(15d, 25d, 35d), uni9),
-                        "extreme", new FuzzySet(new TrapezoidMembershipFunction(25d, 35d, 40d, 50d), uni9)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.RADIATION);
+                Set.of(new FuzzySet(
+                                "light",
+                                Entry.DatabaseColumn.RADIATION,
+                                new TrapezoidMembershipFunction(-1d, 0d, 5d, 15d),
+                                uni9),
+                        new FuzzySet("moderate",
+                                Entry.DatabaseColumn.RADIATION,
+                                new TriangularMembershipFunction(5d, 15d, 25d),
+                                uni9),
+                        new FuzzySet(
+                                "high",
+                                Entry.DatabaseColumn.RADIATION,
+                                new TriangularMembershipFunction(15d, 25d, 35d),
+                                uni9),
+                        new FuzzySet(
+                                "extreme",
+                                Entry.DatabaseColumn.RADIATION,
+                                new TrapezoidMembershipFunction(25d, 35d, 40d, 50d),
+                                uni9)),
+                uni9);
 
 
-        UniverseOfDiscourse uni10 = new ContinuousUniverseOfDiscourse(0d, 14d);
+        UniverseOfDiscourseTwo uni10 = new UniverseOfDiscourseTwo(0d, 40d);
         LinguisticVariable evapotranspiration = new LinguisticVariable(
-                "evapotranspiration",
-                Set.of("light", "moderate", "high", "extreme"),
-                uni10,
-                Map.of(
-                        "light", new FuzzySet(new TrapezoidMembershipFunction(-1d, 0d, 3d, 5d), uni10),
-                        "moderate", new FuzzySet(new TriangularMembershipFunction(3d, 5d, 7d), uni10),
-                        "high", new FuzzySet(new TrapezoidMembershipFunction(5d, 7d, 8d, 10d), uni10),
-                        "extreme", new FuzzySet(new TrapezoidMembershipFunction(8d, 10d, 14d, 20d), uni10)),
-                LinguisticVariable.SyntacticRuleType.COMPLEX,
-                Entry.DatabaseColumn.EVAPOTRANSPIRATION);
+                Set.of(new FuzzySet(
+                                "light",
+                                Entry.DatabaseColumn.EVAPOTRANSPIRATION,
+                                new TrapezoidMembershipFunction(-1d, 0d, 3d, 5d),
+                                uni10),
+                        new FuzzySet("moderate",
+                                Entry.DatabaseColumn.EVAPOTRANSPIRATION,
+                                new TriangularMembershipFunction(3d, 5d, 7d),
+                                uni10),
+                        new FuzzySet(
+                                "high",
+                                Entry.DatabaseColumn.EVAPOTRANSPIRATION,
+                                new TrapezoidMembershipFunction(5d, 7d, 8d, 10d),
+                                uni10),
+                        new FuzzySet(
+                                "extreme",
+                                Entry.DatabaseColumn.EVAPOTRANSPIRATION,
+                                new TrapezoidMembershipFunction(8d, 10d, 14d, 20d),
+                                uni10)),
+                uni10);
 
 
-        return new ArrayList<>(List.of(
-                minTemperature,
-                maxTemperature,
-                morningHumidity,
-                afternoonHumidity,
-                windSpeed,
-                rainfall,
-                insolation,
-                evaporation,
-                radiation,
-                evapotranspiration));
+
+        return new ArrayList<>(
+                List.of(minTemperature,
+                        maxTemperature,
+                        morningHumidity,
+                        afternoonHumidity,
+                        windSpeed,
+                        rainfall,
+                        insolation,
+                        evaporation,
+                        radiation,
+                        evapotranspiration));
     }
 
     public static List<Entry> loadFromDatabase(Set<Entry.DatabaseColumn> columnsOfInterest) {
@@ -179,7 +307,6 @@ public class Util {
     // load entire database
     public static List<Entry> loadFromDatabase() {
         Connect dbase = new Connect();
-
         List<Entry> entries = dbase.selectAllRows();
         return entries;
     }
@@ -200,50 +327,53 @@ public class Util {
     }
 
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
-        UniverseOfDiscourse universe = new DiscreteUniverseOfDiscourse(0, 14_854);
+        UniverseOfDiscourseTwo universe = new UniverseOfDiscourseTwo(0, 14_854);
 
         String about = "About";
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
-                about,
                 280d,
-                new FuzzySet(new GaussianMembershipFunction(280, 170d), universe));
+                about,
+                new GaussianMembershipFunction(280, 170d),
+                universe);
 
 
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
-                about,
                 1200d,
-                new FuzzySet(new GaussianMembershipFunction(1200, 300d), universe));
+                about,
+                new GaussianMembershipFunction(1200, 300d),
+                universe);
 
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
-                about,
                 3600d,
-                new FuzzySet(new GaussianMembershipFunction(3600, 850d), universe));
+                about,
+                new GaussianMembershipFunction(3600, 850d),
+                universe);
 
         Quantifier sevenTwoZeroZero = new AbsoluteQuantifier(
-                about,
                 7200d,
-                new FuzzySet(new GaussianMembershipFunction(7200, 900d), universe));
+                about,
+                new GaussianMembershipFunction(7200, 900d),
+                universe);
 
         Quantifier oneZeroEightZeroZero = new AbsoluteQuantifier(
-                about,
                 10800d,
-                new FuzzySet(new GaussianMembershipFunction(10800, 1000d), universe));
+                about,
+                new GaussianMembershipFunction(10800, 1000d),
+                universe);
 
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
-                about,
                 14600d,
-                new FuzzySet(new GaussianMembershipFunction(14600, 1200d), universe));
+                about,
+                new GaussianMembershipFunction(14600, 1200d),
+                universe);
 
 
         return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
                 sevenTwoZeroZero, oneZeroEightZeroZero, oneFourFourZeroZero));
     }
 
-    public static Map<Entry.DatabaseColumn, List<LabeledFuzzySet>> chooseAttributesAndTheirSummarizers() {
-        return new HashMap<>();
-    }
 
     public static <T> List<Set<T>> generateSubsets(List<T> set) {
         int n = set.size();
@@ -263,20 +393,16 @@ public class Util {
     }
 
 
-    public static List<LabeledFuzzySet> getLabeledFuzzySets(LinguisticVariable variable,
-                                                            List<String> labelsOfChosenSet) {
-        return variable.getLabeledFuzzySetsForChosenFuzzySets(labelsOfChosenSet);
-    }
 
-    public double and(LabeledFuzzySet a, LabeledFuzzySet b, Entry e) {
+    public double and(FuzzySet a, FuzzySet b, Entry e) {
         return Math.min(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
     }
 
-    public double or(LabeledFuzzySet a, LabeledFuzzySet b, Entry e) {
+    public double or(FuzzySet a, FuzzySet b, Entry e) {
         return Math.max(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
     }
 
-    public double not(LabeledFuzzySet a,  Entry e) {
+    public double not(FuzzySet a, FuzzySet b, Entry e) {
         return 1 - a.getMembershipFunctionValueFor(e);
     }
 

@@ -9,9 +9,9 @@ import java.util.Set;
 @Getter
 public class CompoundLabeledFuzzySet {
 
-    private final Set<LabeledFuzzySet> subsets;
+    private final Set<FuzzySet> subsets;
 
-    public CompoundLabeledFuzzySet(Set<LabeledFuzzySet> subsets) {
+    public CompoundLabeledFuzzySet(Set<FuzzySet> subsets) {
         if (subsets.isEmpty()) throw new IllegalArgumentException("Subset cannot be empty!");
         this.subsets = subsets;
     }

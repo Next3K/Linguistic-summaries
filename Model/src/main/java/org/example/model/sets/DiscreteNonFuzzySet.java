@@ -1,14 +1,25 @@
 package org.example.model.sets;
 
 
+
 public class DiscreteNonFuzzySet extends NonFuzzySet {
 
-    private final int min;
-    private final int max;
+    public DiscreteNonFuzzySet(Integer min, Integer max) {
+        super(min, max);
+    }
 
-    public DiscreteNonFuzzySet(int a, int b) {
-        super(new DiscreteUniverseOfDiscourse(a, b));
-        this.min = a;
-        this.max = b;
+    @Override
+    public boolean isEmpty() {
+        return max.intValue() <= min.intValue();
+    }
+
+    @Override
+    public double calculateSize() {
+        return max.intValue() - min.intValue() + 1;
+    }
+
+    @Override
+    public boolean isValueInTheSet(Number number) {
+        return number.intValue() <= this.max.intValue() && this.min.intValue() <= number.intValue();
     }
 }

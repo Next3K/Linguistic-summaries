@@ -2,15 +2,14 @@ package org.example.model.functions;
 
 import lombok.Getter;
 import org.example.model.sets.NonFuzzySet;
-import org.example.model.sets.UniverseOfDiscourse;
 
 @Getter
 public abstract class MembershipFunction {
 
-    protected UniverseOfDiscourse universeOfDiscourse;
+    protected NonFuzzySet universeOfDiscourse;
 
-    public MembershipFunction(UniverseOfDiscourse universeOfDiscourse) {
-        if (universeOfDiscourse.calculateMeasure().doubleValue() == 0) {
+    public MembershipFunction(NonFuzzySet universeOfDiscourse) {
+        if (universeOfDiscourse.isEmpty()) {
             throw new IllegalArgumentException("Universe cannot be empty!");
         }
         this.universeOfDiscourse = universeOfDiscourse;

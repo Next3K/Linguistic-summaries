@@ -1,9 +1,9 @@
 package org.example;
 
 import org.example.model.db.Entry;
-import org.example.model.sets.LabeledFuzzySet;
 import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
+import org.example.model.sets.FuzzySet;
 import org.example.model.statements.Summary;
 
 import java.util.*;
@@ -27,16 +27,16 @@ public class Main {
         // load all defined variables
         List<LinguisticVariable> linguisticVariables = Util.getDefaultLinguisticVariables();
 
-        List<LabeledFuzzySet> fuzzySets = new ArrayList<>(10);
+        List<FuzzySet> fuzzySets = new ArrayList<>(10);
 
         // users chose which fuzzy sets are of interest
         LinguisticVariable minTempVariable = linguisticVariables.get(0);
         LinguisticVariable maxTempVariable = linguisticVariables.get(1);
         LinguisticVariable morningHumidityVariable = linguisticVariables.get(2);
 
-        fuzzySets.addAll(Util.getLabeledFuzzySets(minTempVariable, List.of("warm")));
-        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
-        fuzzySets.addAll(Util.getLabeledFuzzySets(morningHumidityVariable, List.of("dry")));
+//        fuzzySets.addAll(Util.getLabeledFuzzySets(minTempVariable, List.of("warm")));
+//        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
+//        fuzzySets.addAll(Util.getLabeledFuzzySets(morningHumidityVariable, List.of("dry")));
 
         // just one relative quantifier
         ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));

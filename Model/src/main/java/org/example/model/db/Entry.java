@@ -11,7 +11,6 @@ public class Entry {
         if (values.size() == 0) throw new IllegalArgumentException("At least one attribute has to be chosen");
         this.subjectType = subjectType;
         this.values = values;
-        // Map.of(DatabaseColumn.AFTERNOON_HUMIDITY, 10d, DatabaseColumn.INSOLATION, 12d);
     }
 
     private SubjectType subjectType;
@@ -40,6 +39,21 @@ public class Entry {
                 case MIN_TEMPERATURE -> "minTemperature";
                 case MORNING_HUMIDITY -> "morningHumidity";
                 case AFTERNOON_HUMIDITY -> "afternoonHumidity";
+                case WIND -> "wind";
+                case RAINFALL -> "rainfall";
+                case INSOLATION -> "insolation";
+                case EVAPORATION -> "evaporation";
+                case RADIATION -> "radiation";
+                case EVAPOTRANSPIRATION -> "evapotranspiration";
+            };
+        }
+
+        public String variableName() {
+            return switch (this) {
+                case MAX_TEMPERATURE -> "maximum temperature";
+                case MIN_TEMPERATURE -> "minimum temperature";
+                case MORNING_HUMIDITY -> "morning humidity";
+                case AFTERNOON_HUMIDITY -> "afternoon humidity";
                 case WIND -> "wind";
                 case RAINFALL -> "rainfall";
                 case INSOLATION -> "insolation";
