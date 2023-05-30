@@ -1,17 +1,17 @@
 package org.example.model.quantifiers;
 
-import org.example.model.functions.MembershipFunction;
-import org.example.model.functions.TrapezoidMembershipFunction;
-import org.example.model.functions.TriangularMembershipFunction;
-import org.example.model.sets.UniverseOfDiscourseTwo;
+import org.example.model.functions.MembershipShape;
+import org.example.model.functions.TrapezoidShape;
+import org.example.model.functions.TriangularShape;
+import org.example.model.sets.UniverseOfDiscourse;
 
 
 public class RelativeQuantifier extends Quantifier {
 
     // custom relative quantifiers
     public RelativeQuantifier(String label,
-                              MembershipFunction membershipFunction,
-                              UniverseOfDiscourseTwo universeOfDiscourse) {
+                              MembershipShape membershipFunction,
+                              UniverseOfDiscourse universeOfDiscourse) {
         super(label, membershipFunction, universeOfDiscourse);
     }
 
@@ -23,7 +23,7 @@ public class RelativeQuantifier extends Quantifier {
     public enum RelativeQuantifierType {
         ALMOST_NONE, FEW, ABOUT_QUARTER, SOME, ABOUT_HALF, ABOUT_THREE_QUARTERS, MANY, ALMOST_ALL;
 
-        private static final UniverseOfDiscourseTwo universeOfDiscourse = new UniverseOfDiscourseTwo(0d, 1d);
+        private static final UniverseOfDiscourse universeOfDiscourse = new UniverseOfDiscourse(0d, 1d);
 
         public String getInTextualForm() {
             return switch (this) {
@@ -38,20 +38,20 @@ public class RelativeQuantifier extends Quantifier {
             };
         }
 
-        public MembershipFunction getFunction() {
+        public MembershipShape getFunction() {
             return switch (this) {
-                case ALMOST_NONE -> new TriangularMembershipFunction(-1d, 0d, 0.1d);
-                case FEW -> new TriangularMembershipFunction(0d, 0.1d, 0.2d);
-                case ABOUT_QUARTER -> new TriangularMembershipFunction(0.1d, 0.2d, 0.3d);
-                case SOME -> new TrapezoidMembershipFunction(0.2d, 0.3d, 0.35d, 0.45d);
-                case ABOUT_HALF -> new TrapezoidMembershipFunction(0.3d, 0.45d, 0.55d, 0.7d);
-                case ABOUT_THREE_QUARTERS -> new TriangularMembershipFunction(0.6d, 0.7d, 0.8d);
-                case MANY -> new TrapezoidMembershipFunction(0.7d, 0.85d, 1d, 1.2d);
-                case ALMOST_ALL -> new TrapezoidMembershipFunction(0.85d, 0.95d, 1d, 1.2d);
+                case ALMOST_NONE -> new TriangularShape(-1d, 0d, 0.1d);
+                case FEW -> new TriangularShape(0d, 0.1d, 0.2d);
+                case ABOUT_QUARTER -> new TriangularShape(0.1d, 0.2d, 0.3d);
+                case SOME -> new TrapezoidShape(0.2d, 0.3d, 0.35d, 0.45d);
+                case ABOUT_HALF -> new TrapezoidShape(0.3d, 0.45d, 0.55d, 0.7d);
+                case ABOUT_THREE_QUARTERS -> new TriangularShape(0.6d, 0.7d, 0.8d);
+                case MANY -> new TrapezoidShape(0.7d, 0.85d, 1d, 1.2d);
+                case ALMOST_ALL -> new TrapezoidShape(0.85d, 0.95d, 1d, 1.2d);
             };
         }
 
-        public UniverseOfDiscourseTwo getUniverse() {
+        public UniverseOfDiscourse getUniverse() {
             return universeOfDiscourse;
         }
     }

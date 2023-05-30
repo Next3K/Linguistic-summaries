@@ -1,8 +1,8 @@
-package org.example.model.statements;
+package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.Compound;
 import lombok.Getter;
 import org.example.model.sets.FuzzySet;
 
@@ -16,7 +16,7 @@ public abstract class Summary {
     protected static final String SUBJECT = "daily weather measurements";
 
     protected final Quantifier quantifier;
-    protected final CompoundLabeledFuzzySet summarizer;
+    protected final Compound summarizer;
 
     protected Double qualityMeasure;
 
@@ -32,7 +32,7 @@ public abstract class Summary {
     protected Double degreeOfQualifierCardinality;
     protected Double lengthOfQualifier;
 
-    protected Summary(Quantifier quantifier, CompoundLabeledFuzzySet summarizer) {
+    protected Summary(Quantifier quantifier, Compound summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
     }
@@ -106,7 +106,7 @@ public abstract class Summary {
     public double calculateDegreeOfQuantifierCardinality() {
         Quantifier set = this.quantifier;
         this.degreeOfQuantifierCardinality = 1 - (set.getCardinality() /
-                set.getUniverseOfDiscourse().calculateMeasure().doubleValue());
+                set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize());
         return this.degreeOfQuantifierCardinality;
     }
 
@@ -118,7 +118,7 @@ public abstract class Summary {
         for (var set : subset) {
             multiply *=
                     set.getCardinality() /
-                            set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
+                            set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
         }
         this.degreeOfSummarizerCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfSummarizerCardinality;

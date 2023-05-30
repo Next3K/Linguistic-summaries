@@ -2,7 +2,7 @@ package org.example.model;
 
 import org.example.model.sets.FuzzySet;
 import lombok.Getter;
-import org.example.model.sets.UniverseOfDiscourseTwo;
+import org.example.model.sets.UniverseOfDiscourse;
 
 import java.util.Set;
 
@@ -12,10 +12,10 @@ public class LinguisticVariable {
     // tutaj trzeba wywalic wiekszosc
     // tutaj set tych fuzzysetow
     private final Set<FuzzySet> linguisticValues;
-    private final UniverseOfDiscourseTwo universeOfDiscourse;
+    private final UniverseOfDiscourse universeOfDiscourse;
 
     public LinguisticVariable(Set<FuzzySet> linguisticValues,
-                              UniverseOfDiscourseTwo universeOfDiscourse) {
+                              UniverseOfDiscourse universeOfDiscourse) {
         this.linguisticValues = linguisticValues;
         this.universeOfDiscourse = universeOfDiscourse;
     }

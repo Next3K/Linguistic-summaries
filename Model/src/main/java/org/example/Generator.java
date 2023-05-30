@@ -2,12 +2,12 @@
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.Compound;
 import org.example.model.sets.FuzzySet;
-import org.example.model.statements.FirstTypeSummary;
-import org.example.model.statements.SecondTypeSummary;
-import org.example.model.statements.Summary;
-import org.example.model.statements.TwoSubjectSummary;
+import org.example.model.summary.FirstTypeSummary;
+import org.example.model.summary.SecondTypeSummary;
+import org.example.model.summary.Summary;
+import org.example.model.summary.TwoSubjectSummary;
 
 import java.util.*;
 
@@ -22,8 +22,8 @@ import java.util.*;
 
         List<Set<FuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
-        List<CompoundLabeledFuzzySet> combinations =
-                subsets.stream().map(CompoundLabeledFuzzySet::new).toList();
+        List<Compound> combinations =
+                subsets.stream().map(Compound::new).toList();
 
         int size =
                 absoluteQuantifiers.size() * combinations.size() +

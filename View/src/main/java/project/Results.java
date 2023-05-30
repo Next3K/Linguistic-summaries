@@ -1,6 +1,6 @@
 package project;
 
-import org.example.model.statements.Summary;
+import org.example.model.summary.Summary;
 
 public class Results {
     private String text;

@@ -2,10 +2,9 @@ package org.example.model.functions;
 
 import org.example.model.sets.*;
 
-public class TriangularMembershipFunction extends MembershipFunction {
+public class TriangularShape implements MembershipShape {
 
-    public TriangularMembershipFunction(double a, double mid, double b) {
-        super(new ContinuousUniverseOfDiscourse(a, b));
+    public TriangularShape(double a, double mid, double b) {
         this.a = a;
         this.mid = mid;
         this.b = b;
@@ -34,9 +33,7 @@ public class TriangularMembershipFunction extends MembershipFunction {
     }
 
     @Override
-    public Double getIntegral() {
-        double min = this.universeOfDiscourse.getMinimum();
-        double max = this.universeOfDiscourse.getMaximum();
+    public Double getIntegral(double min, double max) {
 
         if (max <= this.a) return 0.0d; // to the left
         if (min >= this.b) return 0.0d; // to the right
@@ -66,20 +63,17 @@ public class TriangularMembershipFunction extends MembershipFunction {
     }
 
     @Override
-    public NonFuzzySet getSupport() {
-        return new ContinuousNonFuzzySet(universeOfDiscourse.getMinimum(), universeOfDiscourse.getMaximum());
+    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
+        return universe.getNonFuzzySet().getSubset(this.a, this.b);
     }
 
     @Override
-    public NonFuzzySet getAlfaCut(double y) {
+    public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
         double leftPoint = (y - leftLineCoefficientB) / leftLineCoefficientA;
         double rightPoint = (y - rightLineCoefficientB) / rightLineCoefficientA;
-        leftPoint = Math.max(leftPoint, universeOfDiscourse.getMinimum());
-        rightPoint = Math.min(rightPoint, universeOfDiscourse.getMaximum());
-//        if (universe instanceof DiscreteUniverseOfDiscourse) {
-//            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
-//        }
-        return new ContinuousNonFuzzySet(leftPoint, rightPoint);
+        leftPoint = Math.max(leftPoint, universe.getNonFuzzySet().getMinimum().doubleValue());
+        rightPoint = Math.min(rightPoint, universe.getNonFuzzySet().getMaximum().doubleValue());
+        return universe.getNonFuzzySet().getSubset(leftPoint, rightPoint);
     }
 
 

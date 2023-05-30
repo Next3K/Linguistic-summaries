@@ -1,7 +1,5 @@
 package project;
 
-import javafx.beans.binding.Bindings;
-import javafx.beans.binding.BooleanBinding;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,10 +11,8 @@ import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.LabeledFuzzySet;
-import org.example.model.statements.Summary;
+import org.example.model.summary.Summary;
 
-import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 public class PanelController {

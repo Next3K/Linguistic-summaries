@@ -22,5 +22,12 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
         return number.doubleValue() <= max.doubleValue() && min.doubleValue() <= number.doubleValue();
     }
 
+    @Override
+    public NonFuzzySet getSubset(Number a, Number b) {
+        return new ContinuousNonFuzzySet(
+                Math.min(a.doubleValue(), min.doubleValue()),
+                Math.max(b.doubleValue(), min.doubleValue()));
+    }
+
 
 }

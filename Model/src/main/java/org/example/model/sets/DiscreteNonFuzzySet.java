@@ -22,4 +22,11 @@ public class DiscreteNonFuzzySet extends NonFuzzySet {
     public boolean isValueInTheSet(Number number) {
         return number.intValue() <= this.max.intValue() && this.min.intValue() <= number.intValue();
     }
+
+    @Override
+    public NonFuzzySet getSubset(Number a, Number b) {
+        return new DiscreteNonFuzzySet(
+                Math.min(a.intValue(), min.intValue()),
+                Math.max(b.intValue(), min.intValue()));
+    }
 }

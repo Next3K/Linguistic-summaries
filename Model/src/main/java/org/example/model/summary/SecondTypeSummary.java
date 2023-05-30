@@ -1,17 +1,19 @@
-package org.example.model.statements;
+package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.Compound;
+import org.example.model.sets.FuzzySet;
 
 import java.util.List;
+import java.util.Set;
 
 
 public class SecondTypeSummary extends Summary {
 
     public SecondTypeSummary(Quantifier quantifier,
-                             CompoundLabeledFuzzySet summarizer,
-                             CompoundLabeledFuzzySet qualifier) {
+                             Compound summarizer,
+                             Compound qualifier) {
         super(quantifier, summarizer);
 
         // check whether quantifier is OK
@@ -22,7 +24,7 @@ public class SecondTypeSummary extends Summary {
         this.qualifier = qualifier;
     }
 
-    protected final CompoundLabeledFuzzySet qualifier;
+    protected final Compound qualifier;
 
 
     @Override
@@ -72,7 +74,7 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        Set<LabeledFuzzySet> subset = this.qualifier.getSubsets();
+        Set<FuzzySet> subset = this.qualifier.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -84,13 +86,13 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        Set<LabeledFuzzySet> subset = this.qualifier.getSubsets();
+        Set<FuzzySet> subset = this.qualifier.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
             multiply *=
                     set.getCardinality() /
-                            set.getUniverseOfDiscourse().calculateMeasure().doubleValue();
+                            set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;

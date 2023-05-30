@@ -1,17 +1,23 @@
 package org.example.model.sets;
 
+import lombok.Getter;
 
-public interface UniverseOfDiscourse {
+@Getter
+public class UniverseOfDiscourse {
 
-    double getMinimum();
+    private final NonFuzzySet nonFuzzySet;
 
-    double getMaximum();
+    public UniverseOfDiscourse(Double min, Double max) {
+        this.nonFuzzySet = new ContinuousNonFuzzySet(min, max);
+        if (nonFuzzySet.isEmpty()) {
+            throw new IllegalArgumentException("Universe of discourse cannot be empty!");
+        }
+    }
 
-    boolean valueInUniverseOfDiscourse(Double value);
-
-    Number calculateMeasure();
-
-    default boolean isEmpty() {
-        return calculateMeasure().doubleValue() == 0;
+    public UniverseOfDiscourse(Integer min, Integer max) {
+        this.nonFuzzySet = new DiscreteNonFuzzySet(min, max);
+        if (nonFuzzySet.isEmpty()) {
+            throw new IllegalArgumentException("Universe of discourse cannot be empty!");
+        }
     }
 }

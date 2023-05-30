@@ -1,14 +1,14 @@
-package org.example.model.statements;
+package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.CompoundLabeledFuzzySet;
+import org.example.model.sets.Compound;
 
 import java.util.List;
 
 public class FirstTypeSummary extends Summary {
 
-    public FirstTypeSummary(Quantifier quantifier, CompoundLabeledFuzzySet summarizer) {
+    public FirstTypeSummary(Quantifier quantifier, Compound summarizer) {
         super(quantifier, summarizer);
     }
 

@@ -2,10 +2,9 @@ package org.example.model.functions;
 
 import org.example.model.sets.*;
 
-public class TrapezoidMembershipFunction extends MembershipFunction {
+public class TrapezoidShape implements MembershipShape {
 
-    public TrapezoidMembershipFunction(double a, double A, double B, double b) {
-        super(new ContinuousUniverseOfDiscourse(a, b));
+    public TrapezoidShape(double a, double A, double B, double b) {
         this.a = a;
         this.A = A;
         this.B = B;
@@ -39,9 +38,7 @@ public class TrapezoidMembershipFunction extends MembershipFunction {
     }
 
     @Override
-    public Double getIntegral() {
-        double min = universeOfDiscourse.getMinimum();
-        double max = universeOfDiscourse.getMaximum();
+    public Double getIntegral(double min, double max) {
 
         double fullTrapeze = 0.5 * 1 * (Math.abs(A - B) + Math.abs(a - b));
 
@@ -64,25 +61,19 @@ public class TrapezoidMembershipFunction extends MembershipFunction {
     }
 
     @Override
-    public NonFuzzySet getSupport() {
-        double q = Math.max(this.a, this.universeOfDiscourse.getMinimum());
-        double r = Math.min(this.b, this.universeOfDiscourse.getMaximum());
-//        if (universe instanceof DiscreteUniverseOfDiscourse) {
-//            return new DiscreteNonFuzzySet((int) q, (int) r);
-//        }
-        return new ContinuousNonFuzzySet(q, r);
+    public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
+        double q = Math.max(this.a, universe.getNonFuzzySet().getMin().doubleValue());
+        double r = Math.min(this.b, universe.getNonFuzzySet().getMaximum().doubleValue());
+        return universe.getNonFuzzySet().getSubset(q, r);
     }
 
     @Override
     public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
         double leftPoint = (y - leftLineCoefficientB) / leftLineCoefficientA;
         double rightPoint = (y - rightLineCoefficientB) / rightLineCoefficientA;
-        leftPoint = Math.max(leftPoint, universe.getMinimum());
-        rightPoint = Math.min(rightPoint, universe.getMaximum());
-        if (universe instanceof DiscreteUniverseOfDiscourse) {
-            return new DiscreteNonFuzzySet((int) leftPoint,(int) rightPoint);
-        }
-        return new ContinuousNonFuzzySet(leftPoint, rightPoint);
+        leftPoint = Math.max(leftPoint, universe.getNonFuzzySet().getMinimum().doubleValue());
+        rightPoint = Math.min(rightPoint, universe.getNonFuzzySet().getMaximum().doubleValue());
+        return universe.getNonFuzzySet().getSubset(leftPoint, rightPoint);
     }
 
 
@@ -91,12 +82,12 @@ public class TrapezoidMembershipFunction extends MembershipFunction {
         double rectangleWidth = this.B - this.A;
 
         if (offset <= firstTriangleWidth) {
-            return TriangularMembershipFunction
+            return TriangularShape
                     .areaUnderLine(leftLineCoefficientA, leftLineCoefficientB, this.a, this.a + offset);
         } else if (offset <= firstTriangleWidth + rectangleWidth) {
             return 0.5 * firstTriangleWidth * 1 + (offset - firstTriangleWidth) * 1;
         } else {
-            return  0.5 * firstTriangleWidth * 1 + rectangleWidth * 1 + TriangularMembershipFunction
+            return  0.5 * firstTriangleWidth * 1 + rectangleWidth * 1 + TriangularShape
                     .areaUnderLine(rightLineCoefficientA, rightLineCoefficientB, this.B, this.a + offset);
         }
     }

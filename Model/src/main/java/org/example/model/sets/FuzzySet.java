@@ -1,7 +1,7 @@
 package org.example.model.sets;
 
 import org.example.model.db.Entry;
-import org.example.model.functions.MembershipFunction;
+import org.example.model.functions.MembershipShape;
 import lombok.Getter;
 
 import java.util.Random;
@@ -14,13 +14,13 @@ public class FuzzySet {
     private final String label;
     private final Entry.DatabaseColumn column;
     private final DescriptionType descriptionType;
-    protected final MembershipFunction membershipFunction;
-    protected final UniverseOfDiscourseTwo universeOfDiscourse;
+    protected final MembershipShape membershipFunction;
+    protected final UniverseOfDiscourse universeOfDiscourse;
 
     public FuzzySet(String label,
                     Entry.DatabaseColumn column,
-                    MembershipFunction membershipFunction,
-                    UniverseOfDiscourseTwo universeOfDiscourse) {
+                    MembershipShape membershipFunction,
+                    UniverseOfDiscourse universeOfDiscourse) {
         this.membershipFunction = membershipFunction;
         this.column = column;
         this.label = label;
@@ -30,8 +30,8 @@ public class FuzzySet {
 
     public FuzzySet(String label,
                     Entry.DatabaseColumn column,
-                    MembershipFunction membershipFunction,
-                    UniverseOfDiscourseTwo universeOfDiscourse,
+                    MembershipShape membershipFunction,
+                    UniverseOfDiscourse universeOfDiscourse,
                     DescriptionType descriptionProducer) {
         this.membershipFunction = membershipFunction;
         this.column = column;
@@ -53,8 +53,8 @@ public class FuzzySet {
     }
 
     public boolean isConvex() {
-        double min = membershipFunction.getUniverseOfDiscourse().getMin().doubleValue();
-        double max = membershipFunction.getUniverseOfDiscourse().getMax().doubleValue();
+        double min = membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().getMin().doubleValue();
+        double max = membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().getMax().doubleValue();
         double diff = max - min;
         for (int i = 0; i < 50; i++) {
             double a = min + random.nextDouble() * diff;
@@ -69,7 +69,8 @@ public class FuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        return this.getSupport().calculateSize() / this.membershipFunction.getUniverseOfDiscourse().calculateSize();
+        return this.getSupport().calculateSize() /
+                this.membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
     }
 
     public NonFuzzySet getSupport() {
@@ -82,8 +83,8 @@ public class FuzzySet {
 
     public double getCardinality() {
         double sum = 0;
-        NonFuzzySet uni = this.membershipFunction.getUniverseOfDiscourse();
-        for (int i = uni.getMin().intValue(); i < uni.getMax().intValue(); i++) {
+        UniverseOfDiscourse uni = this.membershipFunction.getUniverseOfDiscourse();
+        for (int i = uni.getNonFuzzySet().getMin().intValue(); i < uni.getNonFuzzySet().getMax().intValue(); i++) {
             sum += membershipFunction.evaluate((double) i);
         }
         return sum;

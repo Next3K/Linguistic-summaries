@@ -1,4 +1,4 @@
-package org.example.model.statements;
+package org.example.model.summary;
 
 import lombok.Getter;
 

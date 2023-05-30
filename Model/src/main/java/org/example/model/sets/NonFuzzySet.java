@@ -6,10 +6,6 @@ import lombok.Getter;
 @Getter
 public abstract class NonFuzzySet {
 
-    //protected final MembershipFunction membershipFunction;
-    // przestrzeń na pewno musi byc tak w fuzzy set
-//    protected final UniverseOfDiscourse universeOfDiscourse;
-
     protected final Number min;
     protected final Number max;
 
@@ -18,12 +14,13 @@ public abstract class NonFuzzySet {
         this.max = max;
     }
 
-
     public abstract boolean isEmpty();
 
     public abstract double calculateSize();
 
     public abstract boolean isValueInTheSet(Number number);
+
+    public abstract NonFuzzySet getSubset(Number a, Number b);
 
     public Number getMinimum() {
         return min;

@@ -4,7 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.FuzzySet;
-import org.example.model.statements.Summary;
+import org.example.model.summary.Summary;
 
 import java.util.*;
 
