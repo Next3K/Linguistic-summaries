@@ -2,7 +2,7 @@ package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Compound;
+import org.example.model.sets.CompoundFuzzySet;
 import org.example.model.sets.FuzzySet;
 
 import java.util.List;
@@ -12,8 +12,8 @@ import java.util.Set;
 public class SecondTypeSummary extends Summary {
 
     public SecondTypeSummary(Quantifier quantifier,
-                             Compound summarizer,
-                             Compound qualifier) {
+                             CompoundFuzzySet summarizer,
+                             CompoundFuzzySet qualifier) {
         super(quantifier, summarizer);
 
         // check whether quantifier is OK
@@ -24,7 +24,7 @@ public class SecondTypeSummary extends Summary {
         this.qualifier = qualifier;
     }
 
-    protected final Compound qualifier;
+    protected final CompoundFuzzySet qualifier;
 
 
     @Override
@@ -42,14 +42,14 @@ public class SecondTypeSummary extends Summary {
         double up = entries
                 .stream()
                 .filter(e ->
-                        this.summarizer.getMembershipFunctionValueFor(e) > 0
+                        this.summarizer.evaluateFor(e) > 0
                                 &&
-                                this.qualifier.getMembershipFunctionValueFor(e) > 0)
+                                this.qualifier.evaluateFor(e) > 0)
                 .count();
         if (up == 0) return 0;
         double down = entries
                 .stream()
-                .filter(e -> this.qualifier.getMembershipFunctionValueFor(e) > 0)
+                .filter(e -> this.qualifier.evaluateFor(e) > 0)
                 .count();
         return up / down;
     }
@@ -59,8 +59,8 @@ public class SecondTypeSummary extends Summary {
         double numerator = 0d;
         double denominator = 0d;
         for (var entry : entries) {
-            Double summarizerValue = this.summarizer.getMembershipFunctionValueFor(entry);
-            Double qualifierValue = this.qualifier.getMembershipFunctionValueFor(entry);
+            Double summarizerValue = this.summarizer.evaluateFor(entry);
+            Double qualifierValue = this.qualifier.evaluateFor(entry);
             numerator += Math.min(summarizerValue, qualifierValue);
             denominator += qualifierValue;
         }
@@ -74,7 +74,7 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierImprecision(List<Entry> entries) {
-        Set<FuzzySet> subset = this.qualifier.getSubsets();
+        Set<FuzzySet> subset = this.qualifier.getFuzzySets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -86,7 +86,7 @@ public class SecondTypeSummary extends Summary {
 
     @Override
     public double calculateDegreeOfQualifierCardinality(List<Entry> entries) {
-        Set<FuzzySet> subset = this.qualifier.getSubsets();
+        Set<FuzzySet> subset = this.qualifier.getFuzzySets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {

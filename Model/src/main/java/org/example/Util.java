@@ -350,35 +350,73 @@ public class Util {
     }
 
     public static List<Quantifier> loadDefaultRelativeQuantifiers() {
-        Quantifier almostNone = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ALMOST_NONE);
-        Quantifier few = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.FEW);
-        Quantifier aboutQuarter = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ABOUT_QUARTER);
-        Quantifier some = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.SOME);
-        Quantifier aboutHalf = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ABOUT_HALF);
-        Quantifier aboutThreeQuarters =
-                new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ABOUT_THREE_QUARTERS);
-        Quantifier many = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.MANY);
-        Quantifier almostAll = new RelativeQuantifier(RelativeQuantifier.RelativeQuantifierType.ALMOST_ALL);
+        var universe = UniverseOfDiscourse.relativeQuantifierUniverseInstance();
 
-        return new ArrayList<>(List.of(almostNone, few, aboutQuarter,
-                some, aboutHalf, aboutThreeQuarters, many, almostAll));
+        Quantifier almostNone =
+                new RelativeQuantifier(
+                        "Almost none",
+                        new TriangularShape(-1d, 0d, 0.1d),
+                        universe);
+        Quantifier few =
+                new RelativeQuantifier(
+                        "Few",
+                        new TriangularShape(0d, 0.1d, 0.2d),
+                        universe);
+        Quantifier aboutQuarter =
+                new RelativeQuantifier(
+                        "About quarter",
+                        new TriangularShape(0.1d, 0.2d, 0.3d),
+                        universe);
+        Quantifier some =
+                new RelativeQuantifier(
+                        "Some",
+                        new TrapezoidShape(0.2d, 0.3d, 0.35d, 0.45d),
+                        universe);
+        Quantifier aboutHalf =
+                new RelativeQuantifier(
+                        "About half",
+                        new TrapezoidShape(0.3d, 0.45d, 0.55d, 0.7d),
+                        universe);
+        Quantifier aboutThreeQuarters =
+                new RelativeQuantifier(
+                        "About three-quarters",
+                        new TriangularShape(0.6d, 0.7d, 0.8d),
+                        universe);
+        Quantifier many =
+                new RelativeQuantifier(
+                        "Many",
+                        new TrapezoidShape(0.7d, 0.85d, 1d, 1.2d),
+                        universe);
+        Quantifier almostAll =
+                new RelativeQuantifier(
+                        "Almost all",
+                        new TrapezoidShape(0.85d, 0.95d, 1d, 1.2d),
+                        universe);
+
+        return new ArrayList<>(List.of(
+                almostNone,
+                few,
+                aboutQuarter,
+                some,
+                aboutHalf,
+                aboutThreeQuarters,
+                many,
+                almostAll));
     }
 
-    public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
-        UniverseOfDiscourse universe = new UniverseOfDiscourse(0d, 14_854d);
 
+    public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
+        UniverseOfDiscourse universe = UniverseOfDiscourse.absoluteQuantifierUniverseInstance();
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
                 "About 280",
                 new GaussianShape(280, 170d),
                 universe);
 
-
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
                 "About 1200",
                 new GaussianShape(1200, 300d),
                 universe);
-
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
                 "About 3600",
@@ -401,8 +439,13 @@ public class Util {
                 universe);
 
 
-        return new ArrayList<>(List.of(twoEightZero, oneTwoZeroZero, threeSixZeroZero,
-                sevenTwoZeroZero, oneZeroEightZeroZero, oneFourFourZeroZero));
+        return new ArrayList<>(List.of(
+                twoEightZero,
+                oneTwoZeroZero,
+                threeSixZeroZero,
+                sevenTwoZeroZero,
+                oneZeroEightZeroZero,
+                oneFourFourZeroZero));
     }
 
 

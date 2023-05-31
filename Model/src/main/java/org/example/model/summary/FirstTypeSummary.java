@@ -2,13 +2,13 @@ package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Compound;
+import org.example.model.sets.CompoundFuzzySet;
 
 import java.util.List;
 
 public class FirstTypeSummary extends Summary {
 
-    public FirstTypeSummary(Quantifier quantifier, Compound summarizer) {
+    public FirstTypeSummary(Quantifier quantifier, CompoundFuzzySet summarizer) {
         super(quantifier, summarizer);
     }
 
@@ -17,7 +17,7 @@ public class FirstTypeSummary extends Summary {
         double m = entries.size();
         return (entries
                 .stream()
-                .filter(e -> this.summarizer.getMembershipFunctionValueFor(e) > 0)
+                .filter(e -> this.summarizer.evaluateFor(e) > 0)
                 .count()) / m;
     }
 
@@ -25,7 +25,7 @@ public class FirstTypeSummary extends Summary {
     public double calculateDegreeOfTruth(List<Entry> entries) {
         double valueCalculatedFromEntries = 0d;
         for (var entry : entries) {
-            valueCalculatedFromEntries += this.summarizer.getMembershipFunctionValueFor(entry);
+            valueCalculatedFromEntries += this.summarizer.evaluateFor(entry);
         }
         double m = (this.quantifier.isRelative()) ?
                 (double) entries.size() : 1d;

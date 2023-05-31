@@ -1,14 +1,14 @@
 package org.example.model.summary;
 
 import lombok.Getter;
-import org.example.model.sets.Compound;
+import org.example.model.sets.CompoundFuzzySet;
 
 import java.util.Objects;
 
 @Getter
 public class TwoSubjectSummaryTypeFour extends TwoSubjectSummary {
 
-    private Compound summarizer;
+    private CompoundFuzzySet summarizer;
 
     protected TwoSubjectSummaryTypeFour(String subjectOne, String subjectTwo) {
         super(subjectOne, subjectTwo);

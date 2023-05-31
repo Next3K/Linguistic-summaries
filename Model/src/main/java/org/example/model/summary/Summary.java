@@ -2,7 +2,7 @@ package org.example.model.summary;
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Compound;
+import org.example.model.sets.CompoundFuzzySet;
 import lombok.Getter;
 import org.example.model.sets.FuzzySet;
 
@@ -16,7 +16,7 @@ public abstract class Summary {
     protected static final String SUBJECT = "daily weather measurements";
 
     protected final Quantifier quantifier;
-    protected final Compound summarizer;
+    protected final CompoundFuzzySet summarizer;
 
     protected Double qualityMeasure;
 
@@ -32,7 +32,7 @@ public abstract class Summary {
     protected Double degreeOfQualifierCardinality;
     protected Double lengthOfQualifier;
 
-    protected Summary(Quantifier quantifier, Compound summarizer) {
+    protected Summary(Quantifier quantifier, CompoundFuzzySet summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
     }
@@ -56,7 +56,7 @@ public abstract class Summary {
 
     // T2
     public double calculateDegreeOfImprecision() {
-        Set<FuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getFuzzySets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
@@ -76,7 +76,7 @@ public abstract class Summary {
 
     // T4
     public double calculateDegreeOfAppropriateness(List<Entry> entries) {
-        Set<FuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getFuzzySets();
         double m = entries.size();
         double multiply = 1.0d;
         for (var set : subset) {
@@ -113,7 +113,7 @@ public abstract class Summary {
 
     // T8
     public double calculateDegreeOfSummarizerCardinality(List<Entry> entries) {
-        Set<FuzzySet> subset = this.summarizer.getSubsets();
+        Set<FuzzySet> subset = this.summarizer.getFuzzySets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {

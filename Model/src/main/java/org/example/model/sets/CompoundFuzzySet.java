@@ -7,25 +7,21 @@ import java.util.Set;
 
 
 @Getter
-public class Compound {
+public class CompoundFuzzySet {
 
-    private final Set<FuzzySet> subsets;
+    private final Set<FuzzySet> fuzzySets;
 
-    public Compound(Set<FuzzySet> subsets) {
+    public CompoundFuzzySet(Set<FuzzySet> subsets) {
         if (subsets.isEmpty()) throw new IllegalArgumentException("Subset cannot be empty!");
-        this.subsets = subsets;
-    }
-
-    public int getSize() {
-        return subsets.size();
+        this.fuzzySets = subsets;
     }
 
     public String getTextualRepresentation() {
         StringBuilder builder = new StringBuilder();
         int count = 0;
-        for (var set : subsets) {
+        for (var set : fuzzySets) {
             builder.append(set.getTextualRepresentation());
-            if (count < subsets.size() - 1) {
+            if (count < fuzzySets.size() - 1) {
                 builder.append(" and ");
             }
             count++;
@@ -33,12 +29,24 @@ public class Compound {
         return builder.toString();
     }
 
-    public Double getMembershipFunctionValueFor(Entry entry) {
-        return subsets
+    public Double evaluateFor(Entry entry) {
+        return fuzzySets
                 .stream()
                 .map(e -> e.evaluateFor(entry))
                 .min(Double::compareTo)
                 .orElseGet(() -> 0d);
+    }
+
+    public Double evaluateFor(double value) {
+        return fuzzySets
+                .stream()
+                .map(e -> e.evaluateFor(value))
+                .min(Double::compareTo)
+                .orElseGet(() -> 0d);
+    }
+
+    public int getSize() {
+        return fuzzySets.size();
     }
 
 }

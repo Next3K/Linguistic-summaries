@@ -2,7 +2,7 @@
 
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
-import org.example.model.sets.Compound;
+import org.example.model.sets.CompoundFuzzySet;
 import org.example.model.sets.FuzzySet;
 import org.example.model.summary.FirstTypeSummary;
 import org.example.model.summary.SecondTypeSummary;
@@ -22,8 +22,8 @@ import java.util.*;
 
         List<Set<FuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
-        List<Compound> combinations =
-                subsets.stream().map(Compound::new).toList();
+        List<CompoundFuzzySet> combinations =
+                subsets.stream().map(CompoundFuzzySet::new).toList();
 
         int size =
                 absoluteQuantifiers.size() * combinations.size() +
@@ -52,7 +52,7 @@ import java.util.*;
         for (var quantifier : relativeQuantifiers) {
             for (var summarizer : combinations) {
                 for (var qualifier : combinations) {
-                    boolean disjoint = Collections.disjoint(summarizer.getSubsets(), qualifier.getSubsets());
+                    boolean disjoint = Collections.disjoint(summarizer.getFuzzySets(), qualifier.getFuzzySets());
                     if (qualifier != summarizer && disjoint) {
                         Summary statement = new SecondTypeSummary(quantifier, summarizer, qualifier);
                         statements.add(statement);
