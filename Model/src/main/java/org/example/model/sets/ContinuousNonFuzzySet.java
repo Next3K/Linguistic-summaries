@@ -14,7 +14,8 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
 
     @Override
     public double calculateSize() {
-        return this.max.doubleValue() - this.min.doubleValue();
+        double v = this.max.doubleValue() - this.min.doubleValue();
+        return v;
     }
 
     @Override

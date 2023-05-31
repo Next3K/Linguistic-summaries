@@ -105,22 +105,25 @@ public abstract class Summary {
     // T7
     public double calculateDegreeOfQuantifierCardinality() {
         Quantifier set = this.quantifier;
-        this.degreeOfQuantifierCardinality = 1 - (set.getCardinality() /
+        this.degreeOfQuantifierCardinality = 1 - (set.getCardinalityLikeMeasure() /
                 set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize());
         return this.degreeOfQuantifierCardinality;
     }
 
     // T8
-    public double calculateDegreeOfSummarizerCardinality() {
+    public double calculateDegreeOfSummarizerCardinality(List<Entry> entries) {
         Set<FuzzySet> subset = this.summarizer.getSubsets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *=
-                    set.getCardinality() /
-                            set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
+            double cardinality = set.getCardinality(entries);
+            double m = entries.size();
+            multiply *= cardinality / m;
         }
         this.degreeOfSummarizerCardinality = 1 - Math.pow(multiply, 1.0 / n);
+        if (this.degreeOfSummarizerCardinality < 0) {
+            System.out.println("se");
+        }
         return this.degreeOfSummarizerCardinality;
     }
 
@@ -134,18 +137,21 @@ public abstract class Summary {
     public abstract double calculateLengthOfQualifier();
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {
-        double sumWeights = weights.get(0) * this.calculateDegreeOfTruth(entries) +
+        double v = weights.get(0) * this.calculateDegreeOfTruth(entries) +
                 weights.get(1) * this.calculateDegreeOfImprecision() +
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
                 weights.get(4) * this.calculateLengthOfSummary() +
                 weights.get(5) * this.calculateDegreeOfQuantifierImprecision() +
                 weights.get(6) * this.calculateDegreeOfQuantifierCardinality() +
-                weights.get(7) * this.calculateDegreeOfSummarizerCardinality() +
+                weights.get(7) * this.calculateDegreeOfSummarizerCardinality(entries) +
                 weights.get(8) * this.calculateDegreeOfQualifierImprecision(entries) +
                 weights.get(9) * this.calculateDegreeOfQualifierCardinality(entries) +
                 weights.get(10) * this.calculateLengthOfQualifier();
-
+        double sumWeights = v;
+        if (sumWeights < 0) {
+            System.out.println("eo");
+        }
         return sumWeights / weights.stream().mapToDouble(Double::doubleValue).sum();
     }
 }

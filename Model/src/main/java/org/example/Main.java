@@ -29,14 +29,10 @@ public class Main {
 
         List<FuzzySet> fuzzySets = new ArrayList<>(10);
 
-        // users chose which fuzzy sets are of interest
-        LinguisticVariable minTempVariable = linguisticVariables.get(0);
-        LinguisticVariable maxTempVariable = linguisticVariables.get(1);
-        LinguisticVariable morningHumidityVariable = linguisticVariables.get(2);
 
-//        fuzzySets.addAll(Util.getLabeledFuzzySets(minTempVariable, List.of("warm")));
-//        fuzzySets.addAll(Util.getLabeledFuzzySets(maxTempVariable, List.of("cool")));
-//        fuzzySets.addAll(Util.getLabeledFuzzySets(morningHumidityVariable, List.of("dry")));
+        fuzzySets.add(linguisticVariables.get(0).getSet("cold"));
+        fuzzySets.add(linguisticVariables.get(1).getSet("cool"));
+        fuzzySets.add(linguisticVariables.get(2).getSet("dry"));
 
         // just one relative quantifier
         ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));

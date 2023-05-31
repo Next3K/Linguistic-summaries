@@ -4,6 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.functions.MembershipShape;
 import lombok.Getter;
 
+import java.util.List;
 import java.util.Random;
 
 
@@ -53,8 +54,8 @@ public class FuzzySet {
     }
 
     public boolean isConvex() {
-        double min = membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().getMin().doubleValue();
-        double max = membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().getMax().doubleValue();
+        double min = universeOfDiscourse.getNonFuzzySet().getMin().doubleValue();
+        double max = universeOfDiscourse.getNonFuzzySet().getMax().doubleValue();
         double diff = max - min;
         for (int i = 0; i < 50; i++) {
             double a = min + random.nextDouble() * diff;
@@ -69,30 +70,34 @@ public class FuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        return this.getSupport().calculateSize() /
-                this.membershipFunction.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
+        double v = this.getSupport().calculateSize();
+        double v1 = universeOfDiscourse.getNonFuzzySet().calculateSize();
+        double v2 = v / v1;
+        return v2;
     }
 
     public NonFuzzySet getSupport() {
-        return membershipFunction.getSupport();
+        return membershipFunction.getSupport(universeOfDiscourse);
     }
 
     public NonFuzzySet getAlfaCut(double y) {
-        return membershipFunction.getAlfaCut(y);
+        return membershipFunction.getAlfaCut(universeOfDiscourse, y);
     }
 
-    public double getCardinality() {
+    public double getCardinality(List<Entry> entries) {
         double sum = 0;
-        UniverseOfDiscourse uni = this.membershipFunction.getUniverseOfDiscourse();
-        for (int i = uni.getNonFuzzySet().getMin().intValue(); i < uni.getNonFuzzySet().getMax().intValue(); i++) {
-            sum += membershipFunction.evaluate((double) i);
+        for (var entry : entries) {
+            sum += getMembershipFunctionValueFor(entry);
         }
         return sum;
     }
 
     public double getCardinalityLikeMeasure() {
-        return membershipFunction.getIntegral();
+        double a = universeOfDiscourse.getNonFuzzySet().getMinimum().doubleValue();
+        double b = universeOfDiscourse.getNonFuzzySet().getMaximum().doubleValue();
+        return membershipFunction.getIntegral(a, b);
     }
+
 
     public String getTextualRepresentation() {
         return switch (descriptionType) {
@@ -108,7 +113,7 @@ public class FuzzySet {
 
     // example: "Student is/have: strongman musculature"
     private String complexDescription() {
-        return this.column.variableName() + " " + this.label;
+        return this.label + " " + this.column.variableName();
     }
 
     public enum DescriptionType {

@@ -90,9 +90,7 @@ public class SecondTypeSummary extends Summary {
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *=
-                    set.getCardinality() /
-                            set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize();
+            multiply *= set.getCardinality(entries) / (double) entries.size();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;
