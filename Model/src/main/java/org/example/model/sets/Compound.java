@@ -36,7 +36,7 @@ public class Compound {
     public Double getMembershipFunctionValueFor(Entry entry) {
         return subsets
                 .stream()
-                .map(e -> e.getMembershipFunctionValueFor(entry))
+                .map(e -> e.evaluateFor(entry))
                 .min(Double::compareTo)
                 .orElseGet(() -> 0d);
     }

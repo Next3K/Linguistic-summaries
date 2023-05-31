@@ -41,12 +41,13 @@ public class FuzzySet {
         this.universeOfDiscourse = universeOfDiscourse;
     }
 
-    public Double calculateMembershipFunctionValue(double x) {
-        return membershipFunction.evaluate(x);
+
+    public Double evaluateFor(Entry entry) {
+        return this.evaluateFor(entry.getValues().get(this.column));
     }
 
-    public Double getMembershipFunctionValueFor(Entry e) {
-        return this.calculateMembershipFunctionValue(e.getValues().get(this.column));
+    public Double evaluateFor(double value) {
+        return membershipFunction.evaluate(value);
     }
 
     public boolean isNormal() {
@@ -61,8 +62,8 @@ public class FuzzySet {
             double a = min + random.nextDouble() * diff;
             double b = min + random.nextDouble() * diff;
             double mid = (a + b) / 2.0d;
-            if (calculateMembershipFunctionValue(mid) <
-                    Math.min(calculateMembershipFunctionValue(a), calculateMembershipFunctionValue(b))) {
+            if (evaluateFor(mid) <
+                    Math.min(evaluateFor(a), evaluateFor(b))) {
                 return false;
             }
         }
@@ -87,7 +88,7 @@ public class FuzzySet {
     public double getCardinality(List<Entry> entries) {
         double sum = 0;
         for (var entry : entries) {
-            sum += getMembershipFunctionValueFor(entry);
+            sum += evaluateFor(entry);
         }
         return sum;
     }

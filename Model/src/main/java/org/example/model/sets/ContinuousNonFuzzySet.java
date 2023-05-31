@@ -14,20 +14,26 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
 
     @Override
     public double calculateSize() {
-        double v = this.max.doubleValue() - this.min.doubleValue();
-        return v;
+        return (isEmpty()) ? 0d : this.max.doubleValue() - this.min.doubleValue();
     }
 
     @Override
     public boolean isValueInTheSet(Number number) {
-        return number.doubleValue() <= max.doubleValue() && min.doubleValue() <= number.doubleValue();
+        return !isEmpty() &&
+                number.doubleValue() <= max.doubleValue() &&
+                min.doubleValue() <= number.doubleValue();
     }
 
     @Override
     public NonFuzzySet getSubset(Number a, Number b) {
-        return new ContinuousNonFuzzySet(
+        return (isEmpty()) ? emptySetInstance() : new ContinuousNonFuzzySet(
                 Math.min(a.doubleValue(), min.doubleValue()),
                 Math.max(b.doubleValue(), min.doubleValue()));
+    }
+
+    @Override
+    public NonFuzzySet emptySetInstance() {
+        return emptySet;
     }
 
 

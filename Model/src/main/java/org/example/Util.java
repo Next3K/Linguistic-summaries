@@ -122,7 +122,6 @@ public class Util {
                 uni4);
 
 
-
         UniverseOfDiscourse uni5 = new UniverseOfDiscourse(0d, 140d);
         LinguisticVariable windSpeed = new LinguisticVariable(
                 Map.of("calm",
@@ -324,7 +323,6 @@ public class Util {
                 uni10);
 
 
-
         return new ArrayList<>(
                 List.of(minTemperature,
                         maxTemperature,
@@ -369,43 +367,36 @@ public class Util {
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
         UniverseOfDiscourse universe = new UniverseOfDiscourse(0d, 14_854d);
 
-        String about = "About";
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
-                280d,
-                about,
+                "About 280",
                 new GaussianShape(280, 170d),
                 universe);
 
 
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
-                1200d,
-                about,
+                "About 1200",
                 new GaussianShape(1200, 300d),
                 universe);
 
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
-                3600d,
-                about,
+                "About 3600",
                 new GaussianShape(3600, 850d),
                 universe);
 
         Quantifier sevenTwoZeroZero = new AbsoluteQuantifier(
-                7200d,
-                about,
+                "About 7200",
                 new GaussianShape(7200, 900d),
                 universe);
 
         Quantifier oneZeroEightZeroZero = new AbsoluteQuantifier(
-                10800d,
-                about,
+                "About 10800",
                 new GaussianShape(10800, 1000d),
                 universe);
 
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
-                14600d,
-                about,
+                "About 14600",
                 new GaussianShape(14600, 1200d),
                 universe);
 
@@ -433,17 +424,16 @@ public class Util {
     }
 
 
-
     public double and(FuzzySet a, FuzzySet b, Entry e) {
-        return Math.min(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
+        return Math.min(a.evaluateFor(e), b.evaluateFor(e));
     }
 
     public double or(FuzzySet a, FuzzySet b, Entry e) {
-        return Math.max(a.getMembershipFunctionValueFor(e), b.getMembershipFunctionValueFor(e));
+        return Math.max(a.evaluateFor(e), b.evaluateFor(e));
     }
 
-    public double not(FuzzySet a, FuzzySet b, Entry e) {
-        return 1 - a.getMembershipFunctionValueFor(e);
+    public double not(FuzzySet a, Entry e) {
+        return 1 - a.evaluateFor(e);
     }
 
 }

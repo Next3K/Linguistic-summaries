@@ -30,4 +30,8 @@ public abstract class NonFuzzySet {
         return max;
     }
 
+    public NonFuzzySet emptySetInstance() {
+        return EmptySet.getInstance();
+    }
+
 }

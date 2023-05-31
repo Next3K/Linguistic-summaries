@@ -68,7 +68,7 @@ public class SecondTypeSummary extends Summary {
             this.degreeOfTruth = 0d;
             return 0;
         }
-        this.degreeOfTruth = quantifier.getQuantified(numerator / denominator);
+        this.degreeOfTruth = quantifier.evaluateFor(numerator / denominator);
         return degreeOfTruth;
     }
 

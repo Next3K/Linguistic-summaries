@@ -37,7 +37,7 @@ public abstract class Summary {
         this.summarizer = summarizer;
     }
 
-    public String getTextualSummary() {
+    public String getSummaryAsText() {
         return getTextualRepresentation() + " [" + this.qualityMeasure + "]";
     }
 
@@ -49,6 +49,7 @@ public abstract class Summary {
                                         List<Double> weights) {
         this.qualityMeasure = this.calculateWeightedMeasure(entries, weights);
     }
+
 
     // T1
     public abstract double calculateDegreeOfTruth(List<Entry> entries);
@@ -81,7 +82,7 @@ public abstract class Summary {
         for (var set : subset) {
             double r = (entries
                     .stream()
-                    .filter(e -> set.getMembershipFunctionValueFor(e) > 0)
+                    .filter(e -> set.evaluateFor(e) > 0)
                     .count()) / m;
             multiply *= r;
         }

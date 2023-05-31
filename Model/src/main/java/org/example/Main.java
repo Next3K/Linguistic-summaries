@@ -50,7 +50,7 @@ public class Main {
 
         // print report
         for (var s : statements) {
-            System.out.println(s.getTextualSummary());
+            System.out.println(s.getSummaryAsText());
         }
     }
 }

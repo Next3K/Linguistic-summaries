@@ -15,18 +15,21 @@ public class DiscreteNonFuzzySet extends NonFuzzySet {
 
     @Override
     public double calculateSize() {
-        return max.intValue() - min.intValue() + 1;
+        return (isEmpty()) ? 0 : max.intValue() - min.intValue() + 1;
     }
 
     @Override
     public boolean isValueInTheSet(Number number) {
-        return number.intValue() <= this.max.intValue() && this.min.intValue() <= number.intValue();
+        return !isEmpty() &&
+                number.intValue() <= this.max.intValue() &&
+                this.min.intValue() <= number.intValue();
     }
 
     @Override
     public NonFuzzySet getSubset(Number a, Number b) {
-        return new DiscreteNonFuzzySet(
+        return (isEmpty()) ? emptySetInstance() :  new DiscreteNonFuzzySet(
                 Math.min(a.intValue(), min.intValue()),
                 Math.max(b.intValue(), min.intValue()));
     }
+
 }

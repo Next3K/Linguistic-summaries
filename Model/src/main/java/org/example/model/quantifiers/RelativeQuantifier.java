@@ -8,14 +8,12 @@ import org.example.model.sets.UniverseOfDiscourse;
 
 public class RelativeQuantifier extends Quantifier {
 
-    // custom relative quantifiers
     public RelativeQuantifier(String label,
                               MembershipShape membershipFunction,
                               UniverseOfDiscourse universeOfDiscourse) {
         super(label, membershipFunction, universeOfDiscourse);
     }
 
-    // default relative quantifiers
     public RelativeQuantifier(RelativeQuantifierType type) {
         super(type.getInTextualForm(), type.getFunction(), type.getUniverse());
     }
@@ -54,16 +52,6 @@ public class RelativeQuantifier extends Quantifier {
         public UniverseOfDiscourse getUniverse() {
             return universeOfDiscourse;
         }
-    }
-
-    @Override
-    public String getTextualRepresentation() {
-        return this.getLabel();
-    }
-
-    @Override
-    public Double getQuantified(Double d) {
-        return membershipFunction.evaluate(d);
     }
 
     @Override
