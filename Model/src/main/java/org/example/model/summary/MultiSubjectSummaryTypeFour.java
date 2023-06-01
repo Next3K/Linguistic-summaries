@@ -3,7 +3,6 @@ package org.example.model.summary;
 import lombok.Getter;
 import org.example.model.db.Entry;
 import org.example.model.sets.CompoundFuzzySet;
-import org.example.model.sets.FuzzySet;
 
 import java.util.List;
 import java.util.Map;
@@ -19,21 +18,29 @@ public class MultiSubjectSummaryTypeFour extends MultiSubjectSummary {
     }
 
     @Override
-    public String getTextualRepresentation() {
+    public String getTwoSubjectSummaryAsText() {
         return "More" + " " +
                 subjectOne.description() + " than " +
                 subjectTwo.description() + "is/have: " +
-                summarizer.getTextualRepresentation();
+                summarizer.getTextualRepresentation() +
+                "[" + this.qualityMeasure + "]";
     }
 
     @Override
     public Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>> entriesPartitioned) {
-        var recordsTypeOne = entriesPartitioned.get(this.subjectOne);
-        var recordsTypeTwo = entriesPartitioned.get(this.subjectTwo);
-        double numerator = recordsTypeTwo.stream().mapToDouble(summarizer::evaluateFor).sum() / recordsTypeTwo.size();
-        double denominator = recordsTypeOne.stream().mapToDouble(summarizer::evaluateFor).sum() / recordsTypeOne.size();
-        double degreeOfInclusion = numerator / denominator;
-        this.qualityMeasure = 1 - degreeOfInclusion;
+        var recordsSubjectOne = entriesPartitioned.get(this.subjectOne);
+        var recordsSubjectTwo = entriesPartitioned.get(this.subjectTwo);
+
+        var big = Math.max(recordsSubjectTwo.size(), recordsSubjectOne.size());
+
+        double sum = 0;
+        for (int i = 0; i < big; i++) {
+            double a = (i < recordsSubjectOne.size()) ? summarizer.evaluateFor(recordsSubjectOne.get(i)) : 0;
+            double b = (i < recordsSubjectTwo.size()) ? summarizer.evaluateFor(recordsSubjectTwo.get(i)) : 0;
+            sum += Math.min(1, 1 - a + b);
+        }
+
+        this.qualityMeasure = 1 - (sum / big);
         return qualityMeasure;
     }
 

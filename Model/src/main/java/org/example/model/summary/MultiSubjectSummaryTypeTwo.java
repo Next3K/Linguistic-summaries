@@ -27,12 +27,13 @@ public class MultiSubjectSummaryTypeTwo extends MultiSubjectSummary {
     private final CompoundFuzzySet qualifier;
 
     @Override
-    public String getTextualRepresentation() {
+    public String getTwoSubjectSummaryAsText() {
         return quantifier.getTextualRepresentation() + " " +
                 subjectOne.description() + " in comparison to " +
                 subjectTwo.description() + " which are/have: " +
                 qualifier.getTextualRepresentation() + "," + " are/have: " +
-                summarizer.getTextualRepresentation();
+                summarizer.getTextualRepresentation() +
+                "[" + this.qualityMeasure + "]";
     }
 
     @Override

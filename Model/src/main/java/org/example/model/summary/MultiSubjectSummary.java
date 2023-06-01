@@ -23,7 +23,7 @@ public abstract class MultiSubjectSummary {
         this.summarizer = summarizer;
     }
 
-    public abstract String getTextualRepresentation();
+    public abstract String getTwoSubjectSummaryAsText();
 
     public abstract  Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>> entries);
 }

@@ -4,6 +4,7 @@ import org.example.model.db.Entry;
 import org.example.model.LinguisticVariable;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.FuzzySet;
+import org.example.model.summary.MultiSubjectSummary;
 import org.example.model.summary.Summary;
 
 import java.util.*;
@@ -47,10 +48,21 @@ public class Main {
                         fuzzySets,
                         weights);
 
+        List<MultiSubjectSummary> summariesTwo =
+                Generator.generateTwoSubjectSummaries(
+                        records,
+                        relativeQuantifiers,
+                        fuzzySets);
+
 
         // print report
         for (var s : statements) {
             System.out.println(s.getSummaryAsText());
+        }
+
+        // print report
+        for (var s : summariesTwo) {
+            System.out.println(s.getTwoSubjectSummaryAsText());
         }
     }
 }

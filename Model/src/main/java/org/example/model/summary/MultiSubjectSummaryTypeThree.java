@@ -27,12 +27,13 @@ public class MultiSubjectSummaryTypeThree extends MultiSubjectSummary {
     }
 
     @Override
-    public String getTextualRepresentation() {
+    public String getTwoSubjectSummaryAsText() {
         return quantifier.getTextualRepresentation() + " " +
                 subjectOne.description() + " which are/have: " +
                 subjectTwo.description() + " in comparison to " +
                 qualifier.getTextualRepresentation() + "," + " are/have: " +
-                summarizer.getTextualRepresentation();
+                summarizer.getTextualRepresentation() +
+                "[" + this.qualityMeasure + "]";
     }
 
     @Override

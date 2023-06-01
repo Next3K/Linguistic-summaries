@@ -30,8 +30,8 @@ public class Entry {
 
         public String description() {
             return switch (this) {
-                case CURRENT -> "current";
-                case PREMILLENIAL -> "premillenial";
+                case CURRENT -> "current daily weather measurements";
+                case PREMILLENIAL -> "premillenial daily weather measurements";
             };
         }
     }
