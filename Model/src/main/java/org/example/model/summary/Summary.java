@@ -56,7 +56,6 @@ public abstract class Summary {
     public abstract double calculateDegreeOfTruth(List<Entry> entries);
 
     // T2
-    // TODO db
     public double calculateDegreeOfImprecision(List<Entry> entries) {
         Set<FuzzySet> subset = this.summarizer.getFuzzySets();
         int n = subset.size();
@@ -69,7 +68,6 @@ public abstract class Summary {
     }
 
     // T3
-    // TODO db
     public double calculateDegreeOfCovering(List<Entry> entries) {
         if (this.degreeOfCovering == null) {
             this.degreeOfCovering = this.getDegreeOfCovering(entries);
@@ -125,18 +123,13 @@ public abstract class Summary {
             multiply *= cardinality / m;
         }
         this.degreeOfSummarizerCardinality = 1 - Math.pow(multiply, 1.0 / n);
-        if (this.degreeOfSummarizerCardinality < 0) {
-            System.out.println("se");
-        }
         return this.degreeOfSummarizerCardinality;
     }
 
     // T9
-    // TODO db
     public abstract double calculateDegreeOfQualifierImprecision(List<Entry> entries);
 
     // T10
-    // TODO db
     public abstract double calculateDegreeOfQualifierCardinality(List<Entry> entries);
 
     // T11

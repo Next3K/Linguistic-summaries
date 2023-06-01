@@ -80,7 +80,9 @@ public class FuzzySet {
         NonFuzzySet support = this.getSupport();
         double count = entries.stream().filter(e ->
                 support.isValueInTheSet(e.getValues().get(this.databaseColumn))).count();
-        return count / this.universeOfDiscourse.getNonFuzzySet().evaluateSize();
+        double whole = entries.stream().filter(e ->
+                universeOfDiscourse.getNonFuzzySet().isValueInTheSet(e.getValues().get(this.databaseColumn))).count();
+        return count / whole;
     }
 
     public NonFuzzySet getSupport() {
