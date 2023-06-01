@@ -6,9 +6,9 @@ import org.example.model.sets.CompoundFuzzySet;
 
 import java.util.List;
 
-public class FirstTypeSummary extends Summary {
+public class FirstFormSummary extends Summary {
 
-    public FirstTypeSummary(Quantifier quantifier, CompoundFuzzySet summarizer) {
+    public FirstFormSummary(Quantifier quantifier, CompoundFuzzySet summarizer) {
         super(quantifier, summarizer);
     }
 

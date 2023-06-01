@@ -26,7 +26,14 @@ public class Entry {
     private Map<DatabaseColumn, Double> values;
 
     public enum SubjectType {
-        CURRENT, PREMILLENIAL
+        CURRENT, PREMILLENIAL;
+
+        public String description() {
+            return switch (this) {
+                case CURRENT -> "current";
+                case PREMILLENIAL -> "premillenial";
+            };
+        }
     }
 
     public enum DatabaseColumn {

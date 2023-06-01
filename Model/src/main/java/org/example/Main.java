@@ -40,7 +40,7 @@ public class Main {
         ArrayList<Quantifier> zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(0)));
 
         List<Summary> statements =
-                Generator.generateStatements(
+                Generator.generateSummaries(
                         records,
                         zerQualifier,
                         oneQualifier,

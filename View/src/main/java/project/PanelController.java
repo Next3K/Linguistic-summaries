@@ -219,7 +219,7 @@ public class PanelController {
 
         System.out.println("Zaczynam generowanie");
         List<Summary> statements =
-                Generator.generateStatements(
+                Generator.generateSummaries(
                         records,
                         zerQualifier,
                         oneQualifier,

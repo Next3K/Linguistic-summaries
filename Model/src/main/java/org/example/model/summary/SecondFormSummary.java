@@ -9,9 +9,9 @@ import java.util.List;
 import java.util.Set;
 
 
-public class SecondTypeSummary extends Summary {
+public class SecondFormSummary extends Summary {
 
-    public SecondTypeSummary(Quantifier quantifier,
+    public SecondFormSummary(Quantifier quantifier,
                              CompoundFuzzySet summarizer,
                              CompoundFuzzySet qualifier) {
         super(quantifier, summarizer);

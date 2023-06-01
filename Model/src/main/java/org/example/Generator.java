@@ -4,21 +4,22 @@ import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
 import org.example.model.sets.CompoundFuzzySet;
 import org.example.model.sets.FuzzySet;
-import org.example.model.summary.FirstTypeSummary;
-import org.example.model.summary.SecondTypeSummary;
+import org.example.model.summary.FirstFormSummary;
+import org.example.model.summary.SecondFormSummary;
 import org.example.model.summary.Summary;
-import org.example.model.summary.TwoSubjectSummary;
+import org.example.model.summary.MultiSubjectSummary;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
  public class Generator {
 
 
-    public static List<Summary> generateStatements(List<Entry> records,
-                                                   List<Quantifier> absoluteQuantifiers,
-                                                   List<Quantifier> relativeQuantifiers,
-                                                   List<FuzzySet> attributesAndSummarizers,
-                                                   List<Double> weights) {
+    public static List<Summary> generateSummaries(List<Entry> records,
+                                                  List<Quantifier> absoluteQuantifiers,
+                                                  List<Quantifier> relativeQuantifiers,
+                                                  List<FuzzySet> attributesAndSummarizers,
+                                                  List<Double> weights) {
 
         List<Set<FuzzySet>> subsets = Util.generateSubsets(attributesAndSummarizers);
 
@@ -35,14 +36,14 @@ import java.util.*;
         // first type statements
         for (var quantifier : absoluteQuantifiers) {
             for (var summarizer : combinations) {
-                Summary statement = new FirstTypeSummary(quantifier, summarizer);
+                Summary statement = new FirstFormSummary(quantifier, summarizer);
                 statements.add(statement);
             }
         }
 
         for (var quantifier : relativeQuantifiers) {
             for (var summarizer : combinations) {
-                Summary statement = new FirstTypeSummary(quantifier, summarizer);
+                Summary statement = new FirstFormSummary(quantifier, summarizer);
                 statements.add(statement);
             }
         }
@@ -54,7 +55,7 @@ import java.util.*;
                 for (var qualifier : combinations) {
                     boolean disjoint = Collections.disjoint(summarizer.getFuzzySets(), qualifier.getFuzzySets());
                     if (qualifier != summarizer && disjoint) {
-                        Summary statement = new SecondTypeSummary(quantifier, summarizer, qualifier);
+                        Summary statement = new SecondFormSummary(quantifier, summarizer, qualifier);
                         statements.add(statement);
                     }
                 }
@@ -70,10 +71,18 @@ import java.util.*;
         return statements;
     }
 
-    public static List<TwoSubjectSummary> generateTwoSubjectStatements(List<Entry> records,
-                                                                       List<Quantifier> relativeQuantifiers,
-                                                                       Map<Entry.DatabaseColumn, List<FuzzySet>> attributesAndSummarizers) {
-        List<TwoSubjectSummary> statements = new ArrayList<>(100);
+    public static List<MultiSubjectSummary> generateTwoSubjectSummaries(List<Entry> records,
+                                                                        List<Quantifier> relativeQuantifiers,
+                                                                        Map<Entry.DatabaseColumn, List<FuzzySet>> attributesAndSummarizers) {
+        List<MultiSubjectSummary> statements = new ArrayList<>(100);
+
+        Map<Boolean, List<Entry>> partitioned = records.stream().collect(Collectors.partitioningBy(e ->
+                e.getSubjectType().equals(Entry.SubjectType.CURRENT)));
+
+        Map<Entry.SubjectType, List<Entry>> map =
+                Map.of(Entry.SubjectType.CURRENT, partitioned.get(true),
+                Entry.SubjectType.PREMILLENIAL, partitioned.get(false));
+
         return null;
     }
 
