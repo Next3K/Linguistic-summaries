@@ -78,7 +78,7 @@ public class SecondTypeSummary extends Summary {
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *= set.getDegreeOfFuzziness();
+            multiply *= set.getDegreeOfFuzziness(entries);
         }
         this.degreeOfQualifierImprecision = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierImprecision;
@@ -90,7 +90,7 @@ public class SecondTypeSummary extends Summary {
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *= set.getCardinality(entries) / (double) entries.size();
+            multiply *= set.getCardinality(entries) / entries.size();
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;

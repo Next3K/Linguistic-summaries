@@ -64,9 +64,10 @@ public class TriangularShape implements MembershipShape {
 
     @Override
     public NonFuzzySet getSupport(UniverseOfDiscourse universe) {
-        double a = Math.max(universe.getNonFuzzySet().getMinimum().doubleValue(), this.a);
-        double b = Math.min(universe.getNonFuzzySet().getMinimum().doubleValue(), this.b);
-        return universe.getNonFuzzySet().getSubset(a, b);
+        NonFuzzySet fuzzySet = universe.getNonFuzzySet();
+        double a = Math.max(fuzzySet.getMinimum().doubleValue(), this.a);
+        double b = Math.min(fuzzySet.getMaximum().doubleValue(), this.b);
+        return fuzzySet.getSubset(a, b);
     }
 
     @Override

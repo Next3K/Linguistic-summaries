@@ -15,11 +15,15 @@ import java.util.*;
 
 public class Util {
 
+    private static final UniverseOfDiscourse relative = new UniverseOfDiscourse(0d, 1d);
+    private static final UniverseOfDiscourse absolute = new UniverseOfDiscourse(0d, 14_854d);
+
     public static List<LinguisticVariable> getDefaultLinguisticVariables() {
 
         UniverseOfDiscourse uni1 = new UniverseOfDiscourse(0d, 60d);
         LinguisticVariable minTemperature = new LinguisticVariable(
-                Map.of("cold", new FuzzySet(
+                Map.of("cold",
+                        new FuzzySet(
                                 "cold",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
                                 new TrapezoidShape(-1d, 0d, 5d, 15d),
@@ -350,48 +354,47 @@ public class Util {
     }
 
     public static List<Quantifier> loadDefaultRelativeQuantifiers() {
-        var universe = UniverseOfDiscourse.relativeQuantifierUniverseInstance();
 
         Quantifier almostNone =
                 new RelativeQuantifier(
                         "Almost none",
                         new TriangularShape(-1d, 0d, 0.1d),
-                        universe);
+                        relative);
         Quantifier few =
                 new RelativeQuantifier(
                         "Few",
                         new TriangularShape(0d, 0.1d, 0.2d),
-                        universe);
+                        relative);
         Quantifier aboutQuarter =
                 new RelativeQuantifier(
                         "About quarter",
                         new TriangularShape(0.1d, 0.2d, 0.3d),
-                        universe);
+                        relative);
         Quantifier some =
                 new RelativeQuantifier(
                         "Some",
                         new TrapezoidShape(0.2d, 0.3d, 0.35d, 0.45d),
-                        universe);
+                        relative);
         Quantifier aboutHalf =
                 new RelativeQuantifier(
                         "About half",
                         new TrapezoidShape(0.3d, 0.45d, 0.55d, 0.7d),
-                        universe);
+                        relative);
         Quantifier aboutThreeQuarters =
                 new RelativeQuantifier(
                         "About three-quarters",
                         new TriangularShape(0.6d, 0.7d, 0.8d),
-                        universe);
+                        relative);
         Quantifier many =
                 new RelativeQuantifier(
                         "Many",
                         new TrapezoidShape(0.7d, 0.85d, 1d, 1.2d),
-                        universe);
+                        relative);
         Quantifier almostAll =
                 new RelativeQuantifier(
                         "Almost all",
                         new TrapezoidShape(0.85d, 0.95d, 1d, 1.2d),
-                        universe);
+                        relative);
 
         return new ArrayList<>(List.of(
                 almostNone,
@@ -406,37 +409,36 @@ public class Util {
 
 
     public static List<Quantifier> loadDefaultAbsoluteQuantifiers() {
-        UniverseOfDiscourse universe = UniverseOfDiscourse.absoluteQuantifierUniverseInstance();
 
         Quantifier twoEightZero = new AbsoluteQuantifier(
                 "About 280",
                 new GaussianShape(280, 170d),
-                universe);
+                absolute);
 
         Quantifier oneTwoZeroZero = new AbsoluteQuantifier(
                 "About 1200",
                 new GaussianShape(1200, 300d),
-                universe);
+                absolute);
 
         Quantifier threeSixZeroZero = new AbsoluteQuantifier(
                 "About 3600",
                 new GaussianShape(3600, 850d),
-                universe);
+                absolute);
 
         Quantifier sevenTwoZeroZero = new AbsoluteQuantifier(
                 "About 7200",
                 new GaussianShape(7200, 900d),
-                universe);
+                absolute);
 
         Quantifier oneZeroEightZeroZero = new AbsoluteQuantifier(
                 "About 10800",
                 new GaussianShape(10800, 1000d),
-                universe);
+                absolute);
 
         Quantifier oneFourFourZeroZero = new AbsoluteQuantifier(
                 "About 14600",
                 new GaussianShape(14600, 1200d),
-                universe);
+                absolute);
 
 
         return new ArrayList<>(List.of(

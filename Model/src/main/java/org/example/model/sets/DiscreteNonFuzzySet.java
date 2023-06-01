@@ -14,7 +14,7 @@ public class DiscreteNonFuzzySet extends NonFuzzySet {
     }
 
     @Override
-    public double calculateSize() {
+    public double evaluateSize() {
         return (isEmpty()) ? 0 : max.intValue() - min.intValue() + 1;
     }
 

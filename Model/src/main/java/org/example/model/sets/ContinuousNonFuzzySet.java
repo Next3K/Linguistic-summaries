@@ -13,7 +13,7 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
     }
 
     @Override
-    public double calculateSize() {
+    public double evaluateSize() {
         return (isEmpty()) ? 0d : this.max.doubleValue() - this.min.doubleValue();
     }
 
@@ -30,11 +30,4 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
                 Math.min(a.doubleValue(), min.doubleValue()),
                 Math.max(b.doubleValue(), min.doubleValue()));
     }
-
-    @Override
-    public NonFuzzySet emptySetInstance() {
-        return emptySet;
-    }
-
-
 }

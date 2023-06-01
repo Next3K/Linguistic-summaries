@@ -16,7 +16,7 @@ public abstract class NonFuzzySet {
 
     public abstract boolean isEmpty();
 
-    public abstract double calculateSize();
+    public abstract double evaluateSize();
 
     public abstract boolean isValueInTheSet(Number number);
 

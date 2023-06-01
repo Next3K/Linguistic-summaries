@@ -37,7 +37,7 @@ public class Main {
         // just one relative quantifier
         ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(0)));
         // zero absolute quantifiers
-        ArrayList<Quantifier> zerQualifier = new ArrayList<>();
+        ArrayList<Quantifier> zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(0)));
 
         List<Summary> statements =
                 Generator.generateStatements(

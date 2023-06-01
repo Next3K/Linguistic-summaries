@@ -6,8 +6,7 @@ import lombok.Getter;
 public class UniverseOfDiscourse {
 
     private final NonFuzzySet nonFuzzySet;
-    private static final UniverseOfDiscourse relative = new UniverseOfDiscourse(0d, 1d);
-    private static final UniverseOfDiscourse absolute = new UniverseOfDiscourse(0d, 14_854d);
+
 
     public UniverseOfDiscourse(Double min, Double max) {
         this.nonFuzzySet = new ContinuousNonFuzzySet(min, max);
@@ -22,13 +21,4 @@ public class UniverseOfDiscourse {
             throw new IllegalArgumentException("Universe of discourse cannot be empty!");
         }
     }
-
-    public static UniverseOfDiscourse relativeQuantifierUniverseInstance() {
-        return relative;
-    }
-
-    public static UniverseOfDiscourse absoluteQuantifierUniverseInstance() {
-        return relative;
-    }
-
 }

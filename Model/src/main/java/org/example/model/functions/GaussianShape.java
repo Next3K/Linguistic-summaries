@@ -30,8 +30,6 @@ public class GaussianShape implements MembershipShape {
         return num * (err2 - err1);
     }
 
-
-
     @Override
     public Double getMaxValue() {
         return 1d;
@@ -48,10 +46,8 @@ public class GaussianShape implements MembershipShape {
     @Override
     public NonFuzzySet getAlfaCut(UniverseOfDiscourse universe, double y) {
         double tmp = Math.sqrt(-2 * Math.pow(this.stDev, 2) * Math.log(y));
-        double leftPoint = this.mean - tmp;
-        double rightPoint = this.mean + tmp;
-        leftPoint = Math.max(leftPoint, universe.getNonFuzzySet().getMin().doubleValue());
-        rightPoint = Math.min(rightPoint, universe.getNonFuzzySet().getMax().doubleValue());
+        double leftPoint = Math.max(this.mean - tmp, universe.getNonFuzzySet().getMin().doubleValue());
+        double rightPoint = Math.min(this.mean + tmp, universe.getNonFuzzySet().getMax().doubleValue());
         return universe.getNonFuzzySet().getSubset(leftPoint, rightPoint);
     }
 

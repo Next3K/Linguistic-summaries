@@ -32,7 +32,8 @@ public abstract class Summary {
     protected Double degreeOfQualifierCardinality;
     protected Double lengthOfQualifier;
 
-    protected Summary(Quantifier quantifier, CompoundFuzzySet summarizer) {
+    protected Summary(Quantifier quantifier,
+                      CompoundFuzzySet summarizer) {
         this.quantifier = quantifier;
         this.summarizer = summarizer;
     }
@@ -55,18 +56,20 @@ public abstract class Summary {
     public abstract double calculateDegreeOfTruth(List<Entry> entries);
 
     // T2
-    public double calculateDegreeOfImprecision() {
+    // TODO db
+    public double calculateDegreeOfImprecision(List<Entry> entries) {
         Set<FuzzySet> subset = this.summarizer.getFuzzySets();
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *= set.getDegreeOfFuzziness();
+            multiply *= set.getDegreeOfFuzziness(entries);
         }
         this.degreeOfImprecision = 1 - Math.pow(multiply, 1d / n);
         return this.degreeOfImprecision;
     }
 
     // T3
+    // TODO db
     public double calculateDegreeOfCovering(List<Entry> entries) {
         if (this.degreeOfCovering == null) {
             this.degreeOfCovering = this.getDegreeOfCovering(entries);
@@ -107,7 +110,7 @@ public abstract class Summary {
     public double calculateDegreeOfQuantifierCardinality() {
         Quantifier set = this.quantifier;
         this.degreeOfQuantifierCardinality = 1 - (set.getCardinalityLikeMeasure() /
-                set.getUniverseOfDiscourse().getNonFuzzySet().calculateSize());
+                set.getUniverseOfDiscourse().getNonFuzzySet().evaluateSize());
         return this.degreeOfQuantifierCardinality;
     }
 
@@ -129,9 +132,11 @@ public abstract class Summary {
     }
 
     // T9
+    // TODO db
     public abstract double calculateDegreeOfQualifierImprecision(List<Entry> entries);
 
     // T10
+    // TODO db
     public abstract double calculateDegreeOfQualifierCardinality(List<Entry> entries);
 
     // T11
@@ -139,7 +144,7 @@ public abstract class Summary {
 
     public double calculateWeightedMeasure(List<Entry> entries, List<Double> weights) {
         double v = weights.get(0) * this.calculateDegreeOfTruth(entries) +
-                weights.get(1) * this.calculateDegreeOfImprecision() +
+                weights.get(1) * this.calculateDegreeOfImprecision(entries) +
                 weights.get(2) * this.calculateDegreeOfCovering(entries) +
                 weights.get(3) * this.calculateDegreeOfAppropriateness(entries) +
                 weights.get(4) * this.calculateLengthOfSummary() +

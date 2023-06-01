@@ -11,19 +11,18 @@ import java.util.Random;
 @Getter
 public class FuzzySet {
 
-    private static final Random random = new Random();
     private final String label;
-    private final Entry.DatabaseColumn column;
+    private final Entry.DatabaseColumn databaseColumn;
     private final DescriptionType descriptionType;
-    protected final MembershipShape membershipFunction;
+    protected final MembershipShape membershipShape;
     protected final UniverseOfDiscourse universeOfDiscourse;
 
     public FuzzySet(String label,
                     Entry.DatabaseColumn column,
                     MembershipShape membershipFunction,
                     UniverseOfDiscourse universeOfDiscourse) {
-        this.membershipFunction = membershipFunction;
-        this.column = column;
+        this.membershipShape = membershipFunction;
+        this.databaseColumn = column;
         this.label = label;
         this.universeOfDiscourse = universeOfDiscourse;
         this.descriptionType = DescriptionType.COMPLEX;
@@ -33,28 +32,29 @@ public class FuzzySet {
                     Entry.DatabaseColumn column,
                     MembershipShape membershipFunction,
                     UniverseOfDiscourse universeOfDiscourse,
-                    DescriptionType descriptionProducer) {
-        this.membershipFunction = membershipFunction;
-        this.column = column;
-        this.descriptionType = descriptionProducer;
+                    DescriptionType descriptionType) {
+        this.membershipShape = membershipFunction;
+        this.databaseColumn = column;
+        this.descriptionType = descriptionType;
         this.label = label;
         this.universeOfDiscourse = universeOfDiscourse;
     }
 
 
     public Double evaluateFor(Entry entry) {
-        return this.evaluateFor(entry.getValues().get(this.column));
+        return this.evaluateFor(entry.getValues().get(this.databaseColumn));
     }
 
     public Double evaluateFor(double value) {
-        return membershipFunction.evaluate(value);
+        return (universeOfDiscourse.getNonFuzzySet().isValueInTheSet(value)) ?  membershipShape.evaluate(value) : 0;
     }
 
     public boolean isNormal() {
-        return membershipFunction.getMaxValue() == 1;
+        return membershipShape.getMaxValue() == 1;
     }
 
     public boolean isConvex() {
+        Random random = new Random();
         double min = universeOfDiscourse.getNonFuzzySet().getMin().doubleValue();
         double max = universeOfDiscourse.getNonFuzzySet().getMax().doubleValue();
         double diff = max - min;
@@ -71,18 +71,24 @@ public class FuzzySet {
     }
 
     public double getDegreeOfFuzziness() {
-        double v = this.getSupport().calculateSize();
-        double v1 = universeOfDiscourse.getNonFuzzySet().calculateSize();
-        double v2 = v / v1;
-        return v2;
+        double v = this.getSupport().evaluateSize();
+        double v1 = universeOfDiscourse.getNonFuzzySet().evaluateSize();
+        return v / v1;
+    }
+
+    public double getDegreeOfFuzziness(List<Entry> entries) {
+        NonFuzzySet support = this.getSupport();
+        double count = entries.stream().filter(e ->
+                support.isValueInTheSet(e.getValues().get(this.databaseColumn))).count();
+        return count / this.universeOfDiscourse.getNonFuzzySet().evaluateSize();
     }
 
     public NonFuzzySet getSupport() {
-        return membershipFunction.getSupport(universeOfDiscourse);
+        return membershipShape.getSupport(universeOfDiscourse);
     }
 
     public NonFuzzySet getAlfaCut(double y) {
-        return membershipFunction.getAlfaCut(universeOfDiscourse, y);
+        return membershipShape.getAlfaCut(universeOfDiscourse, y);
     }
 
     public double getCardinality(List<Entry> entries) {
@@ -96,25 +102,25 @@ public class FuzzySet {
     public double getCardinalityLikeMeasure() {
         double a = universeOfDiscourse.getNonFuzzySet().getMinimum().doubleValue();
         double b = universeOfDiscourse.getNonFuzzySet().getMaximum().doubleValue();
-        return membershipFunction.getIntegral(a, b);
+        return membershipShape.getIntegral(a, b);
     }
 
 
     public String getTextualRepresentation() {
         return switch (descriptionType) {
-            case SIMPLE -> simpleDescription();
-            case COMPLEX -> complexDescription();
+            case SIMPLE -> generateSimpleDescription();
+            case COMPLEX -> generateComplexDescription();
         };
     }
 
     // example: "Student is/have: buffed"
-    private String simpleDescription() {
+    private String generateSimpleDescription() {
         return this.label;
     }
 
     // example: "Student is/have: strongman musculature"
-    private String complexDescription() {
-        return this.label + " " + this.column.variableName();
+    private String generateComplexDescription() {
+        return this.label + " " + this.databaseColumn.variableName();
     }
 
     public enum DescriptionType {

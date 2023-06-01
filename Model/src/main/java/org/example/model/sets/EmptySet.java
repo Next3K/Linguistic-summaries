@@ -16,7 +16,7 @@ public class EmptySet extends NonFuzzySet {
     }
 
     @Override
-    public double calculateSize() {
+    public double evaluateSize() {
         return 0;
     }
 
