@@ -27,21 +27,25 @@ public class Util {
                                 "cold",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
                                 new TrapezoidShape(-1d, 0d, 5d, 15d),
-                                uni1), "cool",
+                                uni1),
+                        "cool",
                         new FuzzySet("cool",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
                                 new TriangularShape(5d, 15d, 25d),
-                                uni1), "moderate",
+                                uni1),
+                        "moderate",
                         new FuzzySet(
                                 "moderate",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
                                 new TriangularShape(15d, 25d, 35d),
-                                uni1), "warm",
+                                uni1),
+                        "warm",
                         new FuzzySet(
                                 "warm",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
                                 new TriangularShape(25d, 35d, 45d),
-                                uni1), "hot",
+                                uni1),
+                        "hot",
                         new FuzzySet(
                                 "hot",
                                 Entry.DatabaseColumn.MIN_TEMPERATURE,
@@ -183,36 +187,36 @@ public class Util {
                         new FuzzySet(
                                 "mist to light",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TriangularShape(-1d, 0d, 10d),
+                                new TriangularShape(-1d, 0d, 20d),
                                 uni6),
                         "moderate",
                         new FuzzySet("moderate",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TriangularShape(0d, 10d, 20d),
+                                new TrapezoidShape(0d, 20d, 30d, 50d),
                                 uni6),
                         "heavy",
                         new FuzzySet(
                                 "heavy",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TrapezoidShape(10d, 20d, 25d, 35d),
+                                new TrapezoidShape(30d, 50d, 80d, 100d),
                                 uni6),
                         "very heavy",
                         new FuzzySet(
                                 "very heavy",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TrapezoidShape(25d, 35d, 40d, 50d),
+                                new TrapezoidShape(80d, 100d, 140d, 160d),
                                 uni6),
                         "intense",
                         new FuzzySet(
                                 "intense",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TrapezoidShape(40d, 50d, 55d, 65d),
+                                new TrapezoidShape(140d, 160d, 210d, 230d),
                                 uni6),
                         "extreme",
                         new FuzzySet(
                                 "extreme",
                                 Entry.DatabaseColumn.RAINFALL,
-                                new TrapezoidShape(55d, 65d, 70d, 80d),
+                                new TrapezoidShape(200d, 240d, 300d, 310d),
                                 uni6)),
                 uni6);
 
@@ -388,12 +392,12 @@ public class Util {
         Quantifier many =
                 new RelativeQuantifier(
                         "Many",
-                        new TrapezoidShape(0.7d, 0.85d, 1d, 1.2d),
+                        new TrapezoidShape(0.7d, 0.8d, 0.85d, 0.95d),
                         relative);
         Quantifier almostAll =
                 new RelativeQuantifier(
                         "Almost all",
-                        new TrapezoidShape(0.85d, 0.95d, 1d, 1.2d),
+                        new TrapezoidShape(0.85d, 0.95d, 1d, 1.1d),
                         relative);
 
         return new ArrayList<>(List.of(
