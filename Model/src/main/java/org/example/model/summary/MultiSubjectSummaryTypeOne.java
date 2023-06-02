@@ -26,7 +26,7 @@ public class MultiSubjectSummaryTypeOne extends MultiSubjectSummary {
     public String getTwoSubjectSummaryAsText() {
         return quantifier.getTextualRepresentation() + " " +
                 subjectOne.description() + " in comparison to " +
-                subjectTwo.description() + " is/have: " +
+                subjectTwo.description() + " are/have: " +
                 summarizer.getTextualRepresentation() +
                 "[" + this.qualityMeasure + "]";
     }

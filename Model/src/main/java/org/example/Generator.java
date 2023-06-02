@@ -139,8 +139,8 @@ import java.util.stream.Collectors;
 
 
                         var s4 = new MultiSubjectSummaryTypeThree(
-                                Entry.SubjectType.PREMILLENIAL,
                                 Entry.SubjectType.CURRENT,
+                                Entry.SubjectType.PREMILLENIAL,
                                 quantifier,
                                 summarizer,
                                 qualifier);
@@ -178,7 +178,8 @@ import java.util.stream.Collectors;
             summaries.add(s2);
         }
 
-
+        // sort by quality measure
+        summaries.sort(Comparator.comparingDouble(MultiSubjectSummary::getQualityMeasure).reversed());
         return summaries;
     }
 

@@ -7,7 +7,6 @@ import org.example.model.sets.CompoundFuzzySet;
 
 import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 @Getter
 public class MultiSubjectSummaryTypeThree extends MultiSubjectSummary {
@@ -30,8 +29,8 @@ public class MultiSubjectSummaryTypeThree extends MultiSubjectSummary {
     public String getTwoSubjectSummaryAsText() {
         return quantifier.getTextualRepresentation() + " " +
                 subjectOne.description() + " which are/have: " +
-                subjectTwo.description() + " in comparison to " +
-                qualifier.getTextualRepresentation() + "," + " are/have: " +
+                qualifier.getTextualRepresentation() + " in comparison to " +
+                subjectTwo.description() +  "," + " are/have: " +
                 summarizer.getTextualRepresentation() +
                 "[" + this.qualityMeasure + "]";
     }
@@ -40,9 +39,9 @@ public class MultiSubjectSummaryTypeThree extends MultiSubjectSummary {
     public Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>> entriesPartitioned) {
         var recordsTypeOne = entriesPartitioned.get(this.subjectOne);
         var recordsTypeTwo = entriesPartitioned.get(this.subjectTwo);
-        double a = recordsTypeTwo.stream().mapToDouble(e ->
-                Math.min(summarizer.evaluateFor(e), qualifier.evaluateFor(e))).sum() / recordsTypeTwo.size();
-        double b = recordsTypeOne.stream().mapToDouble(summarizer::evaluateFor).sum() / recordsTypeOne.size();
+        double a = recordsTypeOne.stream().mapToDouble(e ->
+                Math.min(summarizer.evaluateFor(e), qualifier.evaluateFor(e))).sum() / recordsTypeOne.size();
+        double b = recordsTypeTwo.stream().mapToDouble(summarizer::evaluateFor).sum() / recordsTypeTwo.size();
         this.qualityMeasure = quantifier.evaluateFor(a / (a + b));
         return qualityMeasure;
     }

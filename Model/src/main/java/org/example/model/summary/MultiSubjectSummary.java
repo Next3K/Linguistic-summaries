@@ -25,5 +25,10 @@ public abstract class MultiSubjectSummary {
 
     public abstract String getTwoSubjectSummaryAsText();
 
-    public abstract  Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>> entries);
+    public abstract Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>> entries);
+
+    public double getQualityMeasure() {
+        return this.qualityMeasure;
+    }
+
 }
