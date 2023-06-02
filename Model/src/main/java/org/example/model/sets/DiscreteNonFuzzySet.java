@@ -28,8 +28,8 @@ public class DiscreteNonFuzzySet extends NonFuzzySet {
     @Override
     public NonFuzzySet getSubset(Number a, Number b) {
         return (isEmpty()) ? emptySetInstance() :  new DiscreteNonFuzzySet(
-                Math.min(a.intValue(), min.intValue()),
-                Math.max(b.intValue(), min.intValue()));
+                Math.max(a.intValue(), min.intValue()),
+                Math.min(b.intValue(), max.intValue()));
     }
 
 }

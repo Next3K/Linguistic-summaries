@@ -27,7 +27,7 @@ public class ContinuousNonFuzzySet extends NonFuzzySet {
     @Override
     public NonFuzzySet getSubset(Number a, Number b) {
         return (isEmpty()) ? emptySetInstance() : new ContinuousNonFuzzySet(
-                Math.min(a.doubleValue(), min.doubleValue()),
-                Math.max(b.doubleValue(), min.doubleValue()));
+                Math.max(a.doubleValue(), min.doubleValue()),
+                Math.min(b.doubleValue(), max.doubleValue()));
     }
 }
