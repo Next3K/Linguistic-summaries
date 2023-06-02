@@ -29,7 +29,7 @@ public class FirstFormSummary extends Summary {
         }
         double m = (this.quantifier.isRelative()) ?
                 (double) entries.size() : 1d;
-        this.degreeOfTruth = this.quantifier.getMembershipShape().evaluate(valueCalculatedFromEntries / m);
+        this.degreeOfTruth = this.quantifier.evaluateFor(valueCalculatedFromEntries / m);
         return degreeOfTruth;
     }
 

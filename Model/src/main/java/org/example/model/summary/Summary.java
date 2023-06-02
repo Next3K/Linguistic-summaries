@@ -147,10 +147,6 @@ public abstract class Summary {
                 weights.get(8) * this.calculateDegreeOfQualifierImprecision(entries) +
                 weights.get(9) * this.calculateDegreeOfQualifierCardinality(entries) +
                 weights.get(10) * this.calculateLengthOfQualifier();
-        double sumWeights = v;
-        if (sumWeights < 0) {
-            System.out.println("eo");
-        }
-        return sumWeights / weights.stream().mapToDouble(Double::doubleValue).sum();
+        return v / weights.stream().mapToDouble(Double::doubleValue).sum();
     }
 }
