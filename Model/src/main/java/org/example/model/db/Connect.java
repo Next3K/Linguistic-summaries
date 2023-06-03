@@ -53,10 +53,10 @@ public class Connect {
         List<Entry> entries = new ArrayList<Entry>();
         int i = 0;
         try {
-            ResultSet result = stat.executeQuery("SELECT * FROM weather;");
+            ResultSet result = stat.executeQuery("SELECT * FROM weather WHERE date < '2000-01-01';");
             while(result.next()) {
                 entries.add(new Entry(
-                        (i % 2 == 0) ? Entry.SubjectType.CURRENT :  Entry.SubjectType.PREMILLENIAL,
+                        Entry.SubjectType.PREMILLENIAL,
                         Map.of(
                         Entry.DatabaseColumn.MAX_TEMPERATURE, result.getDouble("max_t"),
                         Entry.DatabaseColumn.MIN_TEMPERATURE, result.getDouble("min_t"),
@@ -68,6 +68,28 @@ public class Connect {
                         Entry.DatabaseColumn.EVAPORATION, result.getDouble("evap"),
                         Entry.DatabaseColumn.RADIATION, result.getDouble("radiation"),
                         Entry.DatabaseColumn.EVAPOTRANSPIRATION, result.getDouble("fao56_et")
+                        )));
+                i++;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        try {
+            ResultSet result = stat.executeQuery("SELECT * FROM weather WHERE date >= '2000-01-01';");
+            while(result.next()) {
+                entries.add(new Entry(
+                        Entry.SubjectType.CURRENT,
+                        Map.of(
+                                Entry.DatabaseColumn.MAX_TEMPERATURE, result.getDouble("max_t"),
+                                Entry.DatabaseColumn.MIN_TEMPERATURE, result.getDouble("min_t"),
+                                Entry.DatabaseColumn.MORNING_HUMIDITY, result.getDouble("rh1"),
+                                Entry.DatabaseColumn.AFTERNOON_HUMIDITY, result.getDouble("rh2"),
+                                Entry.DatabaseColumn.WIND, result.getDouble("wind"),
+                                Entry.DatabaseColumn.RAINFALL, result.getDouble("rain"),
+                                Entry.DatabaseColumn.INSOLATION, result.getDouble("ssh"),
+                                Entry.DatabaseColumn.EVAPORATION, result.getDouble("evap"),
+                                Entry.DatabaseColumn.RADIATION, result.getDouble("radiation"),
+                                Entry.DatabaseColumn.EVAPOTRANSPIRATION, result.getDouble("fao56_et")
                         )));
                 i++;
             }
