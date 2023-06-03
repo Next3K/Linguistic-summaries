@@ -1,0 +1,299 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+left to right direction
+
+class CompoundFuzzySet
+class Entry
+class Quantifier
+class UniverseOfDiscourse
+class NonFuzzySet
+class FuzzySet
+
+class Entry {
+- subjectType: SubjectType
+- values: Map<DatabaseColumn, Double>
+}
+
+SubjectType <.. Entry
+
+abstract class MultiSubjectSummary {
+# subjectOne: SubjectType
+# subjectTwo: SubjectType
+# summarizer: CompoundFuzzySet
+# qualityMeasure: double
++ {abstract} getTwoSubjectSummaryAsText(): string
++ {abstract} calculateQualityMeasure(entries: Map<SubjectType, List<Entry>>): string
++ getQualityMeasure(): double
+}
+
+
+class MultiSubjectSummaryFormOne {
+- quantifier: Quantifier
++ getTwoSubjectSummaryAsText(): string
++ calculateQualityMeasure(entries: Map<SubjectType, List<Entry>>): string
+}
+class MultiSubjectSummaryFormTwo {
+- quantifier: Quantifier
+- qualifier: CompoundFuzzySet
++ getTwoSubjectSummaryAsText(): string
++ calculateQualityMeasure(entries: Map<SubjectType, List<Entry>>): string
+
+}
+
+class MultiSubjectSummaryFormThree {
+- quantifier: Quantifier
+- qualifier: CompoundFuzzySet
++ getTwoSubjectSummaryAsText(): string
++ calculateQualityMeasure(entries: Map<SubjectType, List<Entry>>): string
+
+}
+
+class MultiSubjectSummaryFormFour {
+}
+
+
+MultiSubjectSummary <|-- MultiSubjectSummaryFormOne
+MultiSubjectSummary <|-- MultiSubjectSummaryFormTwo
+MultiSubjectSummary <|-- MultiSubjectSummaryFormThree
+MultiSubjectSummary <|-- MultiSubjectSummaryFormFour
+
+CompoundFuzzySet <.. MultiSubjectSummary
+SubjectType <.. MultiSubjectSummary
+DescriptionType <.. FuzzySet
+
+interface MembershipShape {
++ {abstract} evaluate(x: double): double
++ {abstract} getIntegral(a: double, b: double): double
++ {abstract} getMaxValue(): double
++ {abstract} getSupport(universe: UniverseOfDiscourse): NonFuzzySet
++ {abstract} getAlfaCut(universe: UniverseOfDiscourse, y: double): NonFuzzySet
+}
+
+MembershipShape <|-- TriangularShape
+MembershipShape <|-- TrapezoidShape
+MembershipShape <|-- GaussianShape
+
+class TriangularShape {
+- a: double
+- mid: double
+- b: double
+- leftLineCoefficientA: double
+- leftLineCoefficientB: double
+- rightLineCoefficientA: double
+- rightLineCoefficientB: double
++ evaluate(x: double): double
++ getIntegral(a: double, b: double): double
++ getMaxValue(): double
++ getSupport(universe: UniverseOfDiscourse): NonFuzzySet
++ getAlfaCut(universe: UniverseOfDiscourse, y: double): NonFuzzySet
+}
+
+class TrapezoidShape {
+- a: double
+- A: double
+- B: double
+- b: double
+- leftLineCoefficientA: double
+- leftLineCoefficientB: double
+- rightLineCoefficientA: double
+- rightLineCoefficientB: double
++ evaluate(x: double): double
++ getIntegral(a: double, b: double): double
++ getMaxValue(): double
++ getSupport(universe: UniverseOfDiscourse): NonFuzzySet
++ getAlfaCut(universe: UniverseOfDiscourse, y: double): NonFuzzySet
+}
+
+class GaussianShape {
+- mean: double
+- stDev: double
++ evaluate(x: double): double
++ getIntegral(a: double, b: double): double
++ getMaxValue(): double
++ getSupport(universe: UniverseOfDiscourse): NonFuzzySet
++ getAlfaCut(universe: UniverseOfDiscourse, y: double): NonFuzzySet
+}
+
+FuzzySet <|-- Quantifier
+Entry <.. FuzzySet
+
+Quantifier <|-- AbsoluteQuantifier
+Quantifier <|-- RelativeQuantifier
+
+abstract class Quantifier {
++ {abstract} isRelative(): bool
+}
+
+DatabaseColumn <.. FuzzySet
+UniverseOfDiscourse "1" --* "1" FuzzySet
+Quantifier <.. Summary
+CompoundFuzzySet <.. Summary
+
+class FuzzySet {
+- label: string
+- databaseColumn: DatabaseColumn
+- descriptionType: DescriptionType
+- membershipShape: MembershipShape
+- universeOfDiscourse: UniverseOfDiscourse
++ evaluateFor(entry: Entry): double
++ evaluateFor(value: double): double
++ isNormal(): bool
++ isConvex(): bool
++ getDegreeOfFuzziness(): double
++ getDegreeOfFuzziness(entries: Entry[1..*]): double
++ getSupport(): NonFuzzySet
++ getAlfaCut(y: double): NonFuzzySet
++ getCardinality(entries: Entry[1..*])): double
++ getCardinalityLikeMeasure(): double
++ getTextualRepresentation(): string
+- generateSimpleDescription(): string
+- generateComplexDescription(): string
+}
+
+abstract class NonFuzzySet {
+# min: Number
+# max: Number
++ {abstract} isEmpty(): bool
++ {abstract} evaluateSize(): double
++ {abstract} isValueInSet(number: Number): bool
++ {abstract} getSubset(): NonFuzzySet
++ {abstract} getMinimum(): Number
++ {abstract} getMaximum(): Number
++ {abstract} emptySetInstance(): NonFuzzySet
+}
+
+NonFuzzySet <|-- DiscreteNonFuzzySet
+NonFuzzySet <|-- ContinuousNonFuzzySet
+NonFuzzySet <|-- EmptySet
+
+NonFuzzySet <.. FuzzySet
+FuzzySet "1" *-- "1" MembershipShape
+
+class DiscreteNonFuzzySet {
++ isEmpty(): bool
++ evaluateSize(): double
++ isValueInSet(number: Number): bool
++ getSubset(): NonFuzzySet
++ getMinimum(): Number
++ getMaximum(): Number
++ emptySetInstance(): NonFuzzySet
+}
+
+class ContinuousNonFuzzySet {
++ isEmpty(): bool
++ evaluateSize(): double
++ isValueInSet(number: Number): bool
++ getSubset(): NonFuzzySet
++ getMinimum(): Number
++ getMaximum(): Number
++ emptySetInstance(): NonFuzzySet
+}
+
+class EmptySet {
++ {static} getInstance(): NonFuzzySet
++ isEmpty(): bool
++ evaluateSize(): double
++ isValueInSet(number: Number): bool
++ getSubset(): NonFuzzySet
++ getMinimum(): Number
++ getMaximum(): Number
++ emptySetInstance(): NonFuzzySet
+}
+
+class CompoundFuzzySet {
+- fuzzySets: Set<FuzzySet>
++ getTextualRepresentation(): string
++ evaluateFor(entry: Entry): double
++ evaluateFor(value: double): double
++ getSize(value: double): int
+}
+
+CompoundFuzzySet "1" -- "*" FuzzySet
+Entry <.. CompoundFuzzySet
+
+class UniverseOfDiscourse {
+- nonFuzzySet: NonFuzzySet
+}
+
+abstract class Summary {
+# {static} SUBJECT: string
+# quantifier: Quantifier
+# summarizer: CompoundFuzzySet
+# qualityMeasure: double
+# degreeOfTruth: double
+# degreeOfImprecision: double
+# degreeOfCovering: double
+# degreeOfAppropriateness: double
+# lengthOfSummary: double
+# degreeOfQuantifierImprecision: double
+# degreeOfQuantifierCardinality: double
+# degreeOfSummarizerCardinality: double
+# degreeOfQualifierImprecision: double
+# degreeOfQualifierCardinality: double
+# lengthOfQualifier: double
++ getSummaryAsText(): string
++ {abstract} getTextualRepresentation(): string
++ calculateQualityMeasure(entries: Entry[1..*]): void
++ {abstract} calculateDegreeOfTruth((entries: Entry[1..*]): double
++ {abstract} calculateDegreeOfImprecision(entries: Entry[1..*]): double
++ {abstract} calculateDegreeOfCovering(entries: Entry[1..*]): double
++ {abstract} calculateDegreeOfAppropriateness(entries: Entry[1..*]): double
++ {abstract} calculateLengthOfSummary(): double
++ {abstract} calculateDegreeOfQuantifierImprecision(): double
++ {abstract} calculateDegreeOfQuantifierCardinality(): double
++ {abstract} calculateDegreeOfSummarizerCardinality(entries: Entry[1..*]): double
++ {abstract} calculateDegreeOfQualifierImprecision(entries: Entry[1..*]): double
++ {abstract} calculateDegreeOfQualifierCardinality(entries: Entry[1..*]): double
++ {abstract} calculateLengthOfQualifier(): double
++ calculateWeightedMeasure((entries: Entry[1..*], weights: double[11]): double
+}
+
+Summary <|-- FirstFormSummary
+Summary <|-- SecondFormSummary
+
+class FirstFormSummary {
++ getTextualRepresentation(): string
++ calculateDegreeOfCovering(entries: Entry[1..*]): double
++ calculateDegreeOfTruth((entries: Entry[1..*]): double
++ calculateDegreeOfQualifierImprecision(entries: Entry[1..*]): double
++ calculateDegreeOfQualifierCardinality(entries: Entry[1..*]): double
++ calculateLengthOfQualifier(): double
+}
+
+class SecondFormSummary {
+# qualifier: CompoundFuzzySet
+
++ getTextualRepresentation(): string
++ calculateDegreeOfCovering(entries: Entry[1..*]): double
++ calculateDegreeOfTruth((entries: Entry[1..*]): double
++ calculateDegreeOfQualifierImprecision(entries: Entry[1..*]): double
++ calculateDegreeOfQualifierCardinality(entries: Entry[1..*]): double
++ calculateLengthOfQualifier(): double
+}
+
+enum SubjectType {
+PREMILLENIAL
+CURRENT
+}
+
+enum DescriptionType {
+SIMPLE
+COMPLEX
+}
+
+enum DatabaseColumn {
+ MAX_TEMPERATURE
+ MIN_TEMPERATURE
+ MORNING_HUMIDITY
+ AFTERNOON_HUMIDITY
+ WIND
+ RAINFALL
+ INSOLATION
+ EVAPORATION
+ RADIATION
+ EVAPOTRANSPIRATION
+}
+
+@enduml

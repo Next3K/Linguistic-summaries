@@ -1,0 +1,12 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+
+left to right direction
+
+class Generator {
++ {static} generateSummaries(records: Entry[1..*], absQuantifiers: Quantifier[1..*], relQuantifiers: Quantifier[1..*], fuzzySets: FuzzySet[1..*], weights: Double[1..*]): Summary[1..*]
++ {static} generateTwoSubjectSummaries(records: Entry[1..*], relQuantifiers: Quantifier[1..*], fuzzySets: FuzzySet[1..*]): MultiSubjectSummary[1..*]
+}
+
+@enduml
