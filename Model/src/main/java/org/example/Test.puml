@@ -126,6 +126,14 @@ abstract class Quantifier {
 + {abstract} isRelative(): bool
 }
 
+class RelativeQuantifier {
++ isRelative(): bool
+}
+
+class AbsoluteQuantifier {
++ isRelative(): bool
+}
+
 DatabaseColumn <.. FuzzySet
 UniverseOfDiscourse "1" --* "1" FuzzySet
 Quantifier <.. Summary
@@ -207,7 +215,7 @@ class CompoundFuzzySet {
 + getTextualRepresentation(): string
 + evaluateFor(entry: Entry): double
 + evaluateFor(value: double): double
-+ getSize(value: double): int
++ getSize(): int
 }
 
 CompoundFuzzySet "1" -- "*" FuzzySet
@@ -237,13 +245,13 @@ abstract class Summary {
 + {abstract} getTextualRepresentation(): string
 + calculateQualityMeasure(entries: Entry[1..*]): void
 + {abstract} calculateDegreeOfTruth((entries: Entry[1..*]): double
-+ {abstract} calculateDegreeOfImprecision(entries: Entry[1..*]): double
-+ {abstract} calculateDegreeOfCovering(entries: Entry[1..*]): double
-+ {abstract} calculateDegreeOfAppropriateness(entries: Entry[1..*]): double
-+ {abstract} calculateLengthOfSummary(): double
-+ {abstract} calculateDegreeOfQuantifierImprecision(): double
-+ {abstract} calculateDegreeOfQuantifierCardinality(): double
-+ {abstract} calculateDegreeOfSummarizerCardinality(entries: Entry[1..*]): double
++ calculateDegreeOfImprecision(entries: Entry[1..*]): double
++ calculateDegreeOfCovering(entries: Entry[1..*]): double
++ calculateDegreeOfAppropriateness(entries: Entry[1..*]): double
++ calculateLengthOfSummary(): double
++ calculateDegreeOfQuantifierImprecision(): double
++ calculateDegreeOfQuantifierCardinality(): double
++ calculateDegreeOfSummarizerCardinality(entries: Entry[1..*]): double
 + {abstract} calculateDegreeOfQualifierImprecision(entries: Entry[1..*]): double
 + {abstract} calculateDegreeOfQualifierCardinality(entries: Entry[1..*]): double
 + {abstract} calculateLengthOfQualifier(): double
