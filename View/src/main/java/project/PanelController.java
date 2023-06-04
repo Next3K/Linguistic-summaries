@@ -10,6 +10,8 @@ import org.example.Util;
 import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
 import org.example.model.quantifiers.Quantifier;
+import org.example.model.sets.FuzzySet;
+import org.example.model.summary.MultiSubjectSummary;
 import org.example.model.summary.Summary;
 
 import java.util.*;
@@ -39,7 +41,7 @@ public class PanelController {
     List<Quantifier> absoluteQuantifiers;
     List<LinguisticVariable> linguisticVariables;
     CheckBoxTreeItem<String> languages;
-    List<LabeledFuzzySet> fuzzySets = new ArrayList<>(10);
+    List<FuzzySet> fuzzySets = new ArrayList<>(10);
 
     //Set<String> selectedNames = new HashSet<>();
 
@@ -167,17 +169,39 @@ public class PanelController {
 
         languages = new CheckBoxTreeItem<>("All qualifiers");
 
-        for (int i = 0; i < linguisticVariables.size(); i++) {
-            CheckBoxTreeItem<String> name = new CheckBoxTreeItem<>(linguisticVariables.get(i).getName());
+//        for (int i = 0; i < linguisticVariables.size(); i++) {
+//            CheckBoxTreeItem<String> name = new CheckBoxTreeItem<>(linguisticVariables.get(i).getLinguisticValues().get(databaseColumn));
+//
+//            Set<String> variables = linguisticVariables.get(i).getLinguisticValues();
+//            List<String> v2 = variables.stream().toList();
+//            for (int j = 0; j < v2.size(); j++) {
+//                //System.out.println(v2.get(j));
+//                name.getChildren().add(new CheckBoxTreeItem<>(v2.get(j)));
+//            }
+//            languages.getChildren().add(name);
+//        }
 
-            Set<String> variables = linguisticVariables.get(i).getLinguisticValues();
-            List<String> v2 = variables.stream().toList();
-            for (int j = 0; j < v2.size(); j++) {
-                //System.out.println(v2.get(j));
-                name.getChildren().add(new CheckBoxTreeItem<>(v2.get(j)));
+        CheckBoxTreeItem<String> name = null;
+
+        for (LinguisticVariable var : linguisticVariables) {
+            Map<String, FuzzySet> lVal = var.getLinguisticValues();
+            int i = 0;
+
+            for (Map.Entry<String, FuzzySet> entry : lVal.entrySet()) {
+                String key = entry.getKey();
+                FuzzySet fuzzySet = entry.getValue();
+
+                if (i == 0) {
+                    name = new CheckBoxTreeItem<>(fuzzySet.getDatabaseColumn().variableName());
+                    i++;
+                }
+                    name.getChildren().add(new CheckBoxTreeItem<>(fuzzySet.getLabel()));
             }
             languages.getChildren().add(name);
         }
+
+
+
 
         languages.setExpanded(true);
         listSummarizers.setRoot(languages);
@@ -226,6 +250,13 @@ public class PanelController {
                         fuzzySets,
                         weights);
 
+        List<MultiSubjectSummary> summariesTwo =
+                Generator.generateTwoSubjectSummaries(
+                        records,
+                        oneQualifier,
+                        fuzzySets);
+
+
         System.out.println("Skonczylem generowanie");
 
         tableGenerated.getItems().clear();
@@ -250,6 +281,10 @@ public class PanelController {
                     );
         }
 
+        for (var s : summariesTwo) {
+            tableGenerated.getItems().add(new Results(s));
+        }
+
         System.out.println("\n\n\n");
     }
 
@@ -258,14 +293,19 @@ public class PanelController {
         selectedNames.clear();
         checkSelectedItemsRecursive(listSummarizers.getRoot(), selectedNames);
 
-        Set<String> kk= selectedNames.keySet();
-        List<String> keyNames = kk.stream().toList();
+        //System.out.println(selectedNames.toString());
 
-        for (int i=0; i<selectedNames.size(); i++) {
-            fuzzySets.addAll(Util.getLabeledFuzzySets(
-                    linguisticVariables.get(
-                            checkLinguisticVariableId(keyNames.get(i))), selectedNames.get(keyNames.get(i))));
+        for (Map.Entry<String, List<String>> entry : selectedNames.entrySet()) {
+            String key = entry.getKey();
+            List<String> values = entry.getValue();
+
+            System.out.println("Klucz: " + key);
+            System.out.println("Lista stringów: " + values);
+            for (int i=0; i < values.size(); i++) {
+                fuzzySets.add(linguisticVariables.get(checkLinguisticVariableId(key)).getSet(values.get(i)));
+            }
         }
+        System.out.println(fuzzySets.toString());
     }
 
     private void checkSelectedItemsRecursive(TreeItem<String> parent, Map<String, List<String>> map) {
@@ -322,7 +362,7 @@ public class PanelController {
             case "About quarter" -> 2;
             case "Some" -> 3;
             case "About half" -> 4;
-            case "About three quarters" -> 5;
+            case "About three-quarters" -> 5;
             case "Many" -> 6;
             case "Almost all" -> 7;
             default -> 10;

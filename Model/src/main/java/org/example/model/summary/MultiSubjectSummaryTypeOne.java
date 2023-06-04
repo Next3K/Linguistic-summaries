@@ -32,6 +32,15 @@ public class MultiSubjectSummaryTypeOne extends MultiSubjectSummary {
     }
 
     @Override
+    public String getTwoSubjectSummaryForTable() {
+        return quantifier.getTextualRepresentation() + " " +
+                subjectOne.description() + " in comparison to " +
+                subjectTwo.description() + " are/have: " +
+                summarizer.getTextualRepresentation();
+    }
+
+
+    @Override
     public Double calculateQualityMeasure(Map<Entry.SubjectType, List<Entry>>  entriesPartitioned) {
         var recordsTypeOne = entriesPartitioned.get(this.subjectOne);
         var recordsTypeTwo = entriesPartitioned.get(this.subjectTwo);

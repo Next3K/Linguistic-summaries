@@ -1,5 +1,6 @@
 package project;
 
+import org.example.model.summary.MultiSubjectSummary;
 import org.example.model.summary.Summary;
 
 public class Results {
@@ -34,6 +35,12 @@ public class Results {
         this.T11 = String.format("%.2f", sum.getLengthOfQualifier());
 
     }
+
+    public Results(MultiSubjectSummary sum) {
+        this.text = sum.getTwoSubjectSummaryForTable();
+        this.T = String.format("%.2f", sum.getQualityMeasure());
+    }
+
 
     public String getText() {
         return this.text;
