@@ -90,9 +90,9 @@ public class SecondFormSummary extends Summary {
         int n = subset.size();
         double multiply = 1.0;
         for (var set : subset) {
-            multiply *=
-                    set.getCardinality(entries) /
-                    set.getUniverseOfDiscourse().getNonFuzzySet().evaluateSize();
+            double cardinality = set.getCardinality(entries);
+            double size = entries.size();
+            multiply *= cardinality / size;
         }
         this.degreeOfQualifierCardinality = 1 - Math.pow(multiply, 1.0 / n);
         return this.degreeOfQualifierCardinality;
