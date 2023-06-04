@@ -333,7 +333,7 @@ public class PanelController {
             case "maximum temperature" -> 1;
             case "morning humidity" -> 2;
             case "afternoon humidity" -> 3;
-            case "wind speed" -> 4;
+            case "wind" -> 4;
             case "rainfall" -> 5;
             case "insolation" -> 6;
             case "evaporation" -> 7;
