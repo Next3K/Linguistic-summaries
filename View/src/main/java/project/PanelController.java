@@ -12,7 +12,9 @@ import org.example.model.db.Entry;
 import org.example.model.functions.GaussianShape;
 import org.example.model.functions.TrapezoidShape;
 import org.example.model.functions.TriangularShape;
+import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
+import org.example.model.quantifiers.RelativeQuantifier;
 import org.example.model.sets.FuzzySet;
 import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.summary.MultiSubjectSummary;
@@ -91,11 +93,13 @@ public class PanelController {
         checkSelectedItems(listSummarizers);
 
         if (radioRelative.isSelected()) {
-            oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(checkRelativeVariableId(comboQuantifier.getValue().toString()))));
+            int index = checkRelativeVariableId(comboQuantifier.getValue().toString());
+            oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(index)));
             zerQualifier = new ArrayList<>();
         } else {
+            int index = checkAbsoluteVariableId(comboQuantifier.getValue().toString());
             oneQualifier = new ArrayList<>();
-            zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(checkAbsoluteVariableId(comboQuantifier.getValue().toString()))));
+            zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(index)));
         }
 
         List<Double> weights =
@@ -135,7 +139,10 @@ public class PanelController {
     @FXML
     public void onBtnGenerateSecond(ActionEvent actionEvent) {
         fuzzySets.clear();
-        ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(checkRelativeVariableId(comboQuantifier_second.getValue().toString()))));
+
+        int index = checkRelativeVariableId(comboQuantifier_second.getValue().toString());
+
+        ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(index)));
         checkSelectedItems(listSummarizers_second);
 
 
@@ -165,7 +172,6 @@ public class PanelController {
 
     @FXML
     public void onBtnLabelGenerate(ActionEvent actionEvent) {
-        System.out.println(linguisticVariables.get(checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().size());
         if (q1Txt != null && q2Txt != null && q3Txt != null && q4Txt != null ) {
              if (labelType.getValue() == "zmienna lingwistyczna") {
                  System.out.println("jestem");
@@ -193,9 +199,60 @@ public class PanelController {
                              new UniverseOfDiscourse(Double.parseDouble(minLbl.getText()), Double.parseDouble(maxLbl.getText())))
                      );
                  }
+                 listSummarizers.getRoot().getChildren().clear();
+                 listSummarizers_second.getRoot().getChildren().clear();
+                 func.loadTreeViews(languages, multiLanguages, linguisticVariables);
+             } else if (labelType.getValue() == "kwantyfiaktor relatywny") {
+                 if(shapeType.getValue() == "trapez") {
+                     relativeQuantifiers.add(new RelativeQuantifier(
+                             linguisticName.getText(),
+                             new TrapezoidShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText()), Double.parseDouble(q4Txt.getText())),
+                             new UniverseOfDiscourse(0d, 1d)));
+                 }
+
+                 else if(shapeType.getValue() == "trójkąt") {
+                     relativeQuantifiers.add(new RelativeQuantifier(
+                             linguisticName.getText(),
+                             new TriangularShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText())),
+                             new UniverseOfDiscourse(0d, 1d)));
+                 }
+
+                 else if(shapeType.getValue() == "gauss") {
+                     relativeQuantifiers.add(new RelativeQuantifier(
+                             linguisticName.getText(),
+                             new GaussianShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText())),
+                             new UniverseOfDiscourse(0d, 1d)));
+                 }
+                 comboQuantifier_second.getItems().clear();
+                 for (int i = 0; i < relativeQuantifiers.size(); i++) {
+                     comboQuantifier_second.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
+                 }
              }
+             else if (labelType.getValue() == "kwantyfikator absolutny") {
+                if(shapeType.getValue() == "trapez") {
+                    absoluteQuantifiers.add(new AbsoluteQuantifier(
+                            linguisticName.getText(),
+                            new TrapezoidShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText()), Double.parseDouble(q4Txt.getText())),
+                            new UniverseOfDiscourse(0d, 14_854d)));
+                }
+
+                else if(shapeType.getValue() == "trójkąt") {
+                    absoluteQuantifiers.add(new AbsoluteQuantifier(
+                            linguisticName.getText(),
+                            new TriangularShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText())),
+                            new UniverseOfDiscourse(0d, 14_854d)));
+                }
+
+                else if(shapeType.getValue() == "gauss") {
+                    absoluteQuantifiers.add(new AbsoluteQuantifier(
+                            linguisticName.getText(),
+                            new GaussianShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText())),
+                            new UniverseOfDiscourse(0d, 14_854d)));
+                }
+            }
+
+
         }
-        System.out.println(linguisticVariables.get(checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().size());
     }
 
 
@@ -271,29 +328,25 @@ public class PanelController {
     }
 
     private int checkAbsoluteVariableId(String name) {
-        return switch (name) {
-            case "About 280" -> 0;
-            case "About 1200" -> 1;
-            case "About 3600" -> 2;
-            case "About 7200" -> 3;
-            case "About 10800" -> 4;
-            case "About 14600" -> 5;
-            default -> 6;
-        };
+        int idx = 0;
+        for (Quantifier q : absoluteQuantifiers) {
+            if (q.getLabel() == name) {
+                return idx;
+            }
+            idx++;
+        }
+        return idx;
     }
 
     private int checkRelativeVariableId(String name) {
-        return switch (name) {
-            case "Almost none" -> 0;
-            case "Few" -> 1;
-            case "About quarter" -> 2;
-            case "Some" -> 3;
-            case "About half" -> 4;
-            case "About three-quarters" -> 5;
-            case "Many" -> 6;
-            case "Almost all" -> 7;
-            default -> 10;
-        };
+        int idx = 0;
+        for (Quantifier q : relativeQuantifiers) {
+            if (q.getLabel() == name) {
+                return idx;
+            }
+            idx++;
+        }
+        return idx;
     }
 
 
@@ -329,10 +382,11 @@ public class PanelController {
         });
 
         comboQuantifier_second.setOnAction(event -> {
-            if (comboQuantifier.getValue() != null) {
+            if (comboQuantifier_second.getValue() != null) {
                 btnGenerate_second.setDisable(false);
             }
         });
+
 
         labelType.setOnAction(event -> {
             if (labelType.getValue() == "kwantyfiaktor relatywny") {
@@ -367,6 +421,8 @@ public class PanelController {
                 }
             }
         });
+
+
 
         shapeType.setOnAction(event -> {
             if (shapeType.getValue() == "trójkąt") {
