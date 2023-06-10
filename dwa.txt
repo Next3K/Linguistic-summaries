@@ -1,0 +1,3 @@
+Few current daily weather measurements which are/have: cold minimum temperature in comparison to premillenial daily weather measurements, are/have: cool minimum temperature; 0.88
+Few premillenial daily weather measurements which are/have: cold minimum temperature in comparison to current daily weather measurements, are/have: cool minimum temperature; 0.86
+Few premillenial daily weather measurements which are/have: warm minimum temperature in comparison to current daily weather measurements, are/have: moderate minimum temperature; 0.17

@@ -1,17 +1,22 @@
 package project;
 
-import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import org.example.Util;
 import org.example.model.LinguisticVariable;
 import org.example.model.db.Entry;
+import org.example.model.quantifiers.AbsoluteQuantifier;
 import org.example.model.quantifiers.Quantifier;
+import org.example.model.quantifiers.RelativeQuantifier;
 import org.example.model.sets.FuzzySet;
-
+import org.example.model.db.Entry;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 public class Functions {
 
@@ -20,10 +25,18 @@ public class Functions {
     }
 
     public void setFirstTableSettings(TableView table) {
+        TableColumn<Results, Boolean> checkbox = new TableColumn<>("Check");
+        checkbox.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
+        checkbox.setCellFactory(CheckBoxTableCell.forTableColumn(checkbox));
+        checkbox.setEditable(true);
+
+        checkbox.setStyle("-fx-font-size: 10px;");
+        checkbox.setPrefWidth(50);
+
         TableColumn<Results, String> result = new TableColumn<>("Result");
         result.setCellValueFactory(new PropertyValueFactory<>("text"));
         result.setStyle("-fx-font-size: 10px;");
-        result.setPrefWidth(900);
+        result.setPrefWidth(850);
 
         TableColumn<Results, String> T = new TableColumn<>("T");
         T.setCellValueFactory(new PropertyValueFactory<>("T"));
@@ -85,22 +98,32 @@ public class Functions {
         T11.setStyle("-fx-font-size: 10px;");
         T11.setPrefWidth(30);
 
-        table.getColumns().addAll(result, T, T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11);
+        table.getColumns().addAll(checkbox, result, T, T1,T2,T3,T4,T5,T6,T7,T8,T9,T10,T11);
     }
 
 
     public void setSecondTableSettings(TableView table) {
+
+        TableColumn<Results, Boolean> checkbox_second = new TableColumn<>("Check");
+        checkbox_second.setCellValueFactory(cellData -> cellData.getValue().selectedProperty());
+        checkbox_second.setCellFactory(CheckBoxTableCell.forTableColumn(checkbox_second));
+        checkbox_second.setEditable(true);
+
+        checkbox_second.setStyle("-fx-font-size: 10px;");
+        checkbox_second.setPrefWidth(50);
+
+
         TableColumn<Results, String> result_second = new TableColumn<>("Result");
         result_second.setCellValueFactory(new PropertyValueFactory<>("text"));
         result_second.setStyle("-fx-font-size: 10px;");
-        result_second.setPrefWidth(1200);
+        result_second.setPrefWidth(1180);
 
         TableColumn<Results, String> T_second = new TableColumn<>("T");
         T_second.setCellValueFactory(new PropertyValueFactory<>("T"));
         T_second.setStyle("-fx-font-size: 10px;");
         T_second.setPrefWidth(30);
 
-        table.getColumns().addAll(result_second, T_second);
+        table.getColumns().addAll(checkbox_second, result_second, T_second);
     }
 
     public void loadDataFromUtil(List<Entry> r, List<Quantifier> rq, List<Quantifier> aq, List<LinguisticVariable> lv) {
@@ -137,5 +160,60 @@ public class Functions {
             ml.setExpanded(true);
         }
     }
+
+    public void addComboBoxItems(ComboBox lt, ComboBox st) {
+        lt.getItems().add("kwantyfikator absolutny");
+        lt.getItems().add("kwantyfiaktor relatywny");
+        lt.getItems().add("zmienna lingwistyczna");
+
+        st.getItems().add("trójkąt");
+        st.getItems().add("trapez");
+        st.getItems().add("gauss");
+
+    }
+
+    public Entry.DatabaseColumn switchVariableNameToDatabaseName(String name) {
+        return switch (name) {
+            case "minimum temperature" -> Entry.DatabaseColumn.MIN_TEMPERATURE;
+            case "maximum temperature" -> Entry.DatabaseColumn.MAX_TEMPERATURE;
+            case "morning humidity" -> Entry.DatabaseColumn.MORNING_HUMIDITY;
+            case "afternoon humidity" -> Entry.DatabaseColumn.AFTERNOON_HUMIDITY;
+            case "wind" -> Entry.DatabaseColumn.WIND;
+            case "rainfall" -> Entry.DatabaseColumn.RAINFALL;
+            case "insolation" -> Entry.DatabaseColumn.INSOLATION;
+            case "evaporation" -> Entry.DatabaseColumn.EVAPORATION;
+            case "radiation" -> Entry.DatabaseColumn.RADIATION;
+            case "evapotranspiration" -> Entry.DatabaseColumn.EVAPOTRANSPIRATION;
+            default -> Entry.DatabaseColumn.EVAPOTRANSPIRATION;
+        };
+    }
+
+    public int checkLinguisticVariableId(String name) {
+        return switch (name) {
+            case "minimum temperature" -> 0;
+            case "maximum temperature" -> 1;
+            case "morning humidity" -> 2;
+            case "afternoon humidity" -> 3;
+            case "wind" -> 4;
+            case "rainfall" -> 5;
+            case "insolation" -> 6;
+            case "evaporation" -> 7;
+            case "radiation" -> 8;
+            case "evapotranspiration" -> 9;
+            default -> 10;
+        };
+    }
+
+    public int checkAbsOrRelId(String name, List<Quantifier> arList) {
+        int idx = 0;
+        for (Quantifier q : arList) {
+            if (Objects.equals(q.getLabel(), name)) {
+                return idx;
+            }
+            idx++;
+        }
+        return idx;
+    }
+
 
 }

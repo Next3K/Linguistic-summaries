@@ -1,9 +1,14 @@
 package project;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.scene.control.CheckBox;
 import org.example.model.summary.MultiSubjectSummary;
 import org.example.model.summary.Summary;
 
 public class Results {
+
+    private BooleanProperty checked;
     private String text;
     private String T;
     private String T1;
@@ -20,6 +25,7 @@ public class Results {
 
 
     public Results(Summary sum) {
+        this.checked = new SimpleBooleanProperty(false);
         this.text = sum.getTextualRepresentation();
         this.T = String.format("%.2f", sum.getQualityMeasure());
         this.T1 = String.format("%.2f", sum.getDegreeOfTruth());
@@ -37,6 +43,7 @@ public class Results {
     }
 
     public Results(MultiSubjectSummary sum) {
+        this.checked = new SimpleBooleanProperty(false);
         this.text = sum.getTwoSubjectSummaryForTable();
         this.T = String.format("%.2f", sum.getQualityMeasure());
     }
@@ -92,5 +99,21 @@ public class Results {
 
     public String getT11() {
         return T11;
+    }
+
+    public BooleanProperty selectedProperty() {
+        return checked;
+    }
+
+    public boolean isSelected() {
+        return checked.get();
+    }
+
+    public void setSelected(boolean selected) {
+        this.checked.set(selected);
+    }
+
+    public String getValue() {
+        return text;
     }
 }

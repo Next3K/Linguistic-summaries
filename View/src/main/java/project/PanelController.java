@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTreeCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.stage.FileChooser;
 import org.example.Generator;
 import org.example.Util;
 import org.example.model.LinguisticVariable;
@@ -20,6 +21,10 @@ import org.example.model.sets.UniverseOfDiscourse;
 import org.example.model.summary.MultiSubjectSummary;
 import org.example.model.summary.Summary;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.*;
 
 public class PanelController {
@@ -34,19 +39,19 @@ public class PanelController {
     private Label q1Lbl, q2Lbl, q3Lbl, q4Lbl, minLbl, maxLbl;
 
     @FXML
-    private ComboBox comboQuantifier, comboQuantifier_second, labelType, shapeType, linguisticType;
+    private ComboBox comboQuantifier, comboQuantifierSecond, labelType, shapeType, linguisticType;
 
     @FXML
-    private TreeView listSummarizers, listSummarizers_second;
+    private TreeView listSummarizers, listSummarizersSecond;
 
     @FXML
-    private Button btnGenerate, btnSave, btnClean, btnGenerate_second, btnLabelGenerate;
+    private Button btnGenerate, btnSave, btnSaveSecond;
 
     @FXML
     private RadioButton radioAbsolute, radioRelative;
 
     @FXML
-    private TableView tableGenerated, tableGenerated_second;
+    private TableView<Results> tableGenerated, tableGeneratedSecond;
 
     List<Entry> records = new ArrayList<>();
     List<Quantifier> relativeQuantifiers = new ArrayList<>();
@@ -64,143 +69,97 @@ public class PanelController {
 
     Map<String, List<String>> selectedNames = new HashMap<>();
 
-    //linguisticVariables.get(0).getLinguisticValues().put()
-
     @FXML
     private void initialize() {
         func.loadDataFromUtil(records, relativeQuantifiers, absoluteQuantifiers, linguisticVariables);
-
         func.setFirstTableSettings(tableGenerated);
-        func.setSecondTableSettings(tableGenerated_second);
-
+        func.setSecondTableSettings(tableGeneratedSecond);
+        func.addComboBoxItems(labelType, shapeType);
         setOtherSetting();
         runOnActionEvents();
-
         func.loadTreeViews(languages, multiLanguages, linguisticVariables);
-
         listSummarizers.setRoot(languages);
         listSummarizers.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+        listSummarizersSecond.setRoot(multiLanguages);
+        listSummarizersSecond.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
+        btnSave.setOnAction(event -> saveSelectedRows());
+        btnSaveSecond.setOnAction(event -> saveSelectedRowsSecond());
 
-        listSummarizers_second.setRoot(multiLanguages);
-        listSummarizers_second.setCellFactory(CheckBoxTreeCell.<String>forTreeView());
     }
 
     @FXML
     public void onBtnGenerate(ActionEvent actionEvent) {
         fuzzySets.clear();
-        ArrayList<Quantifier> oneQualifier;
-        ArrayList<Quantifier> zerQualifier;
+        ArrayList<Quantifier> oneQualifier = new ArrayList<>();
+        ArrayList<Quantifier> zerQualifier = new ArrayList<>();
         checkSelectedItems(listSummarizers);
 
         if (radioRelative.isSelected()) {
-            int index = checkRelativeVariableId(comboQuantifier.getValue().toString());
+            int index = func.checkAbsOrRelId(comboQuantifier.getValue().toString(), relativeQuantifiers);
             oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(index)));
-            zerQualifier = new ArrayList<>();
         } else {
-            int index = checkAbsoluteVariableId(comboQuantifier.getValue().toString());
-            oneQualifier = new ArrayList<>();
+            int index = func.checkAbsOrRelId(comboQuantifier.getValue().toString(), absoluteQuantifiers);
             zerQualifier = new ArrayList<>(List.of(absoluteQuantifiers.get(index)));
         }
 
-        List<Double> weights =
-                new ArrayList<>(List.of(Double.parseDouble(txtT1.getText()),
-                        Double.parseDouble(txtT2.getText()),
-                        Double.parseDouble(txtT3.getText()),
-                        Double.parseDouble(txtT4.getText()),
-                        Double.parseDouble(txtT5.getText()),
-                        Double.parseDouble(txtT6.getText()),
-                        Double.parseDouble(txtT7.getText()),
-                        Double.parseDouble(txtT8.getText()),
-                        Double.parseDouble(txtT9.getText()),
-                        Double.parseDouble(txtT10.getText()),
-                        Double.parseDouble(txtT11.getText())
-                ));
-
-        System.out.println("Zaczynam generowanie");
-        List<Summary> statements =
-                Generator.generateSummaries(
-                        records,
-                        zerQualifier,
-                        oneQualifier,
-                        fuzzySets,
-                        weights);
-
-
-        System.out.println("Skonczylem generowanie");
+        List<Double> weights = getAllWeights();
+        List<Summary> sum = Generator.generateSummaries(records, zerQualifier, oneQualifier, fuzzySets, weights);
 
         tableGenerated.getItems().clear();
+        tableGenerated.setEditable(true);
 
-        for (var s : statements) {
+        for (var s : sum) {
             tableGenerated.getItems().add(new Results(s));
         }
-
     }
 
     @FXML
     public void onBtnGenerateSecond(ActionEvent actionEvent) {
         fuzzySets.clear();
 
-        int index = checkRelativeVariableId(comboQuantifier_second.getValue().toString());
-
+        int index = func.checkAbsOrRelId(comboQuantifierSecond.getValue().toString(), relativeQuantifiers);
         ArrayList<Quantifier> oneQualifier = new ArrayList<>(List.of(relativeQuantifiers.get(index)));
-        checkSelectedItems(listSummarizers_second);
+        checkSelectedItems(listSummarizersSecond);
 
+        List<MultiSubjectSummary> sum = Generator.generateTwoSubjectSummaries(records, oneQualifier, fuzzySets);
 
-        System.out.println("Zaczynam generowanie");
-        List<MultiSubjectSummary> summariesTwo =
-                Generator.generateTwoSubjectSummaries(
-                        records,
-                        oneQualifier,
-                        fuzzySets);
+        tableGeneratedSecond.getItems().clear();
+        tableGeneratedSecond.setEditable(true);
 
-
-        System.out.println("Skonczylem generowanie");
-
-        tableGenerated_second.getItems().clear();
-
-        for (var s : summariesTwo) {
-            tableGenerated_second.getItems().add(new Results(s));
-            System.out.println(
-                    s.getTwoSubjectSummaryForTable()
-                            +";"+ String.format("%.2f", s.getQualityMeasure())
-            );
+        for (var s : sum) {
+            tableGeneratedSecond.getItems().add(new Results(s));
         }
-
-        System.out.println("\n\n\n");
     }
-
 
     @FXML
     public void onBtnLabelGenerate(ActionEvent actionEvent) {
         if (q1Txt != null && q2Txt != null && q3Txt != null && q4Txt != null ) {
              if (labelType.getValue() == "zmienna lingwistyczna") {
-                 System.out.println("jestem");
                  if(shapeType.getValue() == "trapez") {
-                     linguisticVariables.get(checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
+                     linguisticVariables.get(func.checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
                              linguisticName.getText(),
-                             switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
+                             func.switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
                              new TrapezoidShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText()), Double.parseDouble(q4Txt.getText())),
                              new UniverseOfDiscourse(Double.parseDouble(minLbl.getText()), Double.parseDouble(maxLbl.getText())))
                      );
                  } else if(shapeType.getValue() == "trójkąt") {
-                     System.out.println("tu tez");
-                     linguisticVariables.get(checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
+                     linguisticVariables.get(func.checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
                              linguisticName.getText(),
-                             switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
+                             func.switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
                              new TriangularShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText()), Double.parseDouble(q3Txt.getText())),
                              new UniverseOfDiscourse(Double.parseDouble(minLbl.getText()), Double.parseDouble(maxLbl.getText())))
                      );
                  }
                  else if(shapeType.getValue() == "gauss") {
-                     linguisticVariables.get(checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
+                     linguisticVariables.get(func.checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
                              linguisticName.getText(),
-                             switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
+                             func.switchVariableNameToDatabaseName(linguisticType.getValue().toString()),
                              new GaussianShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText())),
                              new UniverseOfDiscourse(Double.parseDouble(minLbl.getText()), Double.parseDouble(maxLbl.getText())))
                      );
                  }
                  listSummarizers.getRoot().getChildren().clear();
-                 listSummarizers_second.getRoot().getChildren().clear();
+                 listSummarizersSecond.getRoot().getChildren().clear();
                  func.loadTreeViews(languages, multiLanguages, linguisticVariables);
              } else if (labelType.getValue() == "kwantyfiaktor relatywny") {
                  if(shapeType.getValue() == "trapez") {
@@ -223,9 +182,13 @@ public class PanelController {
                              new GaussianShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText())),
                              new UniverseOfDiscourse(0d, 1d)));
                  }
-                 comboQuantifier_second.getItems().clear();
+                 comboQuantifierSecond.getItems().clear();
+                 comboQuantifier.getItems().clear();
                  for (int i = 0; i < relativeQuantifiers.size(); i++) {
-                     comboQuantifier_second.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
+                     comboQuantifierSecond.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
+                 }
+                 for (int i = 0; i < relativeQuantifiers.size(); i++) {
+                     comboQuantifier.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
                  }
              }
              else if (labelType.getValue() == "kwantyfikator absolutny") {
@@ -249,31 +212,44 @@ public class PanelController {
                             new GaussianShape(Double.parseDouble(q1Txt.getText()), Double.parseDouble(q2Txt.getText())),
                             new UniverseOfDiscourse(0d, 14_854d)));
                 }
+                 comboQuantifier.getItems().clear();
+                 for (int i = 0; i < absoluteQuantifiers.size(); i++) {
+                     comboQuantifier.getItems().add(absoluteQuantifiers.get(i).getTextualRepresentation());
+                 }
             }
-
-
         }
     }
 
+    @FXML
+    public void onBtnSettingClean(ActionEvent actionEvent) {
+        labelType.getSelectionModel().clearSelection();
+        shapeType.getSelectionModel().clearSelection();
+        linguisticType.getSelectionModel().clearSelection();
+        linguisticType.getItems().clear();
+        linguisticName.clear();
+
+        if (!linguisticType.isDisabled()) {
+            linguisticType.setDisable(true);
+        }
+        minLbl.setText("0");
+        maxLbl.setText("0");
+        q1Txt.clear();
+        q2Txt.clear();
+        q3Txt.clear();
+        q4Txt.clear();
+    }
 
     private void checkSelectedItems(TreeView lSummarizers) {
-        System.out.println("Zaznaczone elementy:");
         selectedNames.clear();
         checkSelectedItemsRecursive(lSummarizers.getRoot(), selectedNames);
-
-        //System.out.println(selectedNames.toString());
 
         for (Map.Entry<String, List<String>> entry : selectedNames.entrySet()) {
             String key = entry.getKey();
             List<String> values = entry.getValue();
-
-            System.out.println("Klucz: " + key);
-            System.out.println("Lista stringów: " + values);
             for (int i=0; i < values.size(); i++) {
-                fuzzySets.add(linguisticVariables.get(checkLinguisticVariableId(key)).getSet(values.get(i)));
+                fuzzySets.add(linguisticVariables.get(func.checkLinguisticVariableId(key)).getSet(values.get(i)));
             }
         }
-        System.out.println(fuzzySets.toString());
     }
 
     private void checkSelectedItemsRecursive(TreeItem<String> parent, Map<String, List<String>> map) {
@@ -294,61 +270,6 @@ public class PanelController {
             checkSelectedItemsRecursive(child, map);
         }
     }
-
-    private Entry.DatabaseColumn switchVariableNameToDatabaseName(String name) {
-        return switch (name) {
-            case "minimum temperature" -> Entry.DatabaseColumn.MIN_TEMPERATURE;
-            case "maximum temperature" -> Entry.DatabaseColumn.MAX_TEMPERATURE;
-            case "morning humidity" -> Entry.DatabaseColumn.MORNING_HUMIDITY;
-            case "afternoon humidity" -> Entry.DatabaseColumn.AFTERNOON_HUMIDITY;
-            case "wind" -> Entry.DatabaseColumn.WIND;
-            case "rainfall" -> Entry.DatabaseColumn.RAINFALL;
-            case "insolation" -> Entry.DatabaseColumn.INSOLATION;
-            case "evaporation" -> Entry.DatabaseColumn.EVAPORATION;
-            case "radiation" -> Entry.DatabaseColumn.RADIATION;
-            case "evapotranspiration" -> Entry.DatabaseColumn.EVAPOTRANSPIRATION;
-            default -> Entry.DatabaseColumn.EVAPOTRANSPIRATION;
-        };
-    }
-
-    private int checkLinguisticVariableId(String name) {
-        return switch (name) {
-            case "minimum temperature" -> 0;
-            case "maximum temperature" -> 1;
-            case "morning humidity" -> 2;
-            case "afternoon humidity" -> 3;
-            case "wind" -> 4;
-            case "rainfall" -> 5;
-            case "insolation" -> 6;
-            case "evaporation" -> 7;
-            case "radiation" -> 8;
-            case "evapotranspiration" -> 9;
-            default -> 10;
-        };
-    }
-
-    private int checkAbsoluteVariableId(String name) {
-        int idx = 0;
-        for (Quantifier q : absoluteQuantifiers) {
-            if (q.getLabel() == name) {
-                return idx;
-            }
-            idx++;
-        }
-        return idx;
-    }
-
-    private int checkRelativeVariableId(String name) {
-        int idx = 0;
-        for (Quantifier q : relativeQuantifiers) {
-            if (q.getLabel() == name) {
-                return idx;
-            }
-            idx++;
-        }
-        return idx;
-    }
-
 
     private void runOnActionEvents() {
         radioAbsolute.setOnAction(event -> {
@@ -381,9 +302,9 @@ public class PanelController {
             }
         });
 
-        comboQuantifier_second.setOnAction(event -> {
-            if (comboQuantifier_second.getValue() != null) {
-                btnGenerate_second.setDisable(false);
+        comboQuantifierSecond.setOnAction(event -> {
+            if (comboQuantifierSecond.getValue() != null) {
+                btnSaveSecond.setDisable(false);
             }
         });
 
@@ -465,22 +386,14 @@ public class PanelController {
 
     private void setOtherSetting() {
         listSummarizers.setStyle("-fx-font-size: 10px;");
-        listSummarizers_second.setStyle("-fx-font-size: 10px;");
+        listSummarizersSecond.setStyle("-fx-font-size: 10px;");
 
-        labelType.getItems().add("kwantyfikator absolutny");
-        labelType.getItems().add("kwantyfiaktor relatywny");
-        labelType.getItems().add("zmienna lingwistyczna");
-
-        shapeType.getItems().add("trójkąt");
-        shapeType.getItems().add("trapez");
-        shapeType.getItems().add("gauss");
-
-
+        linguisticType.setDisable(true);
         comboQuantifier.setDisable(true);
         btnGenerate.setDisable(true);
 
         for (int i = 0; i < relativeQuantifiers.size(); i++) {
-            comboQuantifier_second.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
+            comboQuantifierSecond.getItems().add(relativeQuantifiers.get(i).getTextualRepresentation());
         }
 
         radioAbsolute.setToggleGroup(toggleGroup);
@@ -494,5 +407,94 @@ public class PanelController {
                 maxLbl.setText(uniqueFuzzySets.get(i).getUniverseOfDiscourse().getNonFuzzySet().getMaximum().toString());
             }
         }
+    }
+
+    private void saveSelectedRows() {
+        List<Results> selectedItems = new ArrayList<>();
+        for (Results item : tableGenerated.getItems()) {
+            if (item.isSelected()) {
+                selectedItems.add(item);
+            }
+        }
+
+        if (!selectedItems.isEmpty()) {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Zapisz wyniki do pliku");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showSaveDialog(tableGenerated.getScene().getWindow());
+
+
+            if (file != null) {
+                String fileName = file.getAbsolutePath();
+                if (!fileName.endsWith(".txt")) {
+                    fileName += ".txt";
+                }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                    for (Results item : selectedItems) {
+                        writer.write(item.getValue() + "; " + item.getT() + "; " + item.getT1() + "; " + item.getT2() + "; " +
+                                item.getT3() + "; " + item.getT4() + "; " + item.getT5() + "; " + item.getT6() + "; " +
+                                item.getT7() + "; " + item.getT8() + "; " + item.getT9() + "; " + item.getT10() + "; " + item.getT11());
+
+                        writer.newLine();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private void saveSelectedRowsSecond() {
+        List<Results> selectedItems = new ArrayList<>();
+        for (Results item : tableGeneratedSecond.getItems()) {
+            if (item.isSelected()) {
+                selectedItems.add(item);
+            }
+        }
+
+        if (!selectedItems.isEmpty()) {
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Zapisz wyniki do pliku");
+            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("Text files (*.txt)", "*.txt");
+            fileChooser.getExtensionFilters().add(extFilter);
+            File file = fileChooser.showSaveDialog(tableGeneratedSecond.getScene().getWindow());
+
+
+            if (file != null) {
+                String fileName = file.getAbsolutePath();
+                if (!fileName.endsWith(".txt")) {
+                    fileName += ".txt";
+                }
+
+                try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+                    for (Results item : selectedItems) {
+                        writer.write(item.getValue() + "; " + item.getT());
+
+                        writer.newLine();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private List<Double> getAllWeights() {
+        return new ArrayList<>(List.of(Double.parseDouble(txtT1.getText()),
+                Double.parseDouble(txtT2.getText()),
+                Double.parseDouble(txtT3.getText()),
+                Double.parseDouble(txtT4.getText()),
+                Double.parseDouble(txtT5.getText()),
+                Double.parseDouble(txtT6.getText()),
+                Double.parseDouble(txtT7.getText()),
+                Double.parseDouble(txtT8.getText()),
+                Double.parseDouble(txtT9.getText()),
+                Double.parseDouble(txtT10.getText()),
+                Double.parseDouble(txtT11.getText())
+        ));
     }
 }
