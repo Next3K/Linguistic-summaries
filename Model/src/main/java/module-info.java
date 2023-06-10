@@ -14,6 +14,7 @@ module model {
     exports org.example.model.quantifiers;
     exports org.example.model.sets;
     exports org.example.model.summary;
+    exports org.example.model.functions;
     //exports org.example.model.signals;
     //exports org.example.model.conversion;
 }

@@ -24,7 +24,7 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1500.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.PanelController">
   <tabs>
-    <Tab text="Generator podsumowań">
+    <Tab text="Generator podsumowań jednopodmiotowych">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
@@ -204,11 +204,86 @@
                </children></AnchorPane>
       </content>
     </Tab>
+      <Tab text="Generator podsumowań wielopodmiotowych">
+         <content>
+            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+               <children>
+                  <GridPane prefHeight="869.0" prefWidth="1500.0">
+                     <columnConstraints>
+                        <ColumnConstraints maxWidth="1302.0" minWidth="30.0" prefWidth="1294.0" />
+                        <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" maxWidth="494.0" minWidth="0.0" prefWidth="206.0" />
+                     </columnConstraints>
+                     <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" valignment="CENTER" vgrow="ALWAYS" />
+                     </rowConstraints>
+                     <children>
+                        <TableView fx:id="tableGenerated_second" prefHeight="849.0" prefWidth="890.0">
+                           <GridPane.margin>
+                              <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                           </GridPane.margin>
+                        </TableView>
+                        <VBox prefHeight="869.0" prefWidth="330.0" spacing="20.0" GridPane.columnIndex="1">
+                           <children>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kwantyfikator">
+                                 <VBox.margin>
+                                    <Insets bottom="-15.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <ComboBox fx:id="comboQuantifier_second" prefHeight="24.0" prefWidth="230.0">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </ComboBox>
+                              <GridPane>
+                                 <columnConstraints>
+                                    <ColumnConstraints halignment="CENTER" hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0" />
+                                    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                 </columnConstraints>
+                              </GridPane>
+                              <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Kwalifikatory" wrappingWidth="108.7294921875">
+                                 <VBox.margin>
+                                    <Insets bottom="-15.0" top="10.0" />
+                                 </VBox.margin>
+                              </Text>
+                              <TreeView fx:id="listSummarizers_second" prefHeight="493.0" prefWidth="236.0">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </TreeView>
+                              <Button fx:id="btnGenerate_second" mnemonicParsing="false" onAction="#onBtnGenerateSecond" prefHeight="24.0" prefWidth="200.0" text="Generuj podsumowanie">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="btnSave_second" mnemonicParsing="false" prefHeight="24.0" prefWidth="200.0" text="Zapisz zaznaczone">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                              <Button fx:id="btnClean_second" mnemonicParsing="false" prefHeight="24.0" prefWidth="200.0" text="Wyczyść parametry">
+                                 <VBox.margin>
+                                    <Insets right="5.0" />
+                                 </VBox.margin>
+                              </Button>
+                           </children>
+                           <padding>
+                              <Insets left="10.0" right="10.0" top="20.0" />
+                           </padding>
+                           <GridPane.margin>
+                              <Insets />
+                           </GridPane.margin>
+                        </VBox>
+                     </children>
+                  </GridPane>
+               </children>
+            </AnchorPane>
+         </content>
+      </Tab>
       <Tab text="Ustawienia zaawansowane">
          <content>
             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <HBox prefHeight="870.0" prefWidth="1300.0">
+                  <HBox prefHeight="870.0" prefWidth="1500.0">
                      <children>
                         <VBox prefHeight="870.0" prefWidth="622.0" spacing="20.0">
                            <children>
@@ -229,18 +304,38 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
                                     <Label text="Typ:" />
-                                    <Label text="Zmienna lingwistyczna:" GridPane.rowIndex="1" />
-                                    <Label text="Nazwa nowej etykiety:" GridPane.rowIndex="2" />
-                                    <ComboBox prefHeight="24.0" prefWidth="250.0" promptText="Kwalifikator" GridPane.columnIndex="1" />
-                                    <ComboBox prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField maxWidth="250.0" prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label text="Zmienna lingwistyczna:" GridPane.rowIndex="2" />
+                                    <Label text="Nazwa nowej etykiety:" GridPane.rowIndex="3" />
+                                    <ComboBox fx:id="labelType" prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" />
+                                    <ComboBox fx:id="linguisticType" prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <TextField fx:id="linguisticName" maxWidth="250.0" prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <Label text="Typ:" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <ComboBox fx:id="shapeType" prefHeight="24.0" prefWidth="250.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <Label text="Kształt:" GridPane.rowIndex="1" />
                                  </children>
                                  <VBox.margin>
                                     <Insets top="30.0" />
                                  </VBox.margin>
+                              </GridPane>
+                              <GridPane>
+                                <columnConstraints>
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.0" minWidth="10.0" prefWidth="178.0" />
+                                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="384.0" minWidth="10.0" prefWidth="384.0" />
+                                </columnConstraints>
+                                <rowConstraints>
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                </rowConstraints>
+                                 <children>
+                                    <Label text="Wartość minimalna:" />
+                                    <Label text="Wartość maksymalna:" GridPane.rowIndex="1" />
+                                    <Label fx:id="minLbl" text="0" GridPane.columnIndex="1" />
+                                    <Label fx:id="maxLbl" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                 </children>
                               </GridPane>
                               <GridPane prefHeight="180.0" prefWidth="421.0">
                                 <columnConstraints>
@@ -254,27 +349,19 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Label text="Pierwsza wartość minimalna:" />
-                                    <Label text="Pierwsza wartosć maksymalna:" GridPane.rowIndex="1" />
-                                    <Label text="Druga wartość maksymalna:" GridPane.rowIndex="2" />
-                                    <Label text="Druga wartość minimalna:" GridPane.rowIndex="3" />
-                                    <TextField GridPane.columnIndex="1" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                    <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                    <Label fx:id="q1Lbl" text="Pierwsza wartość minimalna:" />
+                                    <Label fx:id="q2Lbl" text="Pierwsza wartosć maksymalna:" GridPane.rowIndex="1" />
+                                    <Label fx:id="q3Lbl" text="Druga wartość maksymalna:" GridPane.rowIndex="2" />
+                                    <Label fx:id="q4Lbl" text="Druga wartość minimalna:" GridPane.rowIndex="3" />
+                                    <TextField fx:id="q1Txt" GridPane.columnIndex="1" />
+                                    <TextField fx:id="q2Txt" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                    <TextField fx:id="q4Txt" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                    <TextField fx:id="q3Txt" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                  </children>
                                  <VBox.margin>
                                     <Insets top="40.0" />
                                  </VBox.margin>
                               </GridPane>
-                              <Label prefHeight="62.0" prefWidth="430.0" text="UWAGA: Jeśli druga wartość maksymalna nie zostanie uzupełniona, funkcja przyjmie postać trójkątną" textAlignment="CENTER" textOverrun="CLIP" wrapText="true">
-                                 <font>
-                                    <Font name="System Italic" size="13.0" />
-                                 </font>
-                                 <VBox.margin>
-                                    <Insets top="-15.0" />
-                                 </VBox.margin>
-                              </Label>
                               <GridPane prefHeight="62.0" prefWidth="426.0">
                                 <columnConstraints>
                                   <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -285,7 +372,7 @@
                                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                 </rowConstraints>
                                  <children>
-                                    <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Generuj &amp; zapisz" />
+                                    <Button fx:id="btnLabelGenerate" mnemonicParsing="false" onAction="#onBtnLabelGenerate" prefHeight="40.0" prefWidth="150.0" text="Generuj &amp; zapisz" />
                                     <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="120.0" text="Podgląd" GridPane.columnIndex="1" />
                                     <Button mnemonicParsing="false" prefHeight="40.0" prefWidth="150.0" text="Wyczyść" GridPane.columnIndex="2" />
                                  </children>
@@ -298,7 +385,7 @@
                               <Insets left="40.0" right="20.0" top="20.0" />
                            </padding>
                         </VBox>
-                        <LineChart prefHeight="870.0" prefWidth="871.0">
+                        <LineChart prefHeight="470.0" prefWidth="791.0">
                           <xAxis>
                             <CategoryAxis side="BOTTOM" />
                           </xAxis>

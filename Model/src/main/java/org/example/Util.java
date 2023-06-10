@@ -1,5 +1,6 @@
 package org.example;
 
+import lombok.Getter;
 import org.example.model.db.Connect;
 import org.example.model.db.Entry;
 import org.example.model.functions.GaussianShape;
@@ -13,6 +14,7 @@ import org.example.model.quantifiers.RelativeQuantifier;
 
 import java.util.*;
 
+@Getter
 public class Util {
 
     private static final UniverseOfDiscourse relative = new UniverseOfDiscourse(0d, 1d);
@@ -472,6 +474,13 @@ public class Util {
         return subsets;
     }
 
+    public static UniverseOfDiscourse getRelative() {
+        return relative;
+    }
+
+    public static UniverseOfDiscourse getAbsolute() {
+        return absolute;
+    }
 
     public double and(FuzzySet a, FuzzySet b, Entry e) {
         return Math.min(a.evaluateFor(e), b.evaluateFor(e));
