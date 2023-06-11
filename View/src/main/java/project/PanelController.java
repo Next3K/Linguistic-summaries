@@ -134,7 +134,7 @@ public class PanelController {
     @FXML
     public void onBtnLabelGenerate(ActionEvent actionEvent) {
         if (q1Txt != null && q2Txt != null && q3Txt != null && q4Txt != null ) {
-             if (labelType.getValue() == "zmienna lingwistyczna") {
+             if (labelType.getValue() == "etykieta") {
                  if(shapeType.getValue() == "trapez") {
                      linguisticVariables.get(func.checkLinguisticVariableId(linguisticType.getValue().toString())).getLinguisticValues().put(linguisticName.getText(), new FuzzySet(
                              linguisticName.getText(),
@@ -161,7 +161,7 @@ public class PanelController {
                  listSummarizers.getRoot().getChildren().clear();
                  listSummarizersSecond.getRoot().getChildren().clear();
                  func.loadTreeViews(languages, multiLanguages, linguisticVariables);
-             } else if (labelType.getValue() == "kwantyfiaktor relatywny") {
+             } else if (labelType.getValue() == "kwantyfikator relatywny") {
                  if(shapeType.getValue() == "trapez") {
                      relativeQuantifiers.add(new RelativeQuantifier(
                              linguisticName.getText(),
@@ -310,7 +310,7 @@ public class PanelController {
 
 
         labelType.setOnAction(event -> {
-            if (labelType.getValue() == "kwantyfiaktor relatywny") {
+            if (labelType.getValue() == "kwantyfikator relatywny") {
                 linguisticType.setDisable(true);
                 linguisticType.getItems().clear();
                 minLbl.setText(Util.getRelative().getNonFuzzySet().getMinimum().toString());
@@ -323,7 +323,7 @@ public class PanelController {
                 maxLbl.setText(Util.getAbsolute().getNonFuzzySet().getMaximum().toString());
             }
 
-            else if (labelType.getValue() == "zmienna lingwistyczna") {
+            else if (labelType.getValue() == "etykieta") {
                 minLbl.setText("0");
                 maxLbl.setText("0");
                 linguisticType.setDisable(false);

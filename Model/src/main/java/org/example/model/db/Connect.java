@@ -35,7 +35,7 @@ import java.util.Map;
 
 public class Connect {
     private static final String DRIVER = "org.sqlite.JDBC";
-    private static final String DB_URL = "jdbc:sqlite:Model/src/main/java/org/example/model/db/ksr_weather.db";
+    private static final String DB_URL = "jdbc:sqlite:ksr_weather.db";
     private Connection conn;
     private Statement stat;
 

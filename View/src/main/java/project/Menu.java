@@ -16,7 +16,7 @@ public class Menu extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         URL url = getClass().getClassLoader().getResource("UserPanel.fxml");
-        StageController.createFirstStage(primaryStage, url,"hemlo");
+        StageController.createFirstStage(primaryStage, url,"KSR zadanie 2");
     }
 
     public static void main(String[] args) {

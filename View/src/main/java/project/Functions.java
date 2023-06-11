@@ -163,8 +163,8 @@ public class Functions {
 
     public void addComboBoxItems(ComboBox lt, ComboBox st) {
         lt.getItems().add("kwantyfikator absolutny");
-        lt.getItems().add("kwantyfiaktor relatywny");
-        lt.getItems().add("zmienna lingwistyczna");
+        lt.getItems().add("kwantyfikator relatywny");
+        lt.getItems().add("etykieta");
 
         st.getItems().add("trójkąt");
         st.getItems().add("trapez");
