@@ -1,5 +1,8 @@
 package org.example.model.db;
 
+import java.net.URI;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -34,6 +37,7 @@ import java.util.Map;
 
 
 public class Connect {
+
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String DB_URL = "jdbc:sqlite:ksr_weather.db";
     private Connection conn;

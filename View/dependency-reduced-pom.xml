@@ -25,7 +25,7 @@
           <execution>
             <id>default-cli</id>
             <configuration>
-              <mainClass>project.Menu</mainClass>
+              <mainClass>project.EntryPoint</mainClass>
             </configuration>
           </execution>
         </executions>
@@ -42,7 +42,7 @@
             <configuration>
               <transformers>
                 <transformer>
-                  <mainClass>project.Menu</mainClass>
+                  <mainClass>project.EntryPoint</mainClass>
                 </transformer>
               </transformers>
             </configuration>

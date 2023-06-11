@@ -71,7 +71,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>project.Menu</mainClass>
+                            <mainClass>project.EntryPoint</mainClass>
                         </configuration>
                     </execution>
                 </executions>
@@ -89,7 +89,7 @@
                         <configuration>
                             <transformers>
                                 <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>project.Menu</mainClass>
+                                    <mainClass>project.EntryPoint</mainClass>
                                 </transformer>
                             </transformers>
                         </configuration>
